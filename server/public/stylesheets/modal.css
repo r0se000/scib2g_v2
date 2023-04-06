@@ -1,0 +1,122 @@
+button {
+    background-color: #ffffff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: #ffffff;
+    cursor: pointer;
+}
+
+
+/* 건강노트 모달 */
+
+.exmodal,
+.fmmodal,
+.flmodal,
+.fdmodal,
+.bsmodal,
+.fcmodal,
+.ffmodal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* 건강현황 모달 */
+
+.dimodal,
+.bimodal,
+.stimodal,
+.slimodal,
+.reInfo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.okmodal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.exmodal .bg,
+.fmmodal .bg,
+.flmodal .bg,
+.fdmodal .bg,
+.bsmodal .bg,
+.dimodal .bg,
+.bimodal .bg,
+.stimodal .bg,
+.slimodal .bg,
+.okmodal .bg,
+.fcmodal .bg,
+.ffmodal .bg,
+.reInfo .bg {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modalBox {
+    position: absolute;
+    top: 10%;
+    background-color: #fff;
+    width: 100%;
+    padding: 15px;
+}
+
+
+/* 작성완료 팝업창 */
+
+.okBox {
+    position: absolute;
+    top: 35%;
+    background-color: #fff;
+    border: 7px solid #01c0c8;
+    border-radius: 10px;
+    width: 90%;
+    padding: 15px;
+}
+
+
+/* 건강상태 정보 창 */
+
+.infoModal {
+    position: absolute;
+    top: 10%;
+    background-color: #fff;
+    border: 7px solid #01c0c8;
+    border-radius: 10px;
+    width: 90%;
+    height: 55%;
+    padding: 15px;
+    overflow: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.modalBox button {
+    display: block;
+    width: 80px;
+    margin: 0 auto;
+}
+
+.hidden {
+    display: none;
+}

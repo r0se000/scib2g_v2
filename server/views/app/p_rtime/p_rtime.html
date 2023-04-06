@@ -1,0 +1,136 @@
+{% extends "templates/appmainbase.html" %}
+<!-- ------------------------------------------------------------- -->
+{% block head %}
+<!-- CSS -->
+<link
+   rel="stylesheet"
+   href="/app/p_rtime/p_rtime.css"
+   type="text/css"
+ />
+{%endblock%}
+<!-- ------------------------------------------------------------- -->
+
+<!-- ------------------------------------------------------------- -->
+<!-- Content 시작 -->
+{% block contents%}
+<style></style>
+ <div class="skin-megna page-wrapper" style="padding: 0; overflow-y: scroll">
+   <div class="container-fluid">
+     <div class="row page-titles">
+       <button id="allBtn" class="btn btn-outline-secondary">
+         전체조회
+       </button>
+       <button id="NoConnectBtn" class="btn btn-outline-secondary">
+         연결없음 조회
+       </button>
+ 
+       
+     </div>
+     <div class="card">
+       <div class="card-body">
+         <ul id="p_rimelist">
+          <div class = "origin">
+           <li>성명</li>
+           <li>번호</li>
+           <li>침대상태</li>
+           <li>실시간</li>
+          </div>
+         </ul>
+       </div>
+     </div>
+
+     
+ 
+     <!-- 관리 대상자 세부정보 모달 -->
+     <div
+       id="rt-detail"
+       class="modal bs-example-modal-lg"
+       tabindex="-1"
+       role="dialog"
+       aria-labelledby="longmodal"
+       aria-hidden="true"
+     >
+       <div class="modal-dialog modal-xl modal-dialog-centered">
+         <div class="modal-content">
+           <div class="modal-header">
+             
+             <button
+               type="button"
+               class="close"
+               data-dismiss="modal"
+               aria-hidden="true"
+             >
+               ×
+             </button>
+           </div>
+           <div class="modal-body h4">
+             <table class="table table-hover" id="user-detail-table">
+               <tbody id="userlist">
+                 <tr>
+                   <td>성명</td>
+                   <td id="userName"></td>
+                 </tr>
+                 <tr>
+                   <td>생년월일</td>
+                   <td id="userBirth"></td>
+                 </tr>
+                 <tr>
+                   <td>성별</td>
+                   <td id="sex"></td>
+                 </tr>
+                 <tr>
+                   <td>주소</td>
+                   <td id="userAddress"></td>
+                 </tr>
+                 <tr>
+                   <td>관리 대상자 연락처</td>
+                   <td id="userPhone"></td>
+                 </tr>
+                 <tr>
+                   <td>보호자 연락처</td>
+                   <td id="protectorPhone"></td>
+                 </tr>
+                 <tr>
+                   <td>마지막 기록</td>
+                   <td id="last_data"></td>
+                 </tr>
+               </tbody>
+             </table>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+<!-- html -->
+{% endblock %}
+<!-- ------------------------------------------------------------- -->
+
+<!-- ------------------------------------------------------------- -->
+{% block script %}
+ <!--jquery knob -->
+ <script src="/assets/node_modules/moment/moment.js"></script>
+ <!-- Date Picker Plugin JavaScript -->
+
+ <script src="/javascripts/config.js"></script>
+ <script src="/javascripts/commonUtil.js"></script>
+
+<script type="text/javascript" src="/app/p_rtime/p_rtime.js"></script>
+
+<script>
+    let userCode="{{userCode}}"
+    let userList = '{{userList | safe}}';
+    userList = JSON.parse(userList);
+    let userCount = Object.keys(userList).length;
+    for (let j = 0; j < userCount; j++) {
+        userCodeList.push(userList['user' + j].user_code)
+    };
+    init();
+
+  
+  
+    
+    
+</script>
+
+{% endblock %}

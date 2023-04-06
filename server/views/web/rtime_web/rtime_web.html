@@ -1,0 +1,190 @@
+{% extends "templates/mainbase.html" %}
+
+<!-- ------------------------------------------------------------- -->
+{% block style%}
+<link href="/assets/node_modules/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+<link rel="stylesheet" href="/web/rtime_web/rtime_web.css" type="text/css" /> {%endblock%}
+<!-- ------------------------------------------------------------- -->
+
+<!-- ------------------------------------------------------------- -->
+{% block contents%}
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title m-b-0" style="margin:auto; text-align: center;">현재시간</h3>
+                <br>
+                <p class="card-title m-t-5 h4" id="clock-target" style="margin:auto; text-align: center;"></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title m-b-0" style="margin:auto; text-align: center;">금일 모니터링 발생</h3>
+                <br>
+                <p class="card-title m-t-5 h4" id="today-emergency-count" style="margin:auto; text-align: center;">
+                    {{emCount}}건</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title m-b-0" style="margin:auto;">실시간 관리 대상자 목록</h3>
+                <h4 style="padding-left: 10px;">※ 장치 등록이 완료된 사용자의 실시간 상태가 표시됩니다.</h4>
+                <p class="text-muted"></p>
+                <button id="unconnectedBtn" class="btn btn-danger" style="float:right; margin-right:30px; margin-bottom:20px;">연결없음</button>
+                <button id="allBtn" class="btn btn-info" style="float:right; margin-right:10px; margin-bottom:20px;">전체조회</button>
+                <div class="table-responsive">
+                    <table class="table table-hover h4" id="user-rtime" style="text-align:center;">
+                        <thead class="h4">
+                            <tr>
+                                <th style="width:10%;">성명</th>
+                                <th style="width:10%;">번호</th>
+                                <th style="width:10%;">심박수</th>
+                                <th style="width:10%;">침대상태</th>
+                                <th style="width:30%;">특이사항</th>
+                                <th style="width:10%;">A/S</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-list-body">
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 관리 대상자 세부정보 모달 창 -->
+                <div class="modal fade" id="user-detail-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">상세정보</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div style="text-align: right;">
+                                    <span>최근 측정일 |</span>
+                                    <span id="user-recent-data-time"></span>
+                                </div>
+                                <h3 style="text-align: center; margin-top:20px; font-weight: 500;" id="user-info-title">테스트님의 상세정보</h3><br/>
+                                <tbody id="user-list-body">
+                                    <table class="table table-hover h4" id="user-info-table" style="text-align:center;">
+                                        <thead class="h4">
+                                            <tr>
+                                                <td class="user-info">성명</td>
+                                                <td class="user-info-value" id="user-info-name">성명</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="user-info">생년월일</td>
+                                                <td class="user-info-value" id="user-info-birth">생년월일</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="user-info">성별</td>
+                                                <td class="user-info-value" id="user-info-gender">성별</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="user-info">주소</td>
+                                                <td class="user-info-value" id="user-info-address">주소</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="user-info">연락처</td>
+                                                <td class="user-info-value" id="user-info-phone1">연락처</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="user-info">보호자 연락처</td>
+                                                <td class="user-info-value" id="user-info-phone2">보호자 연락처</td>
+                                            </tr>
+                                        </thead>
+                                </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-info" data-dismiss="modal">닫기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 관리 대상자 특이사항 모달 창 -->
+                <div class="modal fade" id="user-note-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">특이사항</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            </div>
+                            <div class="modal-body" style="text-align: center;">
+                                <span id="note-user-name" style="float:center; font-size:15pt;">사용자 이름</span>
+                                <div>
+                                    <span id="note-date" style="float: right; font-size:13pt; margin-right:5px;">yyyy-mm-dd</span>
+                                    <span style="float: right; font-size:13pt;">최종 작성일 | &nbsp;</span>
+                                </div><br/>
+                                <textarea class="form-control" id="note-detail" maxlength="200" style="font-size:13pt;" placeholder="특이사항을 입력해 주세요.">특이사항</textarea><br/>
+                                <input type="hidden" id="note-user-code" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+                                <button type="button" class="btn btn-info" id="note-uploadBtn">등록</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 관리 대상자 A/S 입력 모달 창 -->
+                <div class="modal fade" id="user-as-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">A/S</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            </div>
+                            <div class="modal-body" style="text-align: center;">
+                                <span id="as-user-name" style="float:center; font-size:15pt; margin-left:5px;">관리 대상자 이름</span>
+                                <div>
+                                    <input type="date" class="form-control" id="as-datepicker">
+                                    <span style="float: right; font-size:12pt; height:40px; line-height:40px;">날짜 선택: &nbsp;</span>
+                                </div><br/>
+                                <textarea class="form-control" id="as-detail" maxlength="200" placeholder="A/S 조치내용 입력"></textarea><br/>
+                                <input type="hidden" id="as-user-code" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+                                <button type="button" class="btn btn-info" id="as-uploadBtn">등록</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+<!-- ------------------------------------------------------------- -->
+
+<!-- ------------------------------------------------------------- -->
+
+{%block script%}
+<!-- moment -->
+<script src="../../../assets/node_modules/moment/moment.js"></script>
+<script type="text/javascript" src="/web/rtime_web/rtime_web.js"></script>
+
+<script>
+    let userList = '{{userList | safe}}';
+    userList = JSON.parse(userList);
+    let userCount = Object.keys(userList).length;
+    let userCodeList = [];
+
+    for (let j = 0; j < userCount; j++) {
+        userCodeList.push(userList['user' + j].user_code);
+    };
+
+    init();
+</script>
+{% endblock %}
+<!-- ------------------------------------------------------------- -->

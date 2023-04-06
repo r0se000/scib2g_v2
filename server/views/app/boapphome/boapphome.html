@@ -1,0 +1,245 @@
+<!--================================================================
+ *  건강상태 html
+ *  @author MiYeong Jang
+ *  @since 2021.04.12.
+ *  @history 2021.04.12. 최조작성
+             2021.04.30. 예외처리(처음 페이지 로드 시 데이터 없을 경우)
+             2021.05.03. 부분별 information 버튼 & 모달 추가
+ *  ================================================================-->
+
+{% extends "templates/appmainbase.html" %} {% block head %}
+<!-- datepicker CSS -->
+<link href="/assets/node_modules/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+<link href="/assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/assets/icons/material-design-iconic-font/css/material-design-iconic-font.css">
+
+<style>
+    .table td,
+    .table th {
+        padding: 1rem 0.3rem;
+    }
+</style>{%endblock%}
+
+<!-- Content 시작 -->
+{% block contents%}
+<div class="skin-megna page-wrapper" style="padding: 0; overflow-y: scroll;">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <div class="col-sm-6">
+                <div class="card m-b-0">
+                    <h3 class="card-title" style="margin:auto; text-align: center;">현재시간</h3>
+                    <br>
+                    <p class="card-title m-t-5 h4" id="clock-target" style="margin:auto; text-align: center;"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">응급 발생</h4>
+                <h6 class="card-subtitle">확인되지 않은 응급 발생 목록입니다.</h6>
+                <div class="table-responsive">
+                    <table class="table" id="em-list-table" style="text-align: center;">
+                        <thead>
+                            <tr>
+                                <th>이름</th>
+                                <th>발생시간</th>
+                                <th>세부정보</th>
+                                <th>응급확인</th>
+                            </tr>
+                        </thead>
+                        <tbody id="em-list">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">관제 확인 응급목록</h4>
+                <h6 class="card-subtitle">조차가 완료되지 않은 응급 목록입니다.<br><br>최근 발생한 응급 목록부터 나타납니다.</h6>
+                <div class="table-responsive">
+                    <table class="table" id="check-list-table" style="text-align: center;">
+                        <thead>
+                            <tr>
+                                <th>이름</th>
+                                <th>발생시간</th>
+                                <th>세부정보</th>
+                                <th>응급확인</th>
+                            </tr>
+                        </thead>
+                        <tbody id="check-contents-list">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div style="height: 100px; margin: 5px;"></div>
+    </div>
+</div>
+<!-- 응급 세부정보 모달 -->
+<div id="em-detail" class="modal bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="longmodal" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="longmodal">세부정보</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover" id="em-detail-table" style=" text-align:center">
+                    <tbody id="emDetail">
+                        <tr>
+                            <td>성명</td>
+                            <td id="em-detail-name"></td>
+                        </tr>
+                        <tr>
+                            <td>생년월일</td>
+                            <td id="em-detail-birth"></td>
+                        </tr>
+                        <tr>
+                            <td>성별</td>
+                            <td id="em-detail-gender"></td>
+                        </tr>
+                        <tr>
+                            <td>주소</td>
+                            <td id="em-detail-address"></td>
+                        </tr>
+                        <tr>
+                            <td>보호자 연락처</td>
+                            <td id="em-detail-protector"></td>
+                        </tr>
+                        <tr>
+                            <td>응급발생 시간</td>
+                            <td id="em-detail-em-time"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div>응급 발생 시점 생체정보</div>
+                <div></div>
+                <div>
+                    <canvas id="bioinfo-chart-canvas" height="100" width="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- 조치사항 세부정보 모달 -->
+<div id="check-contents-detail" class="modal long-modal" tabindex="-1" role="dialog" aria-labelledby="longmodal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="longmodal">세부정보</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover" id="user-detail-table" style=" text-align:center">
+                    <tbody id="userlist">
+                        <tr>
+                            <td>성명</td>
+                            <td id="check-detail-name"></td>
+                        </tr>
+                        <tr>
+                            <td>생년월일</td>
+                            <td id="check-detail-birth"></td>
+                        </tr>
+                        <tr>
+                            <td>성별</td>
+                            <td id="check-detail-gender"></td>
+                        </tr>
+                        <tr>
+                            <td>응급발생 시간</td>
+                            <td id="check-detail-em-time"></td>
+                        </tr>
+                        <tr>
+                            <td>응급알림 확인 시간</td>
+                            <td id="check-detail-em-check-time"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 조치사항 입력 모달 -->
+<!-- <div id="check-contents-input" class="modal long-modal" tabindex="-1" role="dialog" aria-labelledby="longmodal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="longmodal">조치사항 입력</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover" id="user-detail-table" style=" text-align:center">
+                    <tbody id="userlist">
+                        <tr>
+                            <td>성명</td>
+                            <td id="check-name"></td>
+                        </tr>
+                        <tr>
+                            <td>생년월일</td>
+                            <td id="check-birth"></td>
+                        </tr>
+                        <tr>
+                            <td>응급발생 시간</td>
+                            <td id="check-em-time"></td>
+                        </tr>
+                        <tr>
+                            <td>응급알림 확인 시간</td>
+                            <td id="check-em-check-time"></td>
+                        </tr>
+                        <tr>
+                            <td>조치사항</td>
+                            <td id="em-check-contents">
+                                <select name="check-contents" id="check-contents">
+                                    <option value="0" selected>선택</option>
+                                    <option value="이상없음">이상없음</option>
+                                    <option value="119 연계">119 연계</option>
+                                    <option value="사망">사망</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="contents-input-btn btn btn-info waves-effect text-left">등록</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+{% endblock %} {% block script %}
+
+<!--jquery knob -->
+<!-- <script src="/assets/node_modules/knob/jquery.knob.js"></script> -->
+<script src="/assets/node_modules/moment/moment.js"></script>
+<!-- Chart JS -->
+<script src="/assets/node_modules/Chart.js/Chart.min.js"></script>
+<!-- Date Picker Plugin JavaScript -->
+<!-- <script src="/assets/node_modules/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+<script src="/assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="/assets/node_modules/bootstrap-daterangepicker/daterangepicker.js"></script> -->
+<!-- Chart JS -->
+<!-- 건강상태 차트 수정 -->
+<!-- Plugin JavaScript -->
+<script src="/javascripts/config.js"></script>
+<script src="/javascripts/commonUtil.js"></script>
+<script src="/web/boapphome/boapphome.js"></script>
+
+
+<script>
+    let pUserCode = '{{pUserCode}}',
+        usercode = '{{userCode}}',
+        emergencyList = JSON.parse('{{emergencyList | safe}}'),
+        checkList = JSON.parse('{{checkList | safe}}'),
+        emDetail = JSON.parse('{{selectEmDetail | safe}}');
+
+    init();
+</script>
+
+{% endblock %}

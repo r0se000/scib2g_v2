@@ -1,0 +1,375 @@
+body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+#allBtn{ /* 전체조회 Button */
+    float: left;
+    font-weight: bold;
+    margin-left: 10px;
+    background-color: lightgray;
+}
+#dateBtn, #nameBtn{ /* 날짜, 이름조회 Button */
+    float: left;
+    margin-left: 1px;
+}
+/* 날짜 조회 form */
+#searchDateFrm{
+    text-align: left;
+    border-color: lightgray;
+    margin-top:20px;
+    margin-bottom:20px;
+    display: none;
+}
+#state-datepicker1{
+    margin-left: 10px;
+}
+#state-datepicker1, #state-datepicker2{
+    text-align: left;
+    padding:14px;
+    width:110px;
+    min-height: 30px;
+    height: 30px;
+    
+}
+#searchDateFrm>input[type=submit]{
+    margin-left: 5px;
+    text-align:center;
+    font-size: 14px;
+    height: 30px;
+    width:55px;
+    padding:4px;
+    border-radius: 4px;
+    border:none;
+    font-weight: 500;
+    background-color: lightgray;
+}
+/* 이름 조회 form */
+#searchNameFrm{
+    display:none;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+#search_name{
+    width:85%;
+    float:left;
+    margin-top:5px;
+}
+#searchNameFrm>input[type=submit]{
+    margin-left: 5px;
+    margin-top:5px;
+    text-align: center;
+    font-size: 14px;
+    height: 30px;
+    width: 55px;
+    padding: 4px;
+    border-radius: 4px;
+    border: none;
+    font-weight: 500;
+    background-color: lightgray;
+    
+}
+.namebar{
+    text-align: left;
+}
+ul, li{
+    margin:0;
+    padding: 0;
+    list-style: none;
+}
+.p_managelist{
+    overflow: auto;
+    margin-bottom: 10px;
+}
+.p_managelist>div>li{
+    float:left;
+    text-align: center;
+    height:50px;
+    line-height: 50px;
+    border-bottom:1px solid #ddd;
+    width:15%;
+}
+.p_managelist>div>li:nth-child(4n+1){
+    width:15%;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+.p_managelist>div>li:nth-child(4n+2){
+    width:20%;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+.p_managelist>div>li:nth-child(4n+3){
+    width:40%;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+.p_managelist>div>li:nth-child(4n+4){
+    width:20%;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+
+.p_managelist_AS{
+    overflow: auto;
+    margin-bottom: 10px;
+}
+.p_managelist_AS>div>li{
+    float:left;
+    text-align: center;
+    height:50px;
+    line-height: 50px;
+    border-bottom:1px solid #ddd;
+    width:15%;
+}
+.p_managelist_AS>div>li:nth-child(3n+1){
+    width:25%;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+.p_managelist_AS>div>li:nth-child(3n+2){
+    width:25%;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+.p_managelist_AS>div>li:nth-child(3n+3){
+    width:50%;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+
+.box {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-flow: column wrap;
+    box-shadow: 0px 0px 14px 4px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+.tabset--nav {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-flow: row nowrap;
+    width: 100%;
+}
+
+.nav--item {
+    padding: 0.7em 0 0.7em 0;
+    flex-basis: 33.334%;
+    text-align: center;
+    text-transform: uppercase;
+    /* letter-spacing: 2px; */
+    font-size: 1.2em;
+    cursor: pointer;
+    /* box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.1); */
+}
+/* .tab2{
+    border-left: 1px solid #aaa;
+    border-right: 1px solid #aaa;
+} */
+.active--tab__marker {
+    height: 0.01em;
+    width: 33.334%;
+    background-color: gray;
+    position: absolute;
+    bottom: 0;
+    transition: 0.24s;
+    
+}
+.nav--item.-is--active {
+    background-color: rgb(235, 234, 234);
+    transition: 0.5s;
+}
+
+.nav--item:nth-of-type(1).-is--active ~ .active--tab__marker {
+    left: 0;
+}
+.nav--item:nth-of-type(2).-is--active ~ .active--tab__marker {
+    left: 33.334%;
+}
+.nav--item:nth-of-type(3).-is--active ~ .active--tab__marker {
+    left: 66.668%;
+}
+.tabset--content {
+    position: relative;
+    width: 300%;
+    flex-grow: 1;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    transition: 0.3s;
+}
+[data-active-tab="tab-1"] {
+    left: 0;
+}
+[data-active-tab="tab-2"] {
+    left: -100%;
+}
+[data-active-tab="tab-3"] {
+    left: -200%;
+}
+.tabset--section {
+    width: 90%;
+    /* padding-top: 10em; */
+    text-align: center;
+    /* color: white; */
+    /* letter-spacing: 0.1em; */
+}
+.tab_title{
+    font-weight: bold;
+    /* letter-spacing: 0.2em; */
+  }
+
+.tabset--section:nth-of-type(1) {
+    /* background-color: springgreen; */
+}
+.tabset--section:nth-of-type(2) {
+    /* background-color: cornflowerblue; */
+}
+.tabset--section:nth-of-type(3) {
+    /* background-color: tomato; */
+}
+
+/* 상세 정보 테이블 */
+.user-detail-table{
+    font-size: 11pt;
+    text-align: left;
+}
+.userlist>tr>td{
+    width: 200px;
+    border-bottom: 1px solid #ddd;
+}
+.userlist>tr>td:nth-child(1){
+    border-right: 1px solid #ddd;
+}
+#asContents {
+    width: 45vw;
+    height: 100px;
+  }
+
+#asContents_regi{
+    width: 80vw;
+    height: 100px;
+}
+#deleteButton {
+    position: absolute;
+    left: 0;
+  }
+  
+  .buttonContainer {
+    position: relative;
+    text-align: right;
+  }
+  
+  #buttonContainer button:not(#deleteButton) {
+    margin-left: 10px;
+  }
+
+  .buttonbar {
+    background: #fff;
+    padding: 14px 10px;
+    box-shadow: 1px 0 20px rgba(0, 0, 0, .08);
+    margin-top: 1px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+#asRegister {
+    margin-left: -70%;
+    margin-top: 15px;
+    margin-bottom: 5px;
+  }
+
+
+
+  
+  /*    ========================== test ======================= */
+
+  .form-control {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 150px;
+    margin-bottom: 10px;
+    min-height: 30px;
+    height: 30px;
+  }
+  
+  #search_name {
+    width: 150px;
+    min-height: 30px;
+    height: 30px;
+    margin-left: 10px;
+  }
+
+  
+  /*  test */
+  .form_regi {
+    display: flex;
+    align-items: center;
+  }
+  
+  #searchName_regi, #search_name_input {
+    height: 30px;
+  }
+  /*  test */
+  #state-datepicker3 {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 120px;
+    margin-bottom: 10px;
+  }
+  
+  textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+    height: 150px;
+    resize: vertical;
+    margin-bottom: 10px;
+  }
+  
+  .buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+
+
+  .user-detail-table td:nth-child(1) {
+    width: 120px;
+  }
+  
+  .user-detail-table td:nth-child(2) {
+    width: auto;
+  }

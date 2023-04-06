@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/sci_logo.png">
+    <title>Sign In</title>
+
+    <!-- page css -->
+    <link href="dist/css/pages/login-register-lock.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="dist/css/style.min.css" rel="stylesheet">
+</head>
+
+<body class="skin-default card-no-border">
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">Elite admin</p>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <section id="wrapper">
+        <div class="login-register">
+            <div class="login-box card" style="margin: auto;">
+                <div class="card-body">
+                    <form class="form-horizontal form-material" id="loginform" action="index.html">
+                        <h2 class="text-center m-b-20"><strong>독거노인 응급관리</strong></h2>
+                        <br>
+                        <h3 class="text-center m-b-20"><strong>로그인</strong></h3>
+                        <div class="form-group ">
+                            <div class="col-xs-12">
+                                <input class="form-control" type="text" id="id-input" placeholder="ID">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <input class="form-control" type="password" id="pw-input" placeholder="Password">
+                            </div>
+                        </div>
+                        <!-- <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="d-flex no-block align-items-center">
+                                    <div class="m-auto">
+                                        <a href="javascript:void(0)" id="to-recover" class="text-muted"><i class="fas fa-lock m-r-5"></i>계정관리</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="form-group text-center">
+                            <div class="col-xs-12 p-b-20">
+                                <button class="btn btn-block btn-lg btn-info btn-rounded" id="login-btn" type="button">Log In</button>
+                            </div>
+                        </div>
+                        <div class="form-group m-b-0">
+                            <div class="col-md-12">
+                                <div id="help-area" class="d-flex no-block align-items-center">
+                                    <div class="ml-auto mr-auto">
+                                        <a href="javascript:void(0)" id="find-id" class="text-muted">아이디 찾기</a>
+                                    </div>
+                                    <div class="ml-auto mr-auto">
+                                        <a href="javascript:void(0)" id="find-pw" class="text-muted">비밀번호 찾기</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group m-b-0">
+                            <div class="col-sm-12 text-center">
+                                <a href="javascript:void(0)" class="text-info m-l-5" id="signup-btn"><b>관리자 계정 추가</b></a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="/assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="/assets/node_modules/popper/popper.min.js"></script>
+    <script src="/assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/javascripts/config.js"></script>
+    <script src="/javascripts/commonUtil.js"></script>
+
+    <!--Custom JavaScript -->
+    <script src="/web/index/index.js">
+    </script>
+
+</body>
+
+</html>

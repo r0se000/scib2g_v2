@@ -1,0 +1,172 @@
+<!--================================================================
+ *  건강 현황 - 생체정보 정보 html
+ *  @author MiYeong Jang
+ *  @since 
+ *  @history 2021.05.17 JG 페이지 초기화 함수(init) 및 이벤트 핸들러 추가,
+                           페이지 번역 작업, dom element id 재지정,
+                           미사용 script, css 삭제  
+             2021.05.19 JG 사용자 이름 정보 추가
+             2021.05.20 JG 불필요한 스크립트 삭제                        
+ *  ================================================================
+  -->
+{% extends 'templates/appmainbase.html' %} {% block head %}
+<!-- Date picker plugins css -->
+<link href="../../../assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<link href="../../../assets/node_modules/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+<link href="../../../assets/node_modules/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+
+<style>
+    [class*="empty-notice"] {
+        display: none;
+        padding: 3%;
+        font-size: large;
+        color: #dcdcdc;
+    }
+</style>
+{% endblock %} {% block contents %}
+<div class="skin-megna page-wrapper" style="padding: 0px;">
+    <div class="container-fluid">
+        <div class="row page-titles" style="list-style:none;  margin-bottom:0;">
+            <div class="col ">
+                <h4 class="text-center">
+                    <i class="fas fa-notes-medical"></i>
+                    <span id="user-name-info">{{userName}}</span>{{biometricPage.pageName}}
+                </h4>
+                <hr class="m-t-24 m-b-0">
+
+
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs customtab nav-justified" role="tablist" style="text-align: center;">
+                    <li class="nav-item">
+                        <a id="tab-daily" class="nav-link active" data-toggle="tab" href="#tab-contents" role="tab">
+                            <span class="hidden-xs-down">{{tabTitle.daily}}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="tab-weekly" class="nav-link" data-toggle="tab" href="#tab-contents" role="tab">
+                            <span class="hidden-xs-down">{{tabTitle.weekly}}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="tab-monthly" class="nav-link" data-toggle="tab" href="#tab-contents" role="tab">
+                            <span class="hidden-xs-down">{{tabTitle.monthly}}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="tab-yearly" class="nav-link" data-toggle="tab" href="#tab-contents" role="tab">
+                            <span class="hidden-xs-down">{{tabTitle.yearly}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="page-titles">
+            <input type="text" class="form-control" id="biometric-datepicker" style="text-align: center;">
+        </div>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab-contents" role="tabpanel">
+                <div class="card">
+                    <h3 class="card-title" style="margin: 20px 20px 0px;">{{biometricPage.hr}}
+                        <span class="float-right">
+                            <h4>
+                                <span>{{biometricPage.avg}}</span>
+                        <span id="hr-avg">-</span>
+                        <span>{{biometricPage.hrUnit}}</span>
+                        </h4>
+                        </span>
+                    </h3>
+                    <div class="card-body">
+                        <span>{{biometricPage.hrNotice}}</span>
+                        <div class="empty-notice text-center">{{emptyData}}</div>
+                        <canvas id="hr-chart-canvas" height="100" width="200"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title" style="margin: 20px 20px 0px;">{{biometricPage.rr}}
+                        <span class="float-right">
+                            <h4>
+                                <span>{{biometricPage.avg}}</span>
+                        <span id="rr-avg">-</span>
+                        <span>{{biometricPage.rrUnit}}</span>
+                        </h4>
+                        </span>
+                    </h3>
+                    <div class="card-body">
+                        <span>{{biometricPage.rrNotice}}</span>
+                        <div class="empty-notice text-center">{{emptyData}}</div>
+                        <canvas id="rr-chart-canvas" height="100" width="200"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="card-title" style="margin: 20px 20px 0px;">{{biometricPage.sv}}
+                        <span class="float-right">
+                            <h4>
+                                <span>{{biometricPage.avg}}</span>
+                        <span id="sv-avg">-</span>
+                        <span>{{biometricPage.svUnit}}</span>
+                        </h4>
+                        </span>
+                    </h3>
+                    <div class="card-body">
+                        <span>{{biometricPage.svNotice}}</span>
+                        <div class="empty-notice text-center">{{emptyData}}</div>
+                        <canvas id="sv-chart-canvas" height="100" width="200"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="card-title" style="margin: 20px 20px 0px;">{{biometricPage.hrv}}
+                        <span class="float-right">
+                            <h4>
+                                <span>{{biometricPage.avg}}</span>
+                        <span id="hrv-avg">-</span>
+                        <span>{{biometricPage.hrvUnit}}</span>
+                        </h4>
+                        </span>
+                    </h3>
+                    <div class="card-body">
+                        <span>{{biometricPage.hrvNotice}}</span>
+                        <div class="empty-notice text-center">{{emptyData}}</div>
+                        <canvas id="hrv-chart-canvas" height="100" width="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="height: 100px; margin: 5px;"></div>
+    </div>
+</div>
+{% endblock %} {% block script %}
+<!-- Plugin JavaScript -->
+<script src="../../../assets/node_modules/moment/moment.js"></script>
+<!-- Date Picker Plugin JavaScript -->
+<script src="../../../assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="../../../assets/node_modules/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+<script src="../../../assets/node_modules/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- Chart JS -->
+<script src="../../../assets/node_modules/Chart.js/Chart.min.js"></script>
+
+<!-- Custom Script -->
+<script src="/javascripts/config.js"></script>
+<script src="/javascripts/commonUtil.js"></script>
+<script src="/web/status/js/biometric.js"></script>
+<script>
+    let userCode = '{{userCode}}';
+    let pUserCode = '{{pUserCode}}';
+    let initData = '{{biometricAvg | safe }}'
+    if (pUserCode == '') {
+        initData = {
+            "biometricAvg": {
+                'drawable': 'N'
+            }
+        };
+    } else {
+        initData = {
+            "biometricAvg": JSON.parse(initData)
+        };
+    }
+    init(initData);
+</script>
+
+{% endblock %}

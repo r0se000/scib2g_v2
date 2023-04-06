@@ -1,0 +1,175 @@
+{% extends "templates/mainbase.html" %}
+<!-- ------------------------------------------------------------- -->
+{% block style%}
+
+<link rel="stylesheet" href="/web/monitStat/monitStat.css" type="text/css"> {%endblock%}
+<!-- ------------------------------------------------------------- -->
+
+<!-- ------------------------------------------------------------- -->
+{% block contents%}
+
+<!-- 응급 발생 건수(금일/금주/금월/금년도/전체) -->
+<div class="row">
+    <div class="col-sm-31">
+        <div class="card">
+            <div class="card-body emCnt" id="emCnt_today">
+                <h3 class="card-title m-b-0" style="margin:auto; text-align: center;">금일 모니터링 발생</h3>
+                <br>
+                <p class="card-title m-t-5 h4" id="emergency-today" style="margin:auto; text-align: center;"></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-31">
+        <div class="card">
+            <div class="card-body emCnt" id="emCnt_toweek">
+                <h3 class="card-title m-b-0" style="margin:auto; text-align: center;">금주 모니터링 발생</h3>
+                <br>
+                <p class="card-title m-t-5 h4" id="emergency-toweek" style="margin:auto; text-align: center;"></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-31">
+        <div class="card">
+            <div class="card-body emCnt" id="emCnt_tomonth">
+                <h3 class="card-title m-b-0" style="margin:auto; text-align: center;">금월 모니터링 발생</h3>
+                <br>
+                <p class="card-title m-t-5 h4" id="emergency-tomonth" style="margin:auto; text-align: center;"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-31">
+        <div class="card">
+            <div class="card-body emCnt" id="emCnt_toyear">
+                <h3 class="card-title mb-1" style="margin:auto; text-align: center;">금년도 모니터링 발생</h3>
+                <br>
+                <p class="card-title m-t-5 h4" id="emergency-toyear" style="margin:auto; text-align: center;"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-31">
+        <div class="card">
+            <div class="card-body emCnt" id="emCnt_all">
+                <h3 class="card-title mb-1" style="margin:auto; text-align: center;">전체 모니터링 발생</h3>
+                <br>
+                <p class="card-title m-t-5 h4" id="emergency-all" style="margin:auto; text-align: center;"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-31">
+        <div class="card">
+            <div class="card-body pb-3" id="emCnt_dayofweek">
+                <h3 class="card-title m-b-0" style="margin:auto; text-align: center;">요일별 모니터링 발생</h3>
+                <table frame=void class="table m-b-0" style="text-align: center;">
+                    <thead>
+                        <tr>
+                            <th class="p-1">
+                                <h5 class="card-title m-b-0">월</h5>
+                                <p class="card-title h5 mb-0" id="emergency-monday"></p>
+                            </th>
+                            <th class="p-1">
+                                <h5 class="card-title m-b-0">화</h5>
+                                <p class="card-title h5 mb-0" id="emergency-tuesday"></p>
+                            </th>
+                            <th class="p-1">
+                                <h5 class="card-title m-b-0">수</h5>
+                                <p class="card-title h5 mb-0" id="emergency-wednesday"></p>
+                            </th>
+                            <th class="p-1">
+                                <h5 class="card-title m-b-0">목</h5>
+                                <p class="card-title h5 mb-0" id="emergency-thursday"></p>
+                            </th>
+                            <th class="p-1">
+                                <h5 class="card-title m-b-0">금</h5>
+                                <p class="card-title h5 mb-0" id="emergency-friday"></p>
+                            </th>
+                            <th class="p-1">
+                                <h5 class="card-title m-b-0">토</h5>
+                                <p class="card-title h5 mb-0" id="emergency-saturday"></p>
+                            </th>
+                            <th class="p-1">
+                                <h5 class="card-title m-b-0">일</h5>
+                                <p class="card-title h5 mb-0" id="emergency-sunday"></p>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+
+            <div class="card-body">
+                <h3 class="card-title m-b-0" style="margin:auto;">모니터링 발생 통계</h3>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-1">
+                    <h4 class="card-title m-b-0" style="margin:auto; text-align: center;">날짜 검색</h3>
+                </div>
+
+                <div class="col-sm-2"><input class="form-control mydatepicker" type="date" id="trip-start" minlength="4" maxlength="8"></div>
+                <div class="col-sm-2"><input class="form-control mydatepicker" type="date" id="trip-end" minlength="4" maxlength="8"></div>
+                <div class="row">
+                    <div>
+                        <select id="gender-category">
+                          <option value="none" selected> 성별 선택</option>
+                          <option value="M">남자</option>
+                          <option value="W">여자</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select id="age-category">
+                            <option value="none" selected> 나이 선택</option>
+                            <option value="age-under">60대 미만</option>
+                            <option value="age-sixty">60대</option>
+                            <option value="age-seventy">70대</option>
+                            <option value="age-eighty">80대</option>
+                            <option value="age-ninety">90대</option>
+                            <option value="age-over">100대 이상</option>
+                          </select>
+                    </div>
+                </div>
+                <div class="col-sm-1"><button class="form-control mydatepicker" id="select_date_button" onclick="showChart()">조회</button></div>
+                <div><button type="button" class="form-control mydatepicker" onClick="window.location.reload()">초기화</button></div>
+            </div>
+            <br>
+            <!-- 통계 그래프 -->
+            <div class="card-body">
+                <div id="graph-div">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+<!-- ------------------------------------------------------------- -->
+
+
+<!-- ------------------------------------------------------------- -->
+{%block script%}
+<!-- Chart JS -->
+<script src="/assets/node_modules/Chart.js/Chart.min.js"></script>
+<script type="text/javascript" src="/web/monitStat/monitStat.js"></script>
+<script>
+    let accessToken = '{{accessToken}}';
+    let userList = '{{userList | safe}}';
+    userList = JSON.parse(userList);
+    console.log(userList)
+    let userCount = Object.keys(userList).length;
+
+    emergencyCnt();
+    showChart();
+</script>
+{% endblock %}
+<!-- ------------------------------------------------------------- -->

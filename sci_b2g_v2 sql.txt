@@ -1,0 +1,512 @@
+-- --------------------------------------------------------
+-- 호스트:                          127.0.0.1
+-- 서버 버전:                        8.0.21 - MySQL Community Server - GPL
+-- 서버 OS:                        Win64
+-- HeidiSQL 버전:                  11.2.0.6213
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+-- sci_b2g_v2 데이터베이스 구조 내보내기
+CREATE DATABASE IF NOT EXISTS `sci_b2g_v2` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `sci_b2g_v2`;
+
+-- 테이블 sci_b2g_v2.address1 구조 내보내기
+CREATE TABLE IF NOT EXISTS `address1` (
+  `address1_code` int DEFAULT NULL,
+  `address1_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='주소 level 1(시/도)';
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 sci_b2g_v2.address2 구조 내보내기
+CREATE TABLE IF NOT EXISTS `address2` (
+  `address1_code` int DEFAULT NULL,
+  `address2_code` int DEFAULT NULL,
+  `address2_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='주소 level 2(시/군/구)';
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 sci_b2g_v2.as_list 구조 내보내기
+CREATE TABLE IF NOT EXISTS `as_list` (
+  `as_num` int NOT NULL AUTO_INCREMENT COMMENT 'A/S 번호(PK)',
+  `as_created_date` date NOT NULL COMMENT 'A/S 입력 날짜',
+  `as_detail` varchar(500) NOT NULL COMMENT 'A/S 조치 내용',
+  `user_code` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 고유 번호',
+  PRIMARY KEY (`as_num`),
+  KEY `fk_as_list_user_info1_idx` (`user_code`),
+  CONSTRAINT `fk_as_list_user_info1` FOREIGN KEY (`user_code`) REFERENCES `user_info` (`user_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='A/S 조치 목록 테이블';
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 sci_b2g_v2.batch_list 구조 내보내기
+CREATE TABLE IF NOT EXISTS `batch_list` (
+  `DATE` datetime NOT NULL,
+  `user_code` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 고유 번호',
+  `batch_check` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  KEY `fk_batch_list_user_info1_idx` (`user_code`),
+  CONSTRAINT `fk_batch_list_user_info1` FOREIGN KEY (`user_code`) REFERENCES `user_info` (`user_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='배치 수행 목록';
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 sci_b2g_v2.biometric_backup_data 구조 내보내기
+CREATE TABLE IF NOT EXISTS `biometric_backup_data` (
+  `user_code` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 고유 번호',
+  `hr` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '실시간 심박수',
+  `rr` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '실시간 호흡수',
+  `sv` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '실시간 심박출량',
+  `hrv` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '실시간 심박변이도',
+  `ss` mediumint DEFAULT NULL COMMENT '신호 세기',
+  `bed_state` tinyint DEFAULT NULL COMMENT '침대 상태',
+  `calibration1` mediumint DEFAULT NULL COMMENT '캘리브레이션 조정값1',
+  `calibration2` mediumint DEFAULT NULL COMMENT '캘립브레이션 조정값2',
+  `calibration3` mediumint DEFAULT NULL COMMENT '캘리브레이션 조정값3',
+  `created_time` timestamp NULL DEFAULT NULL COMMENT '생체 정보 발생 시간',
+  KEY `fk_biometric_backup_data_user_info_idx` (`user_code`,`created_time`) USING BTREE,
+  CONSTRAINT `fk_biometric_backup_data_user_info` FOREIGN KEY (`user_code`) REFERENCES `user_info` (`user_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='생체 정보 백업 테이블';
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 sci_b2g_v2.biometric_real_time 구조 내보내기
+CREATE TABLE IF NOT EXISTS `biometric_real_time` (
+  `user_code` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 고유 번호',
+  `hr` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '실시간 심박수',
+  `rr` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '실시간 호흡수',
+  `sv` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '실시간 심박출량',
+  `hrv` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '실시간 심박변이도',
+  `ss` mediumint DEFAULT NULL COMMENT '신호 세기',
+  `bed_state` tinyint DEFAULT NULL COMMENT '침대 상태',
+  `calibration1` mediumint DEFAULT NULL COMMENT '캘리브레이션 조정값1',
+  `calibration2` mediumint DEFAULT NULL COMMENT '캘립브레이션 조정값2',
+  `calibration3` mediumint DEFAULT NULL COMMENT '캘리브레이션 조정값3',
+  `created_time` timestamp NULL DEFAULT NULL COMMENT '생체 정보 발생 시간',
+  KEY `fk_biometric_real_time_user_info1_idx` (`user_code`,`created_time`) USING BTREE,
+  CONSTRAINT `fk_biometric_real_time_user_info1` FOREIGN KEY (`user_code`) REFERENCES `user_info` (`user_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='실시간 생체 정보 테이블';
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 sci_b2g_v2.emergency_check_list 구조 내보내기
+CREATE TABLE IF NOT EXISTS `emergency_check_list` (
+  `emergency_id` int NOT NULL COMMENT '응급 id',
+  `a_user_code` int DEFAULT NULL COMMENT '앱에서 확인한 담당자 코드',
+  `p_user_code` int DEFAULT NULL COMMENT '앱에서 확인한 보호자 코드',
+  `emergency_check_time` datetime NOT NULL COMMENT '앱 확인 시간'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 sci_b2g_v2.emergency_list 구조 내보내기
+CREATE TABLE IF NOT EXISTS `emergency_list` (
+  `emergency_id` int NOT NULL AUTO_INCREMENT,
+  `user_code` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '응급발생한 사용자 코드',
+  `a_user_code` int NOT NULL COMMENT '담당 공무원 코드',
+  `emergency_time` datetime DEFAULT NULL COMMENT '응급 발생 시간',
+  `emergency_web_check` datetime DEFAULT NULL COMMENT 'WEB) 응급 발생 확인 버튼 클릭한 시간',
+  `emergency_app_admin_check` datetime DEFAULT NULL COMMENT '관리자 APP) 응급 발생 확인 버튼 클릭한 시간',
+  `emergency_app_protect_check` datetime DEFAULT NULL COMMENT '보호자 APP) 응급 발생 확인 버튼 클릭한 시간',
+  `emergency_check_contents` char(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '응급알림 조치 내용',
+  `emergency_contents_time` datetime DEFAULT NULL COMMENT '응급알림 조치 입력시간',
+  `emergency_check_state` varchar(1) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT 'N' COMMENT '응급 발생 최종 확인 여부(N:미확인, Y:확인)',
+  PRIMARY KEY (`emergency_id`) USING BTREE,
+  KEY `fk_emergency_list_user_info1_idx` (`user_code`),
+  KEY `a_user_code` (`a_user_code`),
+  CONSTRAINT `fk_emergency_list_user_info1` FOREIGN KEY (`user_code`) REFERENCES `user_info` (`user_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='응급 발생 테이블';
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 sci_b2g_v2.encryption_key_info 구조 내보내기
+CREATE TABLE IF NOT EXISTS `encryption_key_info` (
+  `key_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '키 고유 id',
+  `key_string` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '암호화 키',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT '키 생성일',
+  `activate_yn` char(1) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT 'Y' COMMENT '키 활성화 여부(Y, N)',
+  PRIMARY KEY (`key_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='암호화 키 관리 테이블';
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 sci_b2g_v2.predict_data 구조 내보내기
+CREATE TABLE IF NOT EXISTS `predict_data` (
+  `user_code` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 고유 번호',
+  `created_time` date DEFAULT NULL COMMENT '배치 날짜',
+  `hr` varchar(50) DEFAULT NULL COMMENT '심박수',
+  `stress` varchar(50) DEFAULT NULL COMMENT '스트레스',
+  `slepp_index` varchar(50) DEFAULT NULL,
+  `predict_glucos` varchar(50) DEFAULT NULL,
+  `predict_high_pressure` varchar(50) DEFAULT NULL,
+  `predict_low_pressure` varchar(50) DEFAULT NULL,
+  `health_index` varchar(50) DEFAULT NULL,
+  KEY `fk_predict_data_user_info_idx` (`user_code`),
+  CONSTRAINT `fk_predict_data_user_info` FOREIGN KEY (`user_code`) REFERENCES `user_info` (`user_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='예측 데이터 테이블';
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 sci_b2g_v2.user_admin 구조 내보내기
+CREATE TABLE IF NOT EXISTS `user_admin` (
+  `a_user_code` int NOT NULL AUTO_INCREMENT COMMENT '관리자 코드',
+  `a_user_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `a_user_account_id` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `a_user_account_pw` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `a_user_phone_first` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `a_user_phone_middle` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `a_user_phone_last` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `a_user_refresh_token` varchar(220) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `a_user_access_token` varchar(220) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `a_user_provide_yn` char(1) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT 'N',
+  `a_user_registered_date` date DEFAULT NULL,
+  `a_user_login_check` char(1) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT 'N',
+  `a_user_app_token` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '앱 알림 토큰',
+  `a_user_refresh_token_app` varchar(220) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `a_user_access_token_app` varchar(220) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `a_user_address1` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '담당지역(시/도)',
+  `a_user_address2` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '담당지역(시/군/구)',
+  `a_user_email_id` varchar(100) DEFAULT NULL COMMENT '이메일 앞주소(암호화)',
+  `a_user_email_domain` varchar(45) DEFAULT NULL COMMENT '이메일 도메인주소',
+  PRIMARY KEY (`a_user_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='담당자 계정 관리 테이블';
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 sci_b2g_v2.user_info 구조 내보내기
+CREATE TABLE IF NOT EXISTS `user_info` (
+  `staff_code` int unsigned DEFAULT NULL COMMENT '담당자 code',
+  `user_code` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '사용자 고유 번호',
+  `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 이름(암호화)',
+  `birth_year` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 생년(암호화)',
+  `birth_month` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 생월(암호화)',
+  `birth_date` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 생일(암호화)',
+  `sex` char(1) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 성별(M: 남성, F: 여성)',
+  `address_1` varchar(30) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '시/도',
+  `address_2` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '시/군/구',
+  `address_3` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '상세주소(암호화)',
+  `phone_first` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '전화번호 첫째 자리(암호화)',
+  `phone_middle` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '전화번호 둘째 자리(암호화)',
+  `phone_last` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '전화번호 셋째 자리(암호화)',
+  `protector_phone_first` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '보호자 연락처 첫째자리(암호화)',
+  `protector_phone_middle` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '보호자 연락처 둘째자리(암호화)',
+  `protector_phone_last` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '보호자 연락처 셋째자리(암호화)',
+  `user_register_date` datetime NOT NULL COMMENT '사용자 등록일',
+  `user_delete_date` datetime DEFAULT NULL COMMENT '사용자 서비스 종료일',
+  `user_status` char(1) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT 'Y' COMMENT '사용자 상태(Y: 관리대상, N: 관리대상X)',
+  `user_note` varchar(500) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `note_created_date` date DEFAULT NULL,
+  PRIMARY KEY (`user_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='독거노인 정보 테이블';
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 sci_b2g_v2.user_own_sensor 구조 내보내기
+CREATE TABLE IF NOT EXISTS `user_own_sensor` (
+  `sensor_node_id` char(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '센서 고유 키',
+  `user_code` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 고유 번호',
+  `own_ssid` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '센서 연결 와이파이 이름',
+  `own_ip` varchar(45) CHARACTER SET armscii8 COLLATE armscii8_general_ci DEFAULT NULL COMMENT '센서 내부 IP',
+  UNIQUE KEY `sensor_node_id_UNIQUE` (`sensor_node_id`),
+  KEY `fk_user_own_sensor_user_info1_idx` (`user_code`),
+  CONSTRAINT `fk_user_own_sensor_user_info1` FOREIGN KEY (`user_code`) REFERENCES `user_info` (`user_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='사용자 소유 센서 정보';
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 sci_b2g_v2.user_protector 구조 내보내기
+CREATE TABLE IF NOT EXISTS `user_protector` (
+  `p_user_code` int unsigned NOT NULL AUTO_INCREMENT COMMENT '보호자 고유번호',
+  `p_user_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '보호자 이름',
+  `p_account_id` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '보호자 계정 ID',
+  `p_account_password` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '보호자 계정 비밀번호',
+  `p_login_check` char(1) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT 'N' COMMENT '보호자 로그인 여부 확인',
+  `access_token` varchar(220) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'jwt access token',
+  `refresh_token` varchar(220) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'jwt refresh token',
+  `activate_yn` char(1) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT 'Y' COMMENT '회원 상태( Y: 정상, N:탈퇴, D: 휴면)',
+  `registered_date` date DEFAULT NULL COMMENT '가입일',
+  `deactivate_date` date DEFAULT NULL COMMENT '탈퇴일',
+  `user_code` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '대상 독거노인 ID',
+  `p_phone_first` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '보호자 연락처 첫째자리',
+  `p_phone_middle` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '보호자 연락처 둘째자리',
+  `p_phone_last` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '보호자 연락처 셋째자리',
+  `p_app_token` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '앱 알림 토큰',
+  `p_provide_yn` char(1) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT 'N' COMMENT '개인정보 제 3자 동의',
+  PRIMARY KEY (`p_user_code`) USING BTREE,
+  UNIQUE KEY `user_id_UNIQUE` (`p_account_id`) USING BTREE,
+  KEY `fk_user_protector_user_info1_idx` (`user_code`),
+  CONSTRAINT `fk_user_protector_user_info1` FOREIGN KEY (`user_code`) REFERENCES `user_info` (`user_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='보호자 계정';
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 데이터 sci_b2g_v2.address1:~17 rows (대략적) 내보내기
+/*!40000 ALTER TABLE `address1` DISABLE KEYS */;
+INSERT INTO `address1` (`address1_code`, `address1_name`) VALUES
+	(1, '부산광역시'),
+	(2, '대구광역시'),
+	(3, '인천광역시'),
+	(4, '광주광역시'),
+	(5, '대전광역시'),
+	(6, '울산광역시'),
+	(7, '세종특별자치시'),
+	(8, '경기도'),
+	(9, '강원도'),
+	(10, '충청북도'),
+	(11, '충청남도'),
+	(12, '전라북도'),
+	(13, '전라남도'),
+	(14, '경상북도'),
+	(15, '경상남도'),
+	(16, '제주특별자치도'),
+	(0, '서울특별시');
+/*!40000 ALTER TABLE `address1` ENABLE KEYS */;
+
+-- 테이블 데이터 sci_b2g_v2.address2:~229 rows (대략적) 내보내기
+/*!40000 ALTER TABLE `address2` DISABLE KEYS */;
+INSERT INTO `address2` (`address1_code`, `address2_code`, `address2_name`) VALUES
+	(0, 1, '강동구'),
+	(0, 2, '강북구'),
+	(0, 3, '강서구'),
+	(0, 4, '관악구'),
+	(0, 5, '광진구'),
+	(0, 6, '구로구'),
+	(0, 7, '금천구'),
+	(0, 8, '노원구'),
+	(0, 9, '도봉구'),
+	(0, 10, '동대문구'),
+	(0, 11, '동작구'),
+	(0, 12, '마포구'),
+	(0, 13, '서대문구'),
+	(0, 14, '서초구'),
+	(0, 15, '성동구'),
+	(0, 16, '성북구'),
+	(0, 17, '송파구'),
+	(0, 18, '양천구'),
+	(0, 19, '영등포구'),
+	(0, 20, '용산구'),
+	(0, 21, '은평구'),
+	(0, 22, '종로구'),
+	(0, 23, '중구'),
+	(0, 24, '중랑구'),
+	(1, 1, '금정구'),
+	(0, 0, '강남구'),
+	(1, 2, '기장군'),
+	(1, 3, '남구'),
+	(1, 4, '동구'),
+	(1, 5, '동래구'),
+	(1, 6, '부산진구'),
+	(1, 7, '북구'),
+	(1, 8, '사상구'),
+	(1, 9, '사하구'),
+	(1, 10, '서구'),
+	(1, 11, '수영구'),
+	(1, 12, '연제구'),
+	(1, 13, '영도구'),
+	(1, 14, '중구'),
+	(1, 15, '해운대구'),
+	(1, 0, '강서구'),
+	(2, 1, '달서구'),
+	(2, 2, '달성군'),
+	(2, 3, '동구'),
+	(2, 4, '북구'),
+	(2, 5, '서구'),
+	(2, 6, '수성구'),
+	(2, 7, '중구'),
+	(2, 0, '남구'),
+	(3, 0, '강화군'),
+	(3, 1, '계양구'),
+	(3, 2, '남구'),
+	(3, 3, '남동구'),
+	(3, 4, '동구'),
+	(3, 5, '미추홀구'),
+	(3, 6, '부평구'),
+	(3, 7, '서구'),
+	(3, 8, '연수구'),
+	(3, 9, '옹진군'),
+	(3, 10, '중구'),
+	(4, 0, '광산구'),
+	(4, 1, '남구'),
+	(4, 2, '동구'),
+	(4, 3, '북구'),
+	(4, 4, '서구'),
+	(5, 0, '대덕구'),
+	(5, 1, '동구'),
+	(5, 2, '서구'),
+	(5, 3, '유성구'),
+	(5, 4, '중구'),
+	(6, 0, '남구'),
+	(6, 1, '동구'),
+	(6, 2, '북구'),
+	(6, 3, '울주군'),
+	(6, 4, '중구'),
+	(7, 0, '세종시'),
+	(8, 0, '가평군'),
+	(8, 1, '고양시'),
+	(8, 2, '과천시'),
+	(8, 3, '광명시'),
+	(8, 4, '광주시'),
+	(8, 5, '구리시'),
+	(8, 6, '군포시'),
+	(8, 7, '김포시'),
+	(8, 8, '남양주시'),
+	(8, 9, '동두천시'),
+	(8, 10, '부천시'),
+	(8, 11, '성남시'),
+	(8, 12, '수원시'),
+	(8, 13, '시흥시'),
+	(8, 14, '안산시'),
+	(8, 15, '안성시'),
+	(8, 16, '안양시'),
+	(8, 17, '양주시'),
+	(8, 18, '양평군'),
+	(8, 19, '여주시'),
+	(8, 20, '연천군'),
+	(8, 21, '오산시'),
+	(8, 22, '용인시'),
+	(8, 23, '의왕시'),
+	(8, 24, '의정부시'),
+	(8, 25, '이천시'),
+	(8, 26, '파주시'),
+	(8, 27, '평택시'),
+	(8, 28, '포천시'),
+	(8, 29, '하남시'),
+	(8, 30, '화성시'),
+	(9, 0, '강릉시'),
+	(9, 1, '고성군'),
+	(9, 2, '동해시'),
+	(9, 3, '삼척시'),
+	(9, 4, '속초시'),
+	(9, 5, '양구군'),
+	(9, 6, '양양군'),
+	(9, 7, '영월군'),
+	(9, 8, '원주시'),
+	(9, 9, '인제군'),
+	(9, 10, '정선군'),
+	(9, 11, '철원군'),
+	(9, 12, '춘천시'),
+	(9, 13, '태백시'),
+	(9, 14, '평창군'),
+	(9, 15, '홍천군'),
+	(9, 16, '화천군'),
+	(9, 17, '횡성군'),
+	(10, 0, '괴산군'),
+	(10, 1, '단양군'),
+	(10, 2, '보은군'),
+	(10, 3, '영동군'),
+	(10, 4, '옥천군'),
+	(10, 5, '음성군'),
+	(10, 6, '제천시'),
+	(10, 7, '증평군'),
+	(10, 8, '진천군'),
+	(10, 9, '청주시'),
+	(10, 10, '충주시'),
+	(11, 0, '계룡시'),
+	(11, 1, '공주시'),
+	(11, 2, '금산군'),
+	(11, 3, '논산시'),
+	(11, 4, '당진시'),
+	(11, 5, '보령시'),
+	(11, 6, '부여군'),
+	(11, 7, '서산시'),
+	(11, 8, '서천군'),
+	(11, 9, '아산시'),
+	(11, 10, '예산군'),
+	(11, 11, '천안시'),
+	(11, 12, '청양군'),
+	(11, 13, '태안군'),
+	(11, 14, '홍성군'),
+	(12, 0, '고창군'),
+	(12, 1, '군산시'),
+	(12, 2, '김제시'),
+	(12, 3, '남원시'),
+	(12, 4, '무주군'),
+	(12, 5, '부안군'),
+	(12, 6, '순창군'),
+	(12, 7, '완주군'),
+	(12, 8, '익산시'),
+	(12, 9, '임실군'),
+	(12, 10, '장수군'),
+	(12, 11, '전주시'),
+	(12, 12, '정읍시'),
+	(12, 13, '진안군'),
+	(13, 0, '강진군'),
+	(13, 1, '고흥군'),
+	(13, 2, '곡성군'),
+	(13, 3, '광양시'),
+	(13, 4, '구례군'),
+	(13, 5, '나주시'),
+	(13, 6, '담양군'),
+	(13, 7, '목포시'),
+	(13, 8, '무안군'),
+	(13, 9, '보성군'),
+	(13, 10, '순천시'),
+	(13, 11, '신안군'),
+	(13, 12, '여수시'),
+	(13, 13, '영광군'),
+	(13, 14, '영암군'),
+	(13, 15, '완도군'),
+	(13, 16, '장성군'),
+	(13, 17, '장흥군'),
+	(13, 18, '진도군'),
+	(13, 19, '함평군'),
+	(13, 20, '해남군'),
+	(13, 21, '화순군'),
+	(14, 0, '경산시'),
+	(14, 1, '경주시'),
+	(14, 2, '고령군'),
+	(14, 3, '구미시'),
+	(14, 4, '군위군'),
+	(14, 5, '김천시'),
+	(14, 6, '문경시'),
+	(14, 7, '봉화군'),
+	(14, 8, '상주시'),
+	(14, 9, '성주군'),
+	(14, 10, '안동시'),
+	(14, 11, '영덕군'),
+	(14, 12, '영양군'),
+	(14, 13, '영주시'),
+	(14, 14, '영천시'),
+	(14, 15, '울릉군'),
+	(14, 16, '울진군'),
+	(14, 17, '의성군'),
+	(14, 18, '청도군'),
+	(14, 19, '청송군'),
+	(14, 20, '칠곡군'),
+	(14, 21, '포항시'),
+	(15, 0, '거제시'),
+	(15, 1, '거창군'),
+	(15, 2, '고성군'),
+	(15, 3, '김해시'),
+	(15, 4, '남해군'),
+	(15, 5, '밀양시'),
+	(15, 6, '사천시'),
+	(15, 7, '산청군'),
+	(15, 8, '양산시'),
+	(15, 9, '의령군'),
+	(15, 10, '진주시'),
+	(15, 11, '창녕군'),
+	(15, 12, '창원시'),
+	(15, 13, '통영시'),
+	(15, 14, '하동군'),
+	(15, 15, '함안군'),
+	(15, 16, '함양군'),
+	(15, 17, '합천군'),
+	(16, 0, '서귀포시'),
+	(16, 1, '제주시');
+/*!40000 ALTER TABLE `address2` ENABLE KEYS */;
+
+
+-- 테이블 데이터 sci_b2g_v2.encryption_key_info:~0 rows (대략적) 내보내기
+/*!40000 ALTER TABLE `encryption_key_info` DISABLE KEYS */;
+INSERT INTO `encryption_key_info` (`key_id`, `key_string`, `created_date`, `activate_yn`) VALUES
+	(1, '_Cause_8-bit_life_is_so_simple__', '2023-03-20 15:51:57', 'Y');
+
+

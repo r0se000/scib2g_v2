@@ -1,0 +1,5 @@
+* emergency_list 테이블 컬럼 추가
+  =>emergency_contents_time: 응급알림 조치 입력시간
+
+* emergency_check_list 테이블 추가
+  => 앱 알림 확인한 공무원 및 보호자 저장 테이블

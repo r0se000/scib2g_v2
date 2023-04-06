@@ -1,0 +1,176 @@
+<!--================================================================
+ *  응급 발생 조회.html
+ *  @author SeYun Park
+ *  @since 2022.11.03.
+ *  @history 2022.11.03. 최조작성
+ *  ================================================================-->
+{% extends "templates/appmainbase.html" %} {% block head %}
+<!-- datepicker CSS -->
+<link
+  href="/assets/node_modules/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
+  rel="stylesheet"
+/>
+<link
+  href="/assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.css"
+  rel="stylesheet"
+  type="text/css"
+/>
+<link
+  rel="stylesheet"
+  href="/assets/icons/material-design-iconic-font/css/material-design-iconic-font.css"
+/>
+<link
+  rel="stylesheet"
+  href="/web/statistics/emergencylist.css"
+  type="text/css"
+/>
+{%endblock%}
+
+<!-- Content 시작 -->
+{% block contents%}
+<style></style>
+<div class="skin-megna page-wrapper" style="padding: 0; overflow-y: scroll">
+  <div class="container-fluid">
+    <div class="row page-titles">
+      <button id="allBtn" class="btn btn-outline-secondary">
+        {{emergencyPage.selectAll}}
+      </button>
+      <button id="dateBtn" class="btn btn-outline-secondary">
+        {{emergencyPage.selectDate}}
+      </button>
+      <button id="nameBtn" class="btn btn-outline-secondary">
+        {{emergencyPage.selectName}}
+      </button>
+
+      <div class="col-md-6" style="font-size: large; text-align: center">
+        <form method="post" action="/searchDate" id="searchDateFrm">
+          <input
+            type="hidden"
+            name="userCode"
+            id="userCode"
+            value="{{userCode}}"
+          />
+          <input
+            type="text"
+            class="form-control"
+            name="date1"
+            id="state-datepicker1"
+            placeholder="{{emergencyPage.placeholder_start}}"
+          />
+          &nbsp;-&nbsp;
+          <input
+            type="text"
+            class="form-control"
+            name="date2"
+            id="state-datepicker2"
+            placeholder="{{emergencyPage.placeholder_end}}"
+            readonly
+          />
+          <input type="submit" value="{{emergencyPage.search}}" />
+        </form>
+        <form method="get" action="/searchName" id="searchNameFrm">
+          <input type="hidden" name="userCode" value="{{userCode}}" />
+          <input
+            type="text"
+            class="form-control"
+            name="name"
+            id="search_name"
+            placeholder="{{emergencyPage.placeholder_name}}"
+          />
+          <input type="submit" value="{{emergencyPage.search}}" />
+        </form>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <ul id="emergencylist">
+          <li>{{emergencyPage.num}}</li>
+          <li>{{emergencyPage.name}}</li>
+          <li>{{emergencyPage.eTime1}}</li>
+          <li>{{emergencyPage.eContent}}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 응급 세부정보 모달 -->
+    <div
+      id="em-detail"
+      class="modal bs-example-modal-lg"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="longmodal"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="longmodal">
+              {{emergencyPage.detailInfo}}
+            </h4>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-hidden="true"
+            >
+              ×
+            </button>
+          </div>
+          <div class="modal-body h4">
+            <table class="table table-hover" id="user-detail-table">
+              <tbody id="userlist">
+                <tr>
+                  <td>{{emergencyPage.num}}</td>
+                  <td id="user_code"></td>
+                </tr>
+                <tr>
+                  <td>{{emergencyPage.name}}</td>
+                  <td id="userName"></td>
+                </tr>
+                <tr>
+                  <td>{{emergencyPage.birth}}</td>
+                  <td id="userBirth"></td>
+                </tr>
+                <tr>
+                  <td>{{emergencyPage.address}}</td>
+                  <td id="userAddress"></td>
+                </tr>
+                <tr>
+                  <td>{{emergencyPage.user_phone}}</td>
+                  <td id="userPhone"></td>
+                </tr>
+                <tr>
+                  <td>{{emergencyPage.protector_phone}}</td>
+                  <td id="protectorPhone"></td>
+                </tr>
+                <tr>
+                  <td>{{emergencyPage.eTime1}}</td>
+                  <td id="eTime1"></td>
+                </tr>
+                <tr>
+                  <td>{{emergencyPage.eTime2}}</td>
+                  <td id="eTime2"></td>
+                </tr>
+                <tr>
+                  <td>{{emergencyPage.eContent}}</td>
+                  <td id="eContent"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block script %}
+<!--jquery knob -->
+<script src="/assets/node_modules/moment/moment.js"></script>
+<!-- Date Picker Plugin JavaScript -->
+<script src="/assets/node_modules/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+<script src="/assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="/assets/node_modules/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="/web/statistics/emergencylist.js"></script>
+<script src="/javascripts/commonUtil.js"></script>
+
+{% endblock %}

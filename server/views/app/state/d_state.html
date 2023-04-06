@@ -1,0 +1,97 @@
+<!--================================================================
+ *  건강상태 html
+ *  @author MiYeong Jang
+ *  @since 2021.04.12.
+ *  @history 2021.04.12. 최조작성
+             2021.04.30. 예외처리(처음 페이지 로드 시 데이터 없을 경우)
+             2021.05.03. 부분별 information 버튼 & 모달 추가
+ *  ================================================================-->
+
+{% extends "templates/p_appmainbase.html" %} {% block head %}
+<!-- datepicker CSS -->
+<link href="/assets/node_modules/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+<link href="/assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/assets/icons/material-design-iconic-font/css/material-design-iconic-font.css">{%endblock%}
+
+<!-- Content 시작 -->
+{% block contents%}
+<div class="skin-megna page-wrapper" style="padding: 0; overflow-y: scroll;">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <div class="col-md-6" style="font-size: large; text-align: center;">
+                <h3 class="col text-center" style="margin: 0 10px 10px 10px; padding: 5px;">
+                    <i class="fas fa-notes-medical"></i>
+                    <span id="user-name-info">{{userName}}</span>{{statePage.pageName}}
+                </h3>
+            </div>
+
+            <input type="text" class="form-control" id="state-datepicker" style="font-size:20px; text-align: center; padding-top: 14px;">
+            <!-- datepicker 수정: public>assets>node_modules>bootstrap-material-datetimepicker>js>bootstrap-material-datetimepicker.js -->
+        </div>
+
+        <!-- 질병 -->
+        <div class="card">
+            <div class="card-title h3 m-2">
+                <img src="/images/icon/new_menu_emergency.png" width="30px" alt=""><span> {{statePage.cardList1}}</span>
+                <span><button id="ref-btn" class="float-right btn waves-effect waves-light btn-secondary">새로고침</button></span>
+            </div>
+            <div class="card-body" id="d_simple" style="list-style:none; display:block;">
+                <h3 class="m-b-0 row">
+                    <div class="col-4" style="text-align: center; font-weight: bold;">당뇨</div>
+                    <!-- <div class="col-3" id="dpercent">-%</div> -->
+                    <div class="col-5" id="dlevel"></div>
+                </h3>
+                <hr>
+                <h3 class="m-b-0 row">
+                    <div class="col-4" style="text-align: center; font-weight: bold;">혈압</div>
+                    <!-- <div class="col-3" id="hpercent">-%</div> -->
+                    <div class="col-5" id="hlevel"></div>
+                </h3>
+                <hr>
+                <h3 class="m-b-0 row">
+                    <div class="col-4" style="text-align: center; font-weight: bold;">부정맥</div>
+                    <!-- <div class="col-3" id="apercent">-%</div> -->
+                    <div class="col-5" id="alevel"></div>
+                </h3>
+                <br>
+            </div>
+        </div>
+        <!-- <div style="height: 100px; margin: 5px;"></div> -->
+    </div>
+</div>
+
+{% endblock %} {% block script %}
+
+<!--jquery knob -->
+<script src="/assets/node_modules/knob/jquery.knob.js"></script>
+<script src="/assets/node_modules/moment/moment.js"></script>
+<!-- Date Picker Plugin JavaScript -->
+<script src="/assets/node_modules/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+<script src="/assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="/assets/node_modules/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- Chart JS -->
+<!-- 건강상태 차트 수정 -->
+<script src="/web/state/js/state-chart.js"></script>
+<script src="/assets/node_modules/Chart.js/Chart.min.js"></script>
+<!-- Plugin JavaScript -->
+<script src="/javascripts/config.js"></script>
+<script src="/javascripts/commonUtil.js"></script>
+<script src="/web/state/js/d_state.js"></script>
+
+
+<script>
+    let usercode = '{{userCode}}',
+        stateData = '{{stateData|safe}}';
+    stateData = JSON.parse(stateData)
+    let normal = '{{statePage.normal}}',
+        great = '{{statePage.great}}',
+        bad = '{{statePage.bad}}';
+
+    $('#ref-btn').on('click', function() {
+        location.href = baseUrl + "/state/d_state/" + usercode
+    })
+
+    init()
+</script>
+
+{% endblock %}

@@ -1,0 +1,182 @@
+{% extends "templates/mainbase.html" %}
+
+<!-- ------------------------------------------------------------- -->
+{% block style%}
+<!--style 작성 -->
+<style>
+    .col-sm-31 {
+        flex: 0 0 19%;
+        max-width: 19%;
+        margin: 8px;
+    }
+</style>
+{%endblock%}
+<!-- ------------------------------------------------------------- -->
+
+<!-- ------------------------------------------------------------- -->
+{% block contents%}
+<!--html 작성 -->
+<div class="row">
+    <div class="col-sm-31">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title m-b-0" style="margin:auto; text-align: center;">금일 모니터링 발생</h3>
+                <br>
+                <p class="card-title m-t-5 h4" id="emergency-today" style="margin:auto; text-align: center;"></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-31">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title m-b-0" style="margin:auto; text-align: center;">금주 모니터링 발생</h3>
+                <br>
+                <p class="card-title m-t-5 h4" id="emergency-toweek" style="margin:auto; text-align: center;"></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-31">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title m-b-0" style="margin:auto; text-align: center;">금월 모니터링 발생</h3>
+                <br>
+                <p class="card-title m-t-5 h4" id="emergency-tomonth" style="margin:auto; text-align: center;"></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-31">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title m-b-0" style="margin:auto; text-align: center;">금년 모니터링 발생</h3>
+                <br>
+                <p class="card-title m-t-5 h4" id="emergency-toyear" style="margin:auto; text-align: center;"></p>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="col-sm-31">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title m-b-0" style="margin:auto; text-align: center;">전체 모니터링 발생</h3>
+                <br>
+                <p class="card-title m-t-5 h4" id="emergency-all" style="margin:auto; text-align: center;"></p>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title m-b-0" style="margin:auto;">모니터링 발생 조회</h3>
+            </div>
+            <div class="row">
+                <div class="col-sm-1">
+                    <h4 class="card-title m-b-0" style="margin:auto; text-align: center;">날짜 검색</h3>
+                </div>
+                <div class="col-sm-2"> <input class="form-control mydatepicker" type="date" id="trip-start" minlength="4" maxlength="8"></div>
+                <div class="col-sm-2"> <input class="form-control mydatepicker" type="date" id="trip-end" minlength="4" maxlength="8"></div>
+                <div class="col-sm-1"> <button class="form-control mydatepicker" id="select_date_button">조회</button></div>
+                <div class="col-sm-1">
+                    <h4 class="card-title m-b-0" style="margin:auto; text-align: center;">이름 검색</h3>
+                </div>
+
+                <div class="col-sm-2">
+                    <input type="text" id="sta-find-name-input" name="name" class="form-control" placeholder="이름을 입력하세요">
+                </div>
+                <div class="col-sm-3 row">
+                    <div class="col-sm-3"><button type="button" class="sta-find-btn form-control mydatepicker">조회</button></div>
+                    <div class="col-sm-3"><button class="form-control mydatepicker" id="excelDownload">다운로드</button></div>
+                </div>
+            </div>
+            <p class="text-muted"></p>
+            <div class="table-responsive">
+                <table class="table table-hover h4" id="user-table" style="text-align:center">
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>성명</th>
+                            <!-- <th>담당 공무원</th> -->
+                            <th>모니터링 발생 시간</th>
+                            <th>모니터링 발생 확인 시간</th>
+                            <th>모니터링 발생 내용</th>
+                            <th>모니터링 발생 조치 소요 시간</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userlist">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="st-em-detail" class="modal bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myLargeModalLabel">모니터링 확인 내역</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+
+            <div class="modal-body" id='user-detail'>
+                <div class="row">
+                    <div class="col-sm-10"></div>
+                    <div class="col-sm-2"> <button type="button" class="form-control mydatepicker" id="emDetailDownload">다운로드</button></div>
+                </div>
+                <br>
+                <table class="table table-hover h4" id="user-detail-table" style=" text-align:center">
+                    <thead>
+                        <tr>
+                            <th>모니터링 번호</th>
+                            <th>분류</th>
+                            <th>이름</th>
+                            <th>모니터링 발생 시간</th>
+                            <th>모니터링 확인 시간</th>
+                        </tr>
+                    </thead>
+                    <tbody id="em-detail-list">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+<!-- ------------------------------------------------------------- -->
+
+<!-- ------------------------------------------------------------- -->
+{%block script%}
+
+<!--script 작성 -->
+<script type="text/javascript" src="/web/monitList/monitList.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+<script>
+    let accessToken = '{{accessToken}}';
+    let userList = '{{userList | safe}}';
+    userList = JSON.parse(userList);
+    let userCount = Object.keys(userList).length;
+
+    init();
+    emergencyCnt();
+
+    $('#user-table').delegate('tr', 'click', function() {
+        let tdArr = new Array()
+        let tr = $(this);
+        let td = tr.children();
+        td.each(function(i) {
+            tdArr.push(td.eq(i).text());
+        });
+        let emergency_code = parseInt(tdArr[0])
+        movePage(emergency_code);
+    });
+</script>
+
+{% endblock %}
+<!-- ------------------------------------------------------------- -->

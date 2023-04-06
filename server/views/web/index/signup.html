@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/sci_logo.png">
+    <title>관리자 등록</title>
+
+    <!-- page css -->
+    <link href="/dist/css/pages/login-register-lock.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/dist/css/style.min.css" rel="stylesheet">
+
+    <style>
+        .active-notice,
+        .bytes-check {
+            margin-top: 0.7em;
+            margin-bottom: 0;
+            font-size: 9pt;
+        }
+        
+        .deactive-notice {
+            display: none;
+        }
+        /* .notice-area {
+            flex-direction: row-reverse;
+        } */
+    </style>
+</head>
+
+<body class="skin-default card-no-border">
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">Load..</p>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <section id="wrapper">
+        <div class="login-register pt-5">
+            <div class="login-box card" style="margin: auto;">
+                <div class="card-body">
+                    <form class="form-horizontal form-material" id="loginform">
+                        <h3 class="text-center m-b-20"><strong>관리자 등록</strong></h3>
+                        <div class="form-group mb-3">
+                            <div class="input-group">
+                                <input id="name-input" name="name" class="form-control" type="text" placeholder="사용자 이름" aria-describedby="name-notice">
+                            </div>
+                            <div class="row notice-area pl-3">
+                                <p id="name-notice" class="deactive-notice form-control-feedback">이름을 2~8자로 입력해 주세요.</p>
+                                <p class="bytes-check ml-2 mr-2"></p>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <div class="input-group">
+                                <input id="id-input" name="id" class="form-control" type="text" placeholder="ID" aria-describedby="id-notice">
+                            </div>
+                            <div class="row notice-area pl-3">
+                                <p id="id-dupl-notice" class="deactive-notice form-control-feedback">중복된 아이디 입니다.</p>
+                                <p id="id-notice" class="deactive-notice form-control-feedback">5자리 이상 20자 이하 영문, 숫자를 조합하여 입력하세요.</p>
+                                <p class="bytes-check ml-2 mr-2"></p>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <div class="input-group">
+                                <input id="pwd-input" name="pwd" type="password" class="form-control" placeholder="비밀번호" aria-describedby="pwd-notice">
+                            </div>
+                            <div class="row notice-area pl-3">
+                                <p id="pwd-notice" class="deactive-notice form-control-feedback">9자리 이상 16자리 이하의 영문, 숫자, 특수문자로 구성해 주세요.<br> 특수문자는 $ @ ! % * # ? & 만 사용 가능합니다.</p>
+                                <p class="bytes-check ml-2 mr-2"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <div class="input-group">
+                                <input id="pwd-confirm-input" name="pwd-confirm" type="password" class="form-control" placeholder="비밀번호 확인" aria-describedby="pwd-notice">
+                            </div>
+                            <div class="row notice-area pl-3">
+                                <p id="pwd-confirm-notice" class="deactive-notice form-control-feedback">비밀번호가 일치하지 않습니다.
+                                </p>
+                                <p class="bytes-check ml-2 mr-2"></p>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="phonenumber">연락처</label>
+                            <div class="input-group">
+                                <input type="number" id="phone1" name="phone1" class="form-control" placeholder="" aria-label="phonenumber" aria-describedby="phone1">
+                                <p class="ml-2 mr-2 mt-2"> - </p>
+                                <input type="number" id="phone2" name="phone2" class="form-control" placeholder="" aria-label="phonenumber" aria-describedby="phone2">
+                                <p class="ml-2 mr-2 mt-2"> - </p>
+                                <input type="number" id="phone3" name="phone3" class="form-control" placeholder="" aria-label="phonenumber" aria-describedby="phone3">
+                            </div>
+                            <div class="row notice-area pl-3">
+                                <p id="phone-notice" class="deactive-notice form-control-feedback">올바른 형식을 입력해 주세요.</p>
+                                <p class="bytes-check ml-2 mr-2"></p>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label id="label-email" for="email-input">이메일</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="email-confirm"><i class="ti-email"></i></span>
+                                </div>
+                                <input id="email-input" name="eId" type="text" class="form-control" placeholder="이메일 아이디" aria-describedby="">
+                                <span class="ml-1 mr-1 mt-2">@</span>
+                                <input id="email-input2" name="eDomain" type="text" class="form-control" placeholder="도메인" aria-describedby="">
+                            </div>
+                            <div class="row notice-area" style="justify-content: space-around;">
+                                <p id="email-bytes2" class="bytes-check"></p>
+                                <p id="email-bytes1" class="bytes-check"></p>
+                            </div>
+                            <p id="email-notice2" class="active-notice form-control-feedback text-right"></p>
+                            <p id="email-notice" class="active-notice form-control-feedback text-info">이메일을 통해 ID, PW 찾기가 가능하므로 정확하게 입력해 주세요.</p>
+                        </div>
+
+                        <!--2022.02.04. 담당지역 추가-->
+                        <div class="form-group" id="address-area">
+                            <label class="" id="label-birthday">담당지역</label>
+                            <p id="address-notice" class="active-notice text-info col-sm-12 m-2"><span></span></p>
+                            <div class="col-md-12 row">
+                                <div class="col-md-5">
+                                    <select id="address1-input" name="address1" class="form-control" placeholder="시/도 선택" onchange=addressSet(this.value)>
+                                        <option>시/도</option>
+                                        <option value="00">서울특별시</option>
+                                        <option value="01">부산광역시</option>
+                                        <option value="02">대구광역시</option>
+                                        <option value="03">인천광역시</option>
+                                        <option value="04">광주광역시</option>
+                                        <option value="05">대전광역시</option>
+                                        <option value="06">울산광역시</option>
+                                        <option value="07">세종특별자치시</option>
+                                        <option value="08">경기도</option>
+                                        <option value="09">강원도</option>
+                                        <option value="10">충청북도</option>
+                                        <option value="11">충청남도</option>
+                                        <option value="12">전라북도</option>
+                                        <option value="13">전라남도</option>
+                                        <option value="14">경상북도</option>
+                                        <option value="15">경상남도</option>
+                                        <option value="16">제주특별자치도</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-7">
+                                    <select id="address2-input" name="address2" class="form-control notval">
+                                        <option>시/군/구</option>
+                                    </select>
+                                </div>
+                                <p id="address1-notice" class="deactive-notice text-danger col-sm-12">담당 지역을 선택해주세요.</p>
+                            </div>
+                        </div>
+                        <!--2022.02.04. 담당지역 추가 끝-->
+
+
+                        <div class="form-group">
+                            <label id="label-ToS">약관 동의</label>
+                            <div class="card-body" style="background-color:#edf1f5; border-radius:5px; border-color:#edf1f5">
+                                <label class="custom-control custom-checkbox m-b-0">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span id="all-requirements" class="custom-control-label">필수항목 모두 동의하기</span>
+                                </label>
+                                <div class="terms-of-service-area ml-4 mt-2">
+                                    <div class="row" style="justify-content: space-between;">
+                                        <label class="custom-control custom-checkbox m-b-0">
+                                            <input id="b2g-ToS-chk" type="checkbox" class="custom-control-input">
+                                            <span id="b2g-tos-span" class="custom-control-label">B2G 서비스 이용약관 동의[필수]</span>
+                                        </label>
+                                        <span id="detail-tos" class="view-detail-modal text-muted mr-2" data-toggle="modal" data-target="#b2g-tos-modal" style="cursor: pointer;" onclick="showModal('detail-tos');">보기</span>
+                                    </div>
+                                    <div class="row" style="justify-content: space-between;">
+                                        <label class="custom-control custom-checkbox m-b-0">
+                                            <input id="private-policy-chk" type="checkbox" class="custom-control-input">
+                                            <span id="private-span" class="custom-control-label">개인정보 수집 이용 동의[필수]</span>
+                                        </label>
+                                        <span id="detail-private" class="view-detail-modal text-muted mr-2" data-toggle="modal" data-target="#b2g-tos-modal" style="cursor: pointer;" onclick="showModal('detail-private');">보기</span>
+                                    </div>
+                                    <div class="row" style="justify-content: space-between;">
+                                        <label class="custom-control custom-checkbox m-b-0">
+                                            <input id="provide-ToS-chk" type="checkbox" class="custom-control-input">
+                                            <span id="provide-span" class="custom-control-label">개인정보 제3자 제공 동의</span>
+                                        </label>
+                                        <span id="detail-provide" class="view-detail-modal text-muted mr-2" data-toggle="modal" data-target="#b2g-tos-modal" style="cursor: pointer;" onclick="showModal('detail-provide');">보기</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group text-center p-b-20">
+                            <div class="col-xs-12">
+                                <button class="btn btn-info btn-lg btn-block btn-rounded text-uppercase waves-effect waves-light" id="submit-btn" type="button">관리자 등록</button>
+                            </div>
+                        </div>
+                        <div class="form-group m-b-0">
+                            <div class="col-sm-12 text-center">
+                                <a href="javascript:void(0)" class="text-info m-l-5" id="signIn-btn"><b>로그인</b></a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- 이용약관 모달창 -->
+        <div class="modal fade" id="b2g-tos-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="tos-title">title</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <textarea style="text-align: left; font-weight: 500; border: none; width:100%; height:400px;" id="tos-contents">테스트님의 상세정보</textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info" data-dismiss="modal">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+
+    <script src="/assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="/assets/node_modules/popper/popper.min.js"></script>
+    <script src="/assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/javascripts/config.js"></script>
+    <script src="/javascripts/commonUtil.js"></script>
+    <script src="/web/index/signup.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $(".preloader").fadeOut();
+        });
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+        // ============================================================== 
+        // Login and Recover Password 
+        // ============================================================== 
+        $('#signIn-btn').on('click', function() {
+            window.location = baseUrl
+        })
+    </script>
+    <!-- 2022.02.04. 담당지역 추가 -->
+    <script>
+        function addressSet(value) {
+
+            let seoul = ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"]
+            let busan = ["강서구", "금정구", "기장군", "남구", "동구", "동래구", "부산진구", "북구", "사상구", "사하구", "서구", "수영구", "연제구", "영도구", "중구", "해운대구"]
+            let daegu = ["남구", "달서구", "달성군", "동구", "북구", "서구", "수성구", "중구"]
+            let incheon = ["강화군", "계양구", "남구", "남동구", "동구", "미추홀구", "부평구", "서구", "연수구", "옹진군", "중구"]
+            let gwangju = ["광산구", "남구", "동구", "북구", "서구"]
+            let daejeon = ["대덕구", "동구", "서구", "유성구", "중구"]
+            let ulsan = ["남구", "동구", "북구", "울주군", "중구"]
+            let sejong = ["세종시"]
+            let gyeonggi = ["가평군", "고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시", "남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시", "안양시", "양주시", "양평군", "여주시", "연천군", "오산시", "용인시", "의왕시", "의정부시", "이천시", "파주시", "평택시", "포천시", "하남시", "화성시"]
+            let gangwon = ["강릉시", "고성군", "동해시", "삼척시", "속초시", "양구군", "양양군", "영월군", "원주시", "인제군", "정선군", "철원군", "춘천시", "태백시", "평창군", "홍천군", "화천군", "횡성군"]
+            let chungbuk = ["괴산군", "단양군", "보은군", "영동군", "옥천군", "음성군", "제천시", "증평군", "진천군", "청주시", "충주시"]
+            let chungnam = ["계룡시", "공주시", "금산군", "논산시", "당진시", "보령시", "부여군", "서산시", "서천군", "아산시", "예산군", "천안시", "청양군", "태안군", "홍성군"]
+            let jeonbuk = ["고창군", "군산시", "김제시", "남원시", "무주군", "부안군", "순창군", "완주군", "익산시", "임실군", "장수군", "전주시", "정읍시", "진안군"]
+            let jeonnam = ["강진군", "고흥군", "곡성군", "광양시", "구례군", "나주시", "담양군", "목포시", "무안군", "보성군", "순천시", "신안군", "여수시", "영광군", "영암군", "완도군", "장성군", "장흥군", "진도군", "함평군", "해남군", "화순군"]
+            let gyeongbuk = ["경산시", "경주시", "고령군", "구미시", "군위군", "김천시", "문경시", "봉화군", "상주시", "성주군", "안동시", "영덕군", "영양군", "영주시", "영천시", "울릉군", "울진군", "의성군", "청도군", "청송군", "칠곡군", "포항시"]
+            let gyeongnam = ["거제시", "거창군", "고성군", "김해시", "남해군", "밀양시", "사천시", "산청군", "양산시", "의령군", "진주시", "창녕군", "창원시", "통영시", "하동군", "함안군", "함양군", "합천군"]
+            let jeju = ["서귀포시", "제주시"]
+            let target = document.getElementById("address2-input");
+            let data
+
+            for (i = target.length - 1; i >= 0; i--) {
+                target.options[i] = null
+            }
+
+            if (value == "00") data = seoul
+            else if (value == "01") data = busan
+            else if (value == "02") data = daegu
+            else if (value == "03") data = incheon
+            else if (value == "04") data = gwangju
+            else if (value == "05") data = daejeon
+            else if (value == "06") data = ulsan
+            else if (value == "07") data = sejong
+            else if (value == "08") data = gyeonggi
+            else if (value == "09") data = gangwon
+            else if (value == "10") data = chungbuk
+            else if (value == "11") data = chungnam
+            else if (value == "12") data = jeonbuk
+            else if (value == "13") data = jeonnam
+            else if (value == "14") data = gyeongbuk
+            else if (value == "15") data = gyeongnam
+            else if (value == "16") data = jeju
+
+
+            for (x in data) {
+                var opt = document.createElement("option");
+                let value
+                if (x < 10) {
+                    value = "0" + x
+                } else {
+                    value = x
+                }
+                opt.value = value;
+                opt.innerHTML = data[x];
+                target.appendChild(opt);
+            }
+        }
+    </script>
+    <!-- 2022.02.04. 담당지역 추가 끝 -->
+</body>
+
+</html>

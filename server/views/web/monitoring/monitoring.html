@@ -1,0 +1,225 @@
+{% extends "templates/mainbase.html" %} {% block contents%}
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title m-b-0" style="margin:auto; text-align: center;">현재시간</h3>
+                <br>
+                <p class="card-title m-t-5 h4" id="clock-target" style="margin:auto; text-align: center;"></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body" id="batch-list">
+                <h3 class="card-title m-b-0" style="margin:auto; text-align: center;">배치 작업 수행 여부</h3>
+                <br>
+                <p class="card-title m-t-5 h4" id="today-batch-check" style="margin:auto; text-align: center;"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title m-b-0" style="margin:auto;">최근 응급 발생 목록</h3>
+                <h5 class="card-title m-b-0" style="margin:auto;">전날 00:00AM ~ 현재시간</h5>
+            </div>
+            <p class="text-muted"></p>
+            <div class="table-responsive">
+                <table class="table table-hover h4" id="user-table" style="text-align:center">
+                    <thead>
+                        <tr>
+                            <th>응급 번호</th>
+                            <th>성명</th>
+                            <th>응급 발생 시간</th>
+                            <th>응급 발생 확인 시간</th>
+                            <th>응급 발생 내용</th>
+                            <th>응급 발생 조치 소요 시간</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userlist">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title m-b-0" style="margin:auto;">독거노인 센서 상태</h3>
+                <p class="text-muted"></p>
+                <div class="table-responsive">
+                    <table class="table table-hover h4" id="user-monitoring" style="text-align:center">
+                        <thead class="h4">
+                            <tr>
+                                <th>독거노인 번호</th>
+                                <th>성명</th>
+                                <th>생년월일</th>
+                                <th>주소</th>
+                                <th>센서 상태</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-list-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="batch-detail" class="modal bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myLargeModalLabel">배치 작업 수행 목록</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="row">
+                <div class="col-sm-2"><input class="form-control mydatepicker" type="date" id="trip-start" minlength="4" maxlength="8"></div>
+                <div class="col-sm-1"> <button class="form-control mydatepicker" id="select_date_button">조회</button></div>
+            </div>
+            <div class="modal-body" id='batch-detail'>
+                <br>
+                <table class="table table-hover h4" id="user-batch-table" style=" text-align:center">
+                    <thead>
+                        <tr>
+                            <th>독거노인 번호</th>
+                            <th>이름</th>
+                            <th>배치 수행 여부</th>
+                            <th>배치 수행 시간</th>
+                            <th>특이 사항</th>
+                        </tr>
+                    </thead>
+                    <tbody id="batch-detail-table">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="user-em-detail" class="modal bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myLargeModalLabel">응급 확인 내역</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class = "row">
+                <div class="col-sm-10"></div>
+                <div class="col-sm-2"> <button type="button" class="form-control mydatepicker" id="emDetailDownload">다운로드</button></div>
+            </div>
+            <div class="modal-body" id='user-detail'>
+                <br>
+                <table class="table table-hover h4" id="user-detail-table" style=" text-align:center">
+                    <thead>
+                        <tr>
+                            <th>응급 번호</th>
+                            <th>분류</th>
+                            <th>이름</th>
+                            <th>응급 발생 시간</th>
+                            <th>응급 확인 시간</th>
+                        </tr>
+                    </thead>
+                    <tbody id="em-detail-list">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="user-em-sensor" class="modal bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myLargeModalLabel">최근 데이터</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body" id='user-sensor'>
+                <br>
+                <table class="table table-hover h4" id="user-detail-sensor" style=" text-align:center">
+                    <thead>
+                        <tr>
+                            <th>독거노인 번호</th>
+                            <th>심박수</th>
+                            <th>호흡수</th>
+                            <th>심박출량</th>
+                            <th>심박변이도</th>
+                            <th>신호세기</th>
+                            <th>침대상태</th>
+                            <th>연결 시간</th>
+                        </tr>
+                    </thead>
+                    <tbody id="em-detail-sensor">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %} {%block script%}
+<script type="text/javascript" src="/web/monitoring/monitoring.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+<script>
+    let userList = '{{userList | safe}}';
+    userList = JSON.parse(userList);
+    console.log(userList)
+    let userCount = Object.keys(userList).length;
+
+    let emer_userList = '{{emer_userList | safe}}';
+    emer_userList = JSON.parse(emer_userList);
+    let emer_userCount = Object.keys(emer_userList).length;
+
+    let userCodeList = [];
+    for (let j = 0; j < userCount; j++) {
+        userCodeList.push(userList['user' + j].user_code)
+    };
+
+    init();
+
+
+    $('#user-monitoring').delegate('tr','click', function() {
+        let tdArr = new Array()
+        let tr = $(this);
+        let td = tr.children();
+        td.each(function(i) {
+            tdArr.push(td.eq(i).text());
+        });
+        let user_sensor_code = parseInt(tdArr[0])
+
+        console.log(user_sensor_code);
+
+        movePage2(user_sensor_code);
+    });
+    
+
+    $('#user-table').delegate('tr','click', function() {
+        let tdArr = new Array()
+        let tr = $(this);
+        let td = tr.children();
+        td.each(function(i) {
+            tdArr.push(td.eq(i).text());
+        });
+        let emergency_code = parseInt(tdArr[0])
+
+        console.log(emergency_code);
+
+        //$('#user-em-detail').modal()
+
+        movePage(emergency_code);
+    });
+
+</script>
+{% endblock %}

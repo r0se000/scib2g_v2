@@ -1,0 +1,278 @@
+{% extends "templates/mainbase.html" %} {%block style%}
+<style>
+    .col-sm-31 {
+        flex: 0 0 30%;
+        max-width: 30%;
+        margin: 2px;
+    }
+    
+    .active-notice,
+    .bytes-check {
+        margin-top: 0.7em;
+        margin-bottom: 0;
+        font-size: 9pt;
+    }
+    
+    .deactive-notice {
+        display: none;
+    }
+</style>
+{% endblock %} {% block contents%}
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">관리 대상자 등록</h3>
+                <p id="notice" class="deactive-notice text-danger col-sm-12 m-2">입력 값을 확인해주세요</p>
+                <form class="form-material form-horizontal">
+                    <div class="row">
+                        <!-- User Name Input-->
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 h4" for="name-input">이름</label>
+                            <div class="col-md-12 ml-2">
+                                <input type="text" id="name-input" name="name" class="form-control" placeholder="이름을 입력하세요">
+                            </div>
+                            <p id="name-notice" class="deactive-notice text-danger col-sm-12 m-2">이름을 2~8자 이내로 입력해 주세요.</p>
+                        </div>
+                        <!-- User Code Input-->
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 h4" for="id-input">대상자 ID</label>
+                            <div class="col-md-12 ml-2">
+                                <input type="text" id="id-input1" name="address_id" class="form-control col-md-4" placeholder="지역코드" disabled>
+                                <input type="text" id="id-input" name="id" class="form-control col-md-6" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- User BirthDay Input-->
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 h4" id="label-birthday">생년월일</label>
+                            <div class="col-md-12 row ml-2">
+                                <div class="col-md-4">
+                                    <select id="birth-year-input" name="bYear" class="form-control" placeholder="yyyy"></select>
+                                </div>
+                                <div class="col-md-4">
+                                    <select id="birth-month-input" name="bMonth" class="form-control" placeholder="mm"></select>
+                                </div>
+                                <div class="col-md-4">
+                                    <select id="birth-day-input" name="bDay" class="form-control" placeholder="dd"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- User Gender Input-->
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 h4">성별</label>
+                            <div class="col-md-12 ml-2">
+                                <select class="form-control" id="gen-input" name="gender">
+                                    <option>선택</option>
+                                    <option value="M">남자</option>
+                                    <option value="W">여자</option>
+                                </select>
+                            </div>
+                            <p id="gender-notice" class="deactive-notice text-danger col-sm-12 m-2">성별을 선택해 주세요.</p>
+                        </div>
+                    </div>
+                    <!-- User Address Input-->
+                    <div class="form-group" id="address-area">
+                        <label class="h4 col-md-12" id="label-birthday">주소</label>
+                        <p id="address-notice" class="active-notice text-info col-sm-12 m-2">도로명주소와 상세주소를 입력해 주세요. <span> (상세주소 예시)금남로 193-22 4층 405호</span></p>
+                        <div class="col-md-12 row ml-2">
+                            <div class="col-md-3">
+                                <select id="address1-input" name="address1" class="form-control notval" placeholder="시/도 선택" onchange=addressSet(this)>
+                                    <option>시/도</option>
+                                    <option value="00">서울특별시</option>
+                                    <option value="01">부산광역시</option>
+                                    <option value="02">대구광역시</option>
+                                    <option value="03">인천광역시</option>
+                                    <option value="04">광주광역시</option>
+                                    <option value="05">대전광역시</option>
+                                    <option value="06">울산광역시</option>
+                                    <option value="07">세종특별자치시</option>
+                                    <option value="08">경기도</option>
+                                    <option value="09">강원도</option>
+                                    <option value="10">충청북도</option>
+                                    <option value="11">충청남도</option>
+                                    <option value="12">전라북도</option>
+                                    <option value="13">전라남도</option>
+                                    <option value="14">경상북도</option>
+                                    <option value="15">경상남도</option>
+                                    <option value="16">제주특별자치도</option>
+                                </select>
+                                <p id="address1-notice" class="deactive-notice text-danger col-sm-12 m-2">시/도 를 선택해 주세요.</p>
+                            </div>
+                            <div class="col-md-3">
+                                <select id="address2-input" name="address2" class="form-control notval">
+                                    <option>시/군/구</option>
+                                </select>
+                            </div>
+                            <p id="address2-notice" class="deactive-notice text-danger col-sm-12 m-2">시/군/구 를 선택해 주세요.</p>
+                            <div class="col-md-5">
+                                <input type="text" id="address3-input" name="address3" class="form-control notval" placeholder="상세주소">
+                                <p id="address3-notice" class="deactive-notice text-danger col-sm-12 m-2">상세 주소를 입력해 주세요.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- User PhonNumber Input-->
+                        <div class="form-group col-md-6">
+                            <label class="h4 col-md-12" for="user-phone-input">사용자 연락처</label>
+                            <div class="col-md-12 ml-2">
+                                <select id="user-phone1-input" name="user1" class="form-control col-sm-31">
+                                    <option value="010">010</option>
+                                    <option value="02">02</option>
+                                    <option value="031">031</option>
+                                    <option value="032">032</option>
+                                    <option value="033">033</option>
+                                    <option value="041">041</option>
+                                    <option value="042">042</option>
+                                    <option value="043">043</option>
+                                    <option value="051">051</option>
+                                    <option value="052">052</option>
+                                    <option value="053">053</option>
+                                    <option value="061">061</option>
+                                    <option value="062">062</option>
+                                    <option value="063">063</option>
+                                    <option value="064">064</option>
+                                    <option value="070">070</option>
+                                </select> -
+                                <input type="number" id="user-phone2-input" name="user2" class="form-control col-sm-31" placeholder="" maxlength="4" oninput="maxLengthCheck(this)"> -
+                                <input type="number" id="user-phone3-input" name="user3" class="form-control col-sm-31" placeholder="" maxlength="4" oninput="maxLengthCheck(this)">
+                            </div>
+                            <p id="user1-notice" class="deactive-notice text-danger col-sm-12 m-2">사용자 연락처를 입력해 주세요.</p>
+                            <p id="user2-notice" class="deactive-notice text-danger col-sm-12 m-2">사용자 연락처를 입력해 주세요.</p>
+                            <p id="user3-notice" class="deactive-notice text-danger col-sm-12 m-2">사용자 연락처를 입력해 주세요.</p>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 h4" for="protect-phone-input">보호자 연락처</label>
+                            <div class="col-md-12 ml-2">
+                                <select id="protect-phone1-input" name="protector1" class="form-control col-sm-31">
+                                    <option value="010">010</option>
+                                    <option value="02">02</option>
+                                    <option value="031">031</option>
+                                    <option value="032">032</option>
+                                    <option value="033">033</option>
+                                    <option value="041">041</option>
+                                    <option value="042">042</option>
+                                    <option value="043">043</option>
+                                    <option value="051">051</option>
+                                    <option value="052">052</option>
+                                    <option value="053">053</option>
+                                    <option value="061">061</option>
+                                    <option value="062">062</option>
+                                    <option value="063">063</option>
+                                    <option value="064">064</option>
+                                    <option value="070">070</option>
+                                </select> -
+                                <input type="number" id="protect-phone2-input" name="protector2" class="form-control col-sm-31" placeholder="" maxlength="4" oninput="maxLengthCheck(this)"> -
+                                <input type="number" id="protect-phone3-input" name="protector3" class="form-control col-sm-31" placeholder="" maxlength="4" oninput="maxLengthCheck(this)">
+                            </div>
+                            <p id="protector1-notice" class="deactive-notice text-danger col-sm-12 m-2">보호자 연락처를 입력해 주세요.</p>
+                            <p id="protector2-notice" class="deactive-notice text-danger col-sm-12 m-2">보호자 연락처를 입력해 주세요.</p>
+                            <p id="protector3-notice" class="deactive-notice text-danger col-sm-12 m-2">보호자 연락처를 입력해 주세요.</p>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <button type="button" id="register" class="btn btn-info waves-effect waves-light m-r-10">등록</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>{% endblock %} {%block script%}
+<script src="/web/register/register.js"></script>
+<script>
+    let $bYear = $('#birth-year-input'), // 생년 select
+        $bMonth = $('#birth-month-input'), // 생월 select
+        $bDay = $('#birth-day-input'), // 생일 select
+        result = '{{result|safe}}'
+    result = JSON.parse(result);
+    let addressCode = result.address1_code + result.address2_code
+    init()
+
+    function init() {
+        setYearSelBox($bYear); // 생년 날짜 설정
+        setMonthSelBox($bMonth); // 생월 날짜 설정
+        setDaySelBox($bDay, '1970', '1'); // 생일 날짜 설정
+        if (addressCode != '9999') {
+            $('#address1-input').val(result.address1_code).prop('selected', true)
+            let address1 = $('#address1-input option:selected').text()
+            addressSet(address1, addressCode)
+            $('#address2-input').val(result.address2_code).prop('selected', true)
+            $('#address1-input').prop('disabled', true);
+            $('#address2-input').prop('disabled', true);
+
+            $('input[name=address_id]').val(result.address1_code + result.address2_code);
+            $('input[name=address_id]').prop('disabled', true);
+        }
+    }
+
+
+    function addressSet(value) {
+        if (addressCode == '9999') {
+            value = $(`#${value.id} option:selected`).text()
+        }
+        let seoul = ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"]
+        let busan = ["강서구", "금정구", "기장군", "남구", "동구", "동래구", "부산진구", "북구", "사상구", "사하구", "서구", "수영구", "연제구", "영도구", "중구", "해운대구"]
+        let daegu = ["남구", "달서구", "달성군", "동구", "북구", "서구", "수성구", "중구"]
+        let incheon = ["강화군", "계양구", "남구", "남동구", "동구", "미추홀구", "부평구", "서구", "연수구", "옹진군", "중구"]
+        let gwangju = ["광산구", "남구", "동구", "북구", "서구"]
+        let daejeon = ["대덕구", "동구", "서구", "유성구", "중구"]
+        let ulsan = ["남구", "동구", "북구", "울주군", "중구"]
+        let sejong = ["세종시"]
+        let gyeonggi = ["가평군", "고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시", "남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시", "안양시", "양주시", "양평군", "여주시", "연천군", "오산시", "용인시", "의왕시", "의정부시", "이천시", "파주시", "평택시", "포천시", "하남시", "화성시"]
+        let gangwon = ["강릉시", "고성군", "동해시", "삼척시", "속초시", "양구군", "양양군", "영월군", "원주시", "인제군", "정선군", "철원군", "춘천시", "태백시", "평창군", "홍천군", "화천군", "횡성군"]
+        let chungbuk = ["괴산군", "단양군", "보은군", "영동군", "옥천군", "음성군", "제천시", "증평군", "진천군", "청주시", "충주시"]
+        let chungnam = ["계룡시", "공주시", "금산군", "논산시", "당진시", "보령시", "부여군", "서산시", "서천군", "아산시", "예산군", "천안시", "청양군", "태안군", "홍성군"]
+        let jeonbuk = ["고창군", "군산시", "김제시", "남원시", "무주군", "부안군", "순창군", "완주군", "익산시", "임실군", "장수군", "전주시", "정읍시", "진안군"]
+        let jeonnam = ["강진군", "고흥군", "곡성군", "광양시", "구례군", "나주시", "담양군", "목포시", "무안군", "보성군", "순천시", "신안군", "여수시", "영광군", "영암군", "완도군", "장성군", "장흥군", "진도군", "함평군", "해남군", "화순군"]
+        let gyeongbuk = ["경산시", "경주시", "고령군", "구미시", "군위군", "김천시", "문경시", "봉화군", "상주시", "성주군", "안동시", "영덕군", "영양군", "영주시", "영천시", "울릉군", "울진군", "의성군", "청도군", "청송군", "칠곡군", "포항시"]
+        let gyeongnam = ["거제시", "거창군", "고성군", "김해시", "남해군", "밀양시", "사천시", "산청군", "양산시", "의령군", "진주시", "창녕군", "창원시", "통영시", "하동군", "함안군", "함양군", "합천군"]
+        let jeju = ["서귀포시", "제주시"]
+        let target = document.getElementById("address2-input");
+        let data
+
+        for (i = target.length - 1; i >= 0; i--) {
+            target.options[i] = null
+        }
+
+        if (value == "서울특별시") data = seoul
+        else if (value == "부산광역시") data = busan
+        else if (value == "대구광역시") data = daegu
+        else if (value == "인천광역시") data = incheon
+        else if (value == "광주광역시") data = gwangju
+        else if (value == "대전광역시") data = daejeon
+        else if (value == "울산광역시") data = ulsan
+        else if (value == "세종특별자치시") data = sejong
+        else if (value == "경기도") data = gyeonggi
+        else if (value == "강원도") data = gangwon
+        else if (value == "충청북도") data = chungbuk
+        else if (value == "충청남도") data = chungnam
+        else if (value == "전라북도") data = jeonbuk
+        else if (value == "전라남도") data = jeonnam
+        else if (value == "경상북도") data = gyeongbuk
+        else if (value == "경상남도") data = gyeongnam
+        else if (value == "제주특별자치도") data = jeju
+
+        for (x in data) {
+            var opt = document.createElement("option");
+            let value
+            if (x < 10) {0
+                value = "0" + x
+            } else {
+                value = x
+            }
+            opt.value = value;
+            opt.innerHTML = data[x];
+            target.appendChild(opt);
+        }
+    }
+</script>
+{% endblock %}

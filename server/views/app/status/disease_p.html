@@ -1,0 +1,452 @@
+<!--================================================================
+ *  건강 현황 - 질병 정보 html
+ *  @author MiYeong Jang
+ *  @since 
+ *  @history 2021.05.10 JG 페이지 초기화 함수(init) 및 이벤트 핸들러 추가,
+                           페이지 번역 작업
+             2021.05.13 JG dom element id 재지정
+             2021.05.14 JG 미사용 css 삭제 
+             2021.05.19 JG 사용자 이름 정보 추가                         
+ *  ================================================================
+  -->
+{% extends 'templates/p_appmainbase.html' %} {% block head %}
+<!-- Date picker plugins css -->
+<link href="../../../assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<link href="../../../assets/node_modules/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+<link href="../../../assets/node_modules/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+
+<style>
+    [class*="empty-notice"] {
+        display: none;
+        padding: 3%;
+        font-size: large;
+        color: #dcdcdc;
+    }
+</style>
+{% endblock %} {% block contents %}
+<div class="page-wrapper" style="padding: 0px;">
+    <div class="container-fluid">
+        <div class="row page-titles" style="list-style:none;  margin-bottom:0;">
+            <div class="col">
+                 <h4 class="text-center">
+                    <i class="fas fa-notes-medical"></i>
+                    <span id="user-name-info">{{userName}}</span>{{diseasePage.pageName}}
+                </h4>
+                <hr class="m-t-24 m-b-0">
+
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs customtab nav-justified" role="tablist" style="text-align: center;">
+                    <li class="nav-item">
+                        <a id="tab-daily" class="nav-link active" data-toggle="tab" href="#tab-contents-daily" role="tab">
+                            <span class="hidden-xs-down">{{tabTitle.daily}}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="tab-weekly" class="nav-link" data-toggle="tab" href="#tab-contents-weekly" role="tab">
+                            <span class="hidden-xs-down">{{tabTitle.weekly}}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="tab-monthly" class="nav-link" data-toggle="tab" href="#tab-contents-monthly" role="tab">
+                            <span class="hidden-xs-down">{{tabTitle.monthly}}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="tab-yearly" class="nav-link" data-toggle="tab" href="#tab-contents-yearly" role="tab">
+                            <span class="hidden-xs-down">{{tabTitle.yearly}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="page-titles">
+            <input type="text" class="form-control" id="disease-datepicker" style="text-align: center;">
+        </div>
+
+        <div class="tab-content">
+            <!-- 일간 그래프(S) -->
+            <div class="tab-pane active" id="tab-contents-daily" role="tabpanel">
+                <div class="card">
+                    <!-- <h3 class="card-title" style="margin: 20px 20px 0px;">{{diseasePage.hypertension}}</h3> -->
+                    <div class="card-title h3" style="margin: 20px 20px 0px;">{{diseasePage.predict}}</div>
+                    <div class="card-body">
+                        <ul class="nav nav-tabs nav-justified">
+                            <li class="nav-item"><span class="nav-link hidden-xs-down" style="padding:0;">{{diseasePage.diabetes}}</span>
+                            </li>
+                            <li class="nav-item"><span class="nav-link hidden-xs-down" style="padding:0;">{{diseasePage.diseaseList5}}</span>
+                            </li>
+                            <li class="nav-item"><span class="nav-link hidden-xs-down" style="padding:0;">{{diseasePage.diseaseList4}}</span>
+                            </li>
+                        </ul>
+                        <div>
+                            <ul class="nav nav-justified">
+                                {% if initData.data0.dmPredict != null %}
+                                <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down drate">{{initData.data0.dmPredict}}</span></span>
+                                </li>
+                                {% else %}
+                                <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down drate">-</span></span>
+                                </li>
+                                {% endif %}{% if initData.data0.htPredict != null %}
+                                <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down hrate" >{{initData.data0.htPredict}}</span></span>
+                                </li>
+                                {% else %}
+                                <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down hrate">-</span></span>
+                                </li>
+                                {% endif %} {% if initData.data0.htlPredict != null %}
+                                <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down hlrate" >{{initData.data0.htlPredict}}</span></span>
+                                </li>
+                                {% else %}
+                                <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down hlrate">-</span></span>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title h3" style="margin: 20px 20px 0px;">{{diseasePage.class}} </div>
+                    <div class="card-body">
+                        <ul class="nav nav-tabs nav-justified">
+                            <li class="nav-item"><span class="nav-link hidden-xs-down" style="padding:0;">{{diseasePage.diabetes}}</span>
+                            </li>
+                            <li class="nav-item"><span class="nav-link hidden-xs-down" style="padding:0;">{{diseasePage.hypertension}}</span>
+                            </li>
+                        </ul>
+                        <div>
+                            <ul class="nav nav-justified">
+                                {% if initData.data0.dlev == 0 %}
+                                <li class="nav-item" id="dm-title-normal" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{diseasePage.normal}}</span></span>
+                                </li>
+                                <li class="nav-item" id="dm-title-great" style="display: block;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{diseasePage.great}}</span></span>
+                                </li>
+                                <li class="nav-item" id="dm-title-bad" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{diseasePage.bad}}</span></span>
+                                </li>
+                                <li class="nav-item" id="dm-title-none" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">-</span></span>
+                                </li>
+                                {%else%} {% if initData.data0.dlev == 1 %}
+                                <li class="nav-item" id="dm-title-normal" style="display: block;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{diseasePage.normal}}</span></span>
+                                </li>
+                                <li class="nav-item" id="dm-title-great" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{diseasePage.great}}</span></span>
+                                </li>
+                                <li class="nav-item" id="dm-title-bad" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{diseasePage.bad}}</span></span>
+                                </li>
+                                <li class="nav-item" id="dm-title-none" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">-</span></span>
+                                </li>
+                                {%else%} {% if initData.data0.dlev == 2 %}
+                                <li class="nav-item" id="dm-title-normal" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{diseasePage.normal}}</span></span>
+                                </li>
+                                <li class="nav-item" id="dm-title-great" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{diseasePage.great}}</span></span>
+                                </li>
+                                <li class="nav-item" id="dm-title-bad" style="display: block;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{diseasePage.bad}}</span></span>
+                                </li>
+                                <li class="nav-item" id="dm-title-none" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">-</span></span>
+                                </li>
+                                {% else %}
+                                <li class="nav-item" id="dm-title-normal" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{diseasePage.normal}}</span></span>
+                                </li>
+                                <li class="nav-item" id="dm-title-great" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{diseasePage.great}}</span></span>
+                                </li>
+                                <li class="nav-item" id="dm-title-bad" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{diseasePage.bad}}</span></span>
+                                </li>
+                                <li class="nav-item" id="dm-title-none" style="display: block;"> <span class="nav-link"><span class="hidden-xs-down dlevel">-</span></span>
+                                </li>
+                                {% endif %}{% endif %}{% endif %}
+                                <!--  -->
+                                {% if initData.data0.hlev == 0%}
+                                <li class="nav-item" id="ht-title-normal" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down hlevel" >{{diseasePage.normal}}</span></span>
+                                </li>
+                                <li class="nav-item" id="ht-title-great" style="display: block;"> <span class="nav-link"><span class="hidden-xs-down hlevel">{{diseasePage.great}}</span></span>
+                                </li>
+                                <li class="nav-item" id="ht-title-bad" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down hlevel">{{diseasePage.bad}}</span></span>
+                                </li>
+                                <li class="nav-item" id="ht-title-none" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down hlevel">-</span></span>
+                                </li>
+                                {%else%} {% if initData.data0.hlev == 1%}
+                                <li class="nav-item" id="ht-title-normal" style="display: block;"> <span class="nav-link"><span class="hidden-xs-down hlevel" >{{diseasePage.normal}}</span></span>
+                                </li>
+                                <li class="nav-item" id="ht-title-great" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down hlevel">{{diseasePage.great}}</span></span>
+                                </li>
+                                <li class="nav-item" id="ht-title-bad" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down hlevel">{{diseasePage.bad}}</span></span>
+                                </li>
+                                <li class="nav-item" id="ht-title-none" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down hlevel">-</span></span>
+                                </li>
+                                {%else%} {% if initData.data0.hlev == 2%}
+                                <li class="nav-item" id="ht-title-normal" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down hlevel" >{{diseasePage.normal}}</span></span>
+                                </li>
+                                <li class="nav-item" id="ht-title-great" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down hlevel">{{diseasePage.great}}</span></span>
+                                </li>
+                                <li class="nav-item" id="ht-title-bad" style="display: block;"> <span class="nav-link"><span class="hidden-xs-down hlevel">{{diseasePage.bad}}</span></span>
+                                </li>
+                                <li class="nav-item" id="ht-title-none" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down hlevel">-</span></span>
+                                </li>
+                                {% else %}
+                                <li class="nav-item" id="ht-title-normal" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down hlevel" >{{diseasePage.normal}}</span></span>
+                                </li>
+                                <li class="nav-item" id="ht-title-great" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down hlevel">{{diseasePage.great}}</span></span>
+                                </li>
+                                <li class="nav-item" id="ht-title-bad" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down hlevel">{{diseasePage.bad}}</span></span>
+                                </li>
+                                <li class="nav-item" id="ht-title-none" style="display: block;"> <span class="nav-link"><span class="hidden-xs-down hlevel">-</span></span>
+                                </li>
+                                {% endif %}{% endif %} {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <!-- <h3 class="card-title" style="margin: 20px 20px 0px;">{{diseasePage.hypertension}}</h3> -->
+                    <div class="card-title h3" style="margin: 20px 20px 0px;">{{diseasePage.afib}}</div>
+                    <div class="card-body">
+                        <ul class="nav nav-tabs nav-justified">
+                            <li class="nav-item"><span class="nav-link hidden-xs-down" style="padding:0;">{{diseasePage.tratio}}</span>
+                            </li>
+                            <li class="nav-item"><span class="nav-link hidden-xs-down" style="padding:0;">{{diseasePage.bratio}}</span>
+                            </li>
+                        </ul>
+                        <div>
+                            <ul class="nav nav-justified">
+                                {% if initData.data0.tPredict != null %}
+                                <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down tratio">{{initData.data0.tPredict}} %</span></span>
+                                </li>
+                                {% else %}
+                                <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down tratio">-</span></span>
+                                </li>
+                                {% endif %} {% if initData.data0.bPredict != null %}
+                                <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down bratio" >{{initData.data0.bPredict}} %</span></span>
+                                </li>
+                                {% else %}
+                                <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down bratio">-</span></span>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 일간 그래프(E) -->
+
+            <!-- 주간 그래프(S) -->
+            <div class="tab-pane" id="tab-contents-weekly" role="tabpanel">
+                <div class="card">
+                    <h3 class="card-title" style="margin: 20px 20px 0px;">{{diseasePage.diabetes}}
+                        <span><i class="mdi mdi-information-outline" id="dminfo" data-toggle="modal" data-target="#dmInfo"style="color:#01c0c8"></i></span>
+                    </h3>
+                    <div class="p-10">
+                        <div class="empty-notice-weekly text-center">{{emptyData}}</div>
+                        <canvas id="dm-line-weekly" height="100" width="200"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="card-title" style="margin: 20px 20px 0px;">{{diseasePage.hypertension}}
+                        <span><i class="mdi mdi-information-outline" id="htinfo" data-toggle="modal" data-target="#htInfo"style="color:#01c0c8"></i>
+                        </span></h3>
+                    <div class="p-10">
+                        <div class="empty-notice-weekly text-center">{{emptyData}}</div>
+                        <canvas id="ht-line-weekly" height="100" width="200"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="card-title" style="margin: 20px 20px 0px;">{{diseasePage.afib}}
+                        <span><i class="mdi mdi-information-outline" id="afinfo" data-toggle="modal" data-target="#afInfo"style="color:#01c0c8"></i>
+                        </span></h3>
+                    <div class="p-10">
+                        <div class="empty-notice-weekly text-center">{{emptyData}}</div>
+                        <canvas id="afib-line-weekly" height="100" width="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- 주간 그래프(E) -->
+
+            <!-- 월간 그래프(S) -->
+            <div class="tab-pane" id="tab-contents-monthly" role="tabpanel">
+                <div class="card">
+                    <h3 class="card-title" style="margin: 20px 20px 0px;">{{diseasePage.diabetes}}
+                        <span><i class="mdi mdi-information-outline" id="dminfo" data-toggle="modal" data-target="#dmInfo"style="color:#01c0c8"></i></span>
+                    </h3>
+                    <div class="p-10">
+                        <div class="empty-notice-monthly text-center">{{emptyData}}</div>
+                        <canvas id="dm-line-monthly" height="100" width="200"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="card-title" style="margin: 20px 20px 0px;">{{diseasePage.hypertension}}
+                        <span><i class="mdi mdi-information-outline" id="htinfo" data-toggle="modal" data-target="#htInfo"style="color:#01c0c8"></i>
+                        </span></h3>
+                    <div class="p-10">
+                        <div class="empty-notice-monthly text-center">{{emptyData}}</div>
+                        <canvas id="ht-line-monthly" height="100" width="200"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="card-title" style="margin: 20px 20px 0px;">{{diseasePage.afib}}
+                        <span><i class="mdi mdi-information-outline" id="afinfo" data-toggle="modal" data-target="#afInfo"style="color:#01c0c8"></i>
+                        </span></h3>
+                    <div class="p-10">
+                        <div class="empty-notice-monthly text-center">{{emptyData}}</div>
+                        <canvas id="afib-line-monthly" height="100" width="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- 월간 그래프(E) -->
+
+            <!-- 연간 그래프(S) -->
+            <div class="tab-pane" id="tab-contents-yearly" role="tabpanel">
+                <div class="card">
+                    <h3 class="card-title" style="margin: 20px 20px 0px;">{{diseasePage.diabetes}}</h3>
+                    <div class="p-10">
+                        <div class="empty-notice-yearly text-center">{{emptyData}}</div>
+                        <canvas id="dm-bar" height="100" width="200"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="card-title" style="margin: 20px 20px 0px;">{{diseasePage.hypertension}}</h3>
+                    <div class="p-10">
+                        <div class="empty-notice-yearly text-center">{{emptyData}}</div>
+                        <canvas id="ht-bar" height="100" width="200"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="card-title" style="margin: 20px 20px 0px;">{{diseasePage.afib}}</h3>
+                    <div class="p-10">
+                        <div class="empty-notice-yearly text-center">{{emptyData}}</div>
+                        <canvas id="afib-bar" height="100" width="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- 연간 그래프(E) -->
+        </div>
+        <div style="height: 100px; margin: 5px;"></div>
+    </div>
+</div>
+<!-- 혈당 설명 모달 -->
+<div id="dmInfo" class="modal long-modal" tabindex="-1" role="dialog" aria-labelledby="longmodal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="longmodal">{{diseasePage.diabetes}}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>{{diseasePage.infohead1}}</th>
+                            <th>{{diseasePage.infohead2}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{diseasePage.great}}</td>
+                            <td>{{diseasePage.dgreat}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{diseasePage.normal}}</td>
+                            <td>{{diseasePage.dnormal}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{diseasePage.bad}}</td>
+                            <td>{{diseasePage.dbad}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 혈압 설명 모달 -->
+<div id="htInfo" class="modal long-modal" tabindex="-1" role="dialog" aria-labelledby="longmodal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="longmodal">{{diseasePage.hypertension}}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>{{diseasePage.infohead1}}</th>
+                            <th>{{diseasePage.infohead3}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{diseasePage.great}}</td>
+                            <td>{{diseasePage.hgreat}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{diseasePage.normal}}</td>
+                            <td>{{diseasePage.hnormal}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{diseasePage.bad}}</td>
+                            <td>{{diseasePage.hbad}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 심받세동 설명 모달 -->
+<div id="afInfo" class="modal long-modal" tabindex="-1" role="dialog" aria-labelledby="longmodal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="longmodal">{{diseasePage.afib}}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>{{diseasePage.infohead1}}</th>
+                            <th>{{diseasePage.detailInfo}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{diseasePage.tachycardia}}</td>
+                            <td>{{diseasePage.tinfo}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{diseasePage.bradycardia}}</td>
+                            <td>{{diseasePage.binfo}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} {% block script %}
+<!-- Plugin JavaScript -->
+<script src="../../../assets/node_modules/moment/moment.js"></script>
+<!-- Date Picker Plugin JavaScript -->
+<script src="../../../assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="../../../assets/node_modules/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+<script src="../../../assets/node_modules/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- Chart JS -->
+<!-- <script src="../../assets/node_modules/Chart.js/chartjs.init.js"></script> -->
+<script src="../../../assets/node_modules/Chart.js/Chart.min.js"></script>
+<!--jquery knob -->
+<script src="../../../assets/node_modules/knob/jquery.knob.js"></script>
+
+<!-- Custom Script -->
+<script src="/javascripts/config.js"></script>
+<script src="/javascripts/commonUtil.js"></script>
+<script src="/web/status/js/disease.js"></script>
+<!-- disease page 관련 함수 2021.05.11 JG -->
+<script>
+    let userCode = '{{userCode}}';
+    let pUserCode='{{pUserCode}}';
+    let graphtratio = '{{diseasePage.tratio}}';
+    let graphbratio = '{{diseasePage.bratio}}';
+    let htlp = '{{diseasePage.diseaseList4}}';
+    let htp = '{{diseasePage.diseaseList5}}';
+    init('{{initData.drawable}}');
+</script>
+
+{% endblock %}

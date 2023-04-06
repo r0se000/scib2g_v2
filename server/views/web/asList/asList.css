@@ -1,0 +1,69 @@
+/****************************
+    상단 이름 검색, 버튼 관련 CSS
+****************************/
+
+.form-control {
+    width: auto;
+    font-size: 10pt;
+}
+
+/* A/S 목록 테이블 */
+#as-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+
+/* 상세내용 줄바꿈 관련 CSS */
+.detail {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/****************************
+    A/S 모달창
+****************************/
+/* as 등록, as 수정 textarea */
+#as-detail, #as-edit-detail {
+    border: 1px solid lightgray;
+    margin-top: 15px;
+    padding: 2%;
+    width:95%;
+    height: 250px;
+    font-size: 13pt;
+    resize: none;
+    white-space: pre-wrap;
+}
+
+#search-input{
+    margin-left:18px;
+    margin-right:5px;
+    float: left;
+}
+
+#search-button{
+    float: left;
+}
+
+/* datePicker CSS */
+#as-datepicker {
+    float: right;
+    width: 140px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 12pt;
+}
+
+/* 대상자 선택 select CSS */
+.select-user-area {
+    font-size: 12pt;
+    width: 120px;
+    float: left;
+    margin-left:2%;
+}
+
+/* 사용자 검색 테이블 */
+#search-user-list{
+    width:100%;
+}

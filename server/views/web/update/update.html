@@ -1,0 +1,164 @@
+{% extends "templates/mainbase.html" %} {%block style%}
+<style>
+    .col-sm-31 {
+        flex: 0 0 30%;
+        max-width: 30%;
+        margin: 2px;
+    }
+    
+    .active-notice,
+    .bytes-check {
+        margin-top: 0.7em;
+        margin-bottom: 0;
+        font-size: 9pt;
+    }
+    
+    .deactive-notice {
+        display: none;
+    }
+</style>
+{% endblock %} {% block contents%}
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">관리 대상자 수정</h3>
+                <p id="notice" class="deactive-notice text-danger col-sm-12 m-2">입력 값을 확인해주세요</p>
+                <form class="form-material form-horizontal">
+                    <div class="row">
+                        <!-- User Name Input-->
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 h4" for="name-input">이름</label>
+                            <div class="col-md-12 ml-2">
+                                <input type="text" id="name-input" name="name" class="form-control" placeholder="이름을 입력하세요">
+                            </div>
+                            <p id="name-notice" class="deactive-notice text-danger col-sm-12 m-2">이름을 2~8자로 입력해 주세요.</p>
+                        </div>
+                    </div>
+                    <!-- User BirthDay Input-->
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 h4" id="label-birthday">생년월일</label>
+                            <div class="col-md-12 row ml-2">
+                                <div class="col-md-4">
+                                    <select id="birth-year-input" name="bYear" class="form-control" placeholder="yyyy"></select>
+                                </div>
+                                <div class="col-md-4">
+                                    <select id="birth-month-input" name="bMonth" class="form-control" placeholder="mm"></select>
+                                </div>
+                                <div class="col-md-4">
+                                    <select id="birth-date-input" name="bDay" class="form-control" placeholder="dd"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- User Gender Input-->
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 h4">성별</label>
+                            <div class="col-md-12 ml-2">
+                                <select class="form-control" id="gen-input" name="gender">
+                                    <option value="M">남자</option>
+                                    <option value="W">여자</option>
+                                </select>
+                            </div>
+                            <p id="gender-notice" class="deactive-notice text-danger col-sm-12 m-2">성별을 선택해주세요.</p>
+                        </div>
+                    </div>
+                    <!-- User Address Input-->
+                    <div class="form-group" id="address-area">
+                        <label class="h4 col-md-12">주소</label>
+                        <p id="address-notice" class="active-notice text-info col-sm-12 m-2">도로명주소와 상세주소를 입력해주세요. <span> (상세주소 예시)금남로 193-22 4층 405호</span></p>
+                        <div class="col-md-12 row ml-2">
+                            <div class="col-md-3">
+                                <input type="text" id="address1-input" class="form-control" readonly>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" id="address2-input" class="form-control" readonly>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="text" id="address3-input" class="form-control" placeholder="상세 주소를 입력해 주세요.">
+                                <p id="address3-notice" class="deactive-notice text-danger col-sm-12 m-2">상세 주소를 입력해 주세요.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- User PhonNumber Input-->
+                        <div class="form-group col-md-6">
+                            <label class="h4 col-md-12" for="user-phone-input">사용자 연락처</label>
+                            <div class="col-md-12 ml-2">
+                                <select id="user-phone1-input" name="user1" class="form-control col-sm-31">
+                                    <option value="010">010</option>
+                                    <option value="02">02</option>
+                                    <option value="031">031</option>
+                                    <option value="032">032</option>
+                                    <option value="033">033</option>
+                                    <option value="041">041</option>
+                                    <option value="042">042</option>
+                                    <option value="043">043</option>
+                                    <option value="051">051</option>
+                                    <option value="052">052</option>
+                                    <option value="053">053</option>
+                                    <option value="061">061</option>
+                                    <option value="062">062</option>
+                                    <option value="063">063</option>
+                                    <option value="064">064</option>
+                                    <option value="070">070</option>
+                                </select> -
+                                <input type="number" id="user-phone2-input" name="user2" class="form-control col-sm-31" placeholder="" maxlength="4" oninput="maxLengthCheck(this)"> -
+                                <input type="number" id="user-phone3-input" name="user3" class="form-control col-sm-31" placeholder="" maxlength="4" oninput="maxLengthCheck(this)">
+                            </div>
+                            <p id="phone1-notice" class="deactive-notice text-danger col-sm-12 m-2">사용자 연락처를 입력해주세요.</p>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 h4" for="protect-phone-input">보호자 연락처</label>
+                            <div class="col-md-12 ml-2">
+                                <select id="protect-phone1-input" name="protector1" class="form-control col-sm-31">
+                                    <option value="010">010</option>
+                                    <option value="02">02</option>
+                                    <option value="031">031</option>
+                                    <option value="032">032</option>
+                                    <option value="033">033</option>
+                                    <option value="041">041</option>
+                                    <option value="042">042</option>
+                                    <option value="043">043</option>
+                                    <option value="051">051</option>
+                                    <option value="052">052</option>
+                                    <option value="053">053</option>
+                                    <option value="061">061</option>
+                                    <option value="062">062</option>
+                                    <option value="063">063</option>
+                                    <option value="064">064</option>
+                                    <option value="070">070</option>
+                                </select> -
+                                <input type="number" id="protect-phone2-input" name="protector2" class="form-control col-sm-31" placeholder="" maxlength="4" oninput="maxLengthCheck(this)"> -
+                                <input type="number" id="protect-phone3-input" name="protector3" class="form-control col-sm-31" placeholder="" maxlength="4" oninput="maxLengthCheck(this)">
+                            </div>
+                            <p id="phone2-notice" class="deactive-notice text-danger col-sm-12 m-2">보호자 연락처를 입력해주세요.</p>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <button type="button" id="back-btn" class="btn btn-success waves-effect waves-light m-r-10">취소</button>
+                        <button type="button" id="user-edit-btn" class="btn btn-info waves-effect waves-light m-r-10">수정</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>{% endblock %} {%block script%}
+<script src="/web/update/update.js"></script>
+<script>
+    let userInfo = '{{userInfo|safe}}'
+    userInfo = JSON.parse(userInfo);
+    userInfo = userInfo.rows[0];
+    let user_code = '{{user_code}}' // 관리 대상자 코드
+    init();
+
+</script>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "templates/appmainbase.html" %} {% block head %}
+<!-- <link href="/dist/css/pages/dashboard1.css" rel="stylesheet"> -->
+<!-- page css -->
+<link href="/dist/css/pages/login-register-lock.css" rel="stylesheet">
+<link href="/dist/css/pages/tab-page.css" rel="stylesheet">
+<link rel="stylesheet" href="/stylesheets/modal.css">{% endblock %} {% block contents %}
+
+
+
+<div class="container-fluid">
+    <div class="m-t-20">
+        <div class="form-group text-center">
+            <div class="col-xs-12">
+                <button id="search-wifi-btn" class="btn btn-block btn-lg btn-success btn-rounded" alt="default" data-toggle="modal" type="submit">{{sensorPage.sensorToSetUp}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %} {%block script%}
+<script src="/dist/js/waves.js"></script>
+<script src="/dist/js/custom.min.js"></script>
+<script>
+    let $searchWifiBtn = $('#search-wifi-btn');
+
+    $searchWifiBtn.on('click', function() {
+
+        window.parent.postMessage({
+            action: 'searchsensor'
+        }, '*'); // TO-DO: 임시로 모든 도메인 허용(*)하였음. 추후 수정할 것
+    });
+</script>
+
+{% endblock %}

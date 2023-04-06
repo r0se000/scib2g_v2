@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/sci_logo.png">
+    <title>독거노인 모니터링</title>
+    <!-- Custom CSS -->
+    <link href="/dist/css/style.min.css" rel="stylesheet">
+    <!-- Dashboard 1 Page CSS -->
+    <link href="/dist/css/pages/dashboard1.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <base href="/">
+</head>
+
+
+<style>
+    .active {
+        margin-top: 0.7em;
+        margin-bottom: 0;
+    }
+    
+    .deactive {
+        display: none;
+    }
+</style>
+{% block style %}{%endblock%}
+
+<body class="skin-megna fixed-layout">
+    <!-- <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+        </div>
+    </div> -->
+    <div id="main-wrapper">
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-light">
+                <div class="navbar-header">
+                    <a class="navbar-brand m-auto sd-list" id="page-title" href="javascript:void(0)">
+                        <!-- Logo icon --><b>
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <img src="/assets/images/sci_logo.png" alt="homepage"/>
+                        </b>
+                        <!--End Logo icon -->
+                        <span class="hidden-xs"><span class="">독거노인 모니터링</span>
+                    </a>
+                </div>
+                <div class="navbar-collapse">
+                    <ul class="navbar-nav m-auto font-bold" style="font-size:xx-large; padding: 10px">
+                        {{title}}
+                    </ul>
+                    <ul class="navbar-nav my-lg-0">
+                        <li class="nav-item dropdown u-pro">
+                            <a class="nav-link dropdown-toggle profile-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="hidden-md-down" id="admin-name"><span></span><i class="fa fa-angle-down"></i></span></span></a>
+                            <div class="dropdown-menu dropdown-menu-right animated flipInY">
+                                <!-- <a href="javascript:void(0)" id="user_info" class="dropdown-item">관리자정보 수정</a> -->
+                                <a href="javascript:void(0)" id="manual-download" class="dropdown-item">사용자매뉴얼 다운로드</a>
+                                <a href="javascript:void(0)" id="logout-btn" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
+                                <audio id="player" controls="controls" style="display:none">
+                                    <source id="sourceOgg" src="" type="audio/ogg" />
+                                    <source id="sourceMp3" src="" type="audio/mp3" />
+                                    Your browser does not support the audio element.
+                                </audio>
+                                <button onclick='loadSong()' style="display:none"> 모니터링 대상 발생 </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="sd-list" id="side-menu-rtime"><a class="waves-effect waves-dark" href="javascript:void(0)"><i class="icon-screen-desktop"></i><span class="hide-menu">실시간 모니터링</span></a></li>
+                        <li class="sd-list" id="side-menu-register"><a class="waves-effect waves-dark" href="javascript:void(0)"><i class="icon-pencil"></i><span class="hide-menu">관리대상자 등록</span></a></li>
+                        <li class="sd-list" id="side-menu-health"><a class="waves-effect waves-dark" href="javascript:void(0)"><i class="icons-Calendar-3"></i><span class="hide-menu">건강상태</span></a></li>
+                        <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icons-Cursor"></i><span class="hide-menu">정보 조회</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li class="sd-list" id="side-menu-user-list">
+                                    <a class="waves-effect waves-dark" href="javascript:void(0)"></i><span class="hide-menu">관리대상자 조회</span></a>
+                                </li>
+                                <li class="sd-list" id="side-menu-user-list1">
+                                    <a class="waves-effect waves-dark" href="javascript:void(0)"></i><span class="hide-menu">모니터링 발생 조회</span></a>
+                                </li>
+
+                                <li class="sd-list" id="side-menu-emergency-list">
+                                    <a class="waves-effect waves-dark" href="javascript:void(0)"></i><span class="hide-menu">A/S 조회</span></a>
+                                </li>
+                            </ul>
+                            <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-graph"></i><span class="hide-menu">통계 조회</span></a>
+                                <ul aria-expanded="false" class="collapse">
+                                    <li class="sd-list" id="side-menu-emergency-graph">
+                                        <a class="waves-effect waves-dark" href="javascript:void(0)"></i><span class="hide-menu">모니터링 통계 조회</span></a>
+                                    </li>
+                                </ul>
+                            </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card emergencyArea deactive">
+                            <div class="card-body">
+                                <h3 class="card-title m-b-0 emergencyTitle" style="margin:auto;">모니터링 발생 현황</h3>
+                                <p class="text-muted"></p>
+                                <div class="table-responsive" id="emergencyTable">
+                                    <table class="table table-hover h4" id="emergencyTable" style="text-align:center">
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card emergencyAfterArea deactive">
+                            <div class="card-body">
+                                <h3 class="card-title m-b-0 emergencyTitle" style="margin:auto;">조치사항 입력</h3>
+                                <p class="text-muted"></p>
+                                <div class="table-responsive" id="insertEmergency">
+                                    <table class="table table-hover h4" id="insertEmergency" style="text-align:center">
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card"></div>
+                <!-- html 작성부분 -->
+                {%block contents%} {% endblock %}
+                <!-- html 작성부분 -->
+
+                <!-- 조치사항 입력 모달 -->
+                <div id="check-contents-input" class="modal long-modal" tabindex="-1" role="dialog" aria-labelledby="longmodal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="longmodal">조치사항 입력</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table table-hover" id="user-detail-table" style=" text-align:center">
+                                    <tbody id="userlist">
+                                        <tr>
+                                            <td>성명</td>
+                                            <td id="check-name"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>생년월일</td>
+                                            <td id="check-birth"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>모니터링 발생 시간</td>
+                                            <td id="check-em-time"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>모니터링 알림 확인 시간</td>
+                                            <td id="check-em-check-time"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>조치사항</td>
+                                            <td id="em-check-contents">
+                                                <select name="check-contents" id="check-contents">
+                                                    <option value="0" selected>선택</option>
+                                                    <option value="이상없음">이상없음</option>
+                                                    <option value="119 연계">119 연계</option>
+                                                    <option value="이송완료">이송완료</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="contents-input-btn btn btn-info waves-effect">등록</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 응급 세부정보 모달 -->
+                <div id="em-detail" class="modal bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="longmodal" aria-hidden="true">
+                    <div class="modal-dialog modal-xl modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="longmodal">세부정보</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div class="modal-body h4">
+                                <table class="table table-hover" id="em-detail-table" style=" text-align:center">
+                                    <tbody id="emDetail">
+                                        <tr>
+                                            <td>성명</td>
+                                            <td id="em-detail-name"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>생년월일</td>
+                                            <td id="em-detail-birth"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>성별</td>
+                                            <td id="em-detail-gender"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>모니터링 발생 시간</td>
+                                            <td id="em-detail-em-time"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>주소</td>
+                                            <td id="em-detail-address"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>개인 연락처</td>
+                                            <td id="em-detail-user"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>보호자 연락처</td>
+                                            <td id="em-detail-protector"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>담당공무원</td>
+                                            <td id="em-detail-staff"></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                <div>모니터링 발생 시점 생체정보</div>
+                                <div>
+                                    <canvas id="bioinfo-chart-canvas" height="100" width="200"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 조치사항 세부정보 모달 -->
+                <div id="emAfter-detail" class="modal bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="longmodal" aria-hidden="true">
+                    <div class="modal-dialog modal-xl modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="longmodal">세부정보</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div class="modal-body h4">
+                                <table class="table table-hover" id="emAfter-detail-table" style=" text-align:center">
+                                    <tbody id="emDetail">
+                                        <tr>
+                                            <td>성명</td>
+                                            <td id="emAfter-detail-name"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>생년월일</td>
+                                            <td id="emAfter-detail-birth"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>개인 연락처</td>
+                                            <td id="emAfter-detail-user"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>보호자 연락처</td>
+                                            <td id="emAfter-detail-protector"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>모니터링 발생 시간</td>
+                                            <td id="emAfter-detail-em-time"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>모니터링 발생 확인 시간</td>
+                                            <td id="emAfter-detail-check-time"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<!-- <script src="/assets/node_modules/jquery/jquery-3.2.1.min.js"></script>/ -->
+<script src="/assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<!--Wave Effects -->
+<script src="/dist/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="/dist/js/sidebarmenu.js"></script>
+<!--Custom JavaScript -->
+<!-- <script src="/dist/js/custom.min.js"></script> -->
+<!-- Chart JS -->
+<script src="/assets/node_modules/Chart.js/Chart.min.js"></script>
+<script src="/javascripts/config.js"></script>
+<script src="/javascripts/commonUtil.js"></script>
+<script src="/javascripts/emergency.js"></script>
+
+<script>
+    let userName = '{{userName}}';
+    let userCode = '{{userCode}}';
+
+    $('#admin-name').text(userName)
+    init()
+    selectUserList()
+
+    selectNotInsert();
+
+    $('#manual-download').on('click', function() {
+        location.href = baseUrl + '/monitList/download';
+    })
+
+    $('#user_info').on('click', function() {
+
+    })
+</script>
+
+
+{%block script%} {% endblock %}
+
+
+
+
+</html>

@@ -1,0 +1,122 @@
+<!--================================================================
+ *  건강현황 html
+ *  @author MiYeong Jang
+ *  @since 
+ *  @history 2021.05.10 JG 페이지 초기화 함수(init) 및 이벤트 핸들러 추가            
+ *  ================================================================
+  -->
+{% extends "templates/p_appmainbase.html" %} {% block contents%}
+
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <!-- Row -->
+        <div id="button-list" class="skin-megna row m-t-10">
+            <!-- Column -->
+            <div class="col-lg-3 col-md-6">
+                <a id="go-disease">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex no-block">
+                                <img src="/images/icon/new_menu_emergency.png" width="50px" height="60px" alt="">
+                                <!-- <div class="round align-self-center round-success"><i class="fas fa-stethoscope" style="text-align: center; font-size: large;"></i></div> -->
+                                <div class="m-l-10 align-self-center">
+                                    <h3 class="m-b-0">{{statusPage.contentsList1}}</h3>
+                                    <p class="text-muted m-b-0">{{statusPage.contentsListDesc1}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- Column -->
+            <div class="col-lg-3 col-md-6">
+                <a id="go-biometric">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex no-block">
+                                <img src="/images/icon/new_menu_bio.png" width="50px" height="60px" alt="">
+                                <!-- <div class="round align-self-center round-info"><i class="fas fa-chart-area" style="text-align: center; font-size: large;"></i></div> -->
+                                <div class="m-l-10 align-self-center">
+                                    <h3 class="m-b-0">{{statusPage.contentsList2}}</h3>
+                                    <p class="text-muted m-b-0">{{statusPage.contentsListDesc2}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- Column -->
+            <div class="col-lg-3 col-md-6">
+                <a id="go-stress">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex no-block">
+                                <img src="/images/icon/new_menu_stress.png" width="50px" height="60px" alt="">
+                                <!-- <div class="round align-self-center round-danger"><i class="fas fa-thermometer-half" style="width:18px; text-align: center; font-size: large;"></i></div> -->
+                                <div class=" m-l-10 align-self-center">
+                                    <h3 class="m-b-0">{{statusPage.contentsList3}}</h3>
+                                    <p class="text-muted m-b-0">{{statusPage.contentsListDesc3}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- Column -->
+            <div class="col-lg-3 col-md-6 ">
+                <a id="go-sleep">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex no-block">
+                                <img src="/images/icon/new_menu_sleep.png" width="50px" height="60px" alt="">
+                                <!-- <div class="round align-self-center round-warning "><i class="fas fa-bed" style="text-align: center; font-size: large;"></i></div> -->
+                                <div class="m-l-10 align-self-center ">
+                                    <h3 class="m-b-0 ">{{statusPage.contentsList4}}</h3>
+                                    <p class="text-muted m-b-0 ">{{statusPage.contentsListDesc4}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- Column -->
+        </div>
+    </div>
+</div>
+{% endblock %} {% block script%}
+<script src="/javascripts/config.js"></script>
+<script src="/javascripts/commonutil.js"></script>
+<script>
+    const $buttonList = $('#button-list a');
+
+    let userCode = '{{userCode}}',
+        pUserCode = '{{pUserCode}}',
+        lang = '{{lang}}',
+        accessToken = '{{accessToken}}';
+
+    // 페이지 이동 버튼 클릭 이벤트 2021.05.10 JG
+    $buttonList.on('click', function(evnt) {
+        let targetId = evnt.currentTarget.id,
+            reqUrl = baseUrl + '/status/p_index/';
+        switch (targetId) {
+            case 'go-disease':
+                reqUrl += 'disease';
+                break;
+            case 'go-biometric':
+                reqUrl += 'biometric';
+                break;
+            case 'go-stress':
+                reqUrl += 'stress';
+                break;
+            case 'go-sleep':
+                reqUrl += 'sleep';
+                break;
+        }
+        reqUrl += '?lang=' + lang + '&userCode=' + userCode + '&pUserCode=' + pUserCode + "&accessToken=" + accessToken;
+        location.href = reqUrl;
+    });
+</script>
+{% endblock %}

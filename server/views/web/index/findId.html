@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/sci_logo.png">
+    <title>관리자 등록</title>
+
+    <!-- page css -->
+    <link href="/dist/css/pages/login-register-lock.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/dist/css/style.min.css" rel="stylesheet">
+    <style>
+        .active-notice,
+        .bytes-check {
+            margin-top: 0.7em;
+            margin-bottom: 0;
+            font-size: 9pt;
+        }
+        
+        .deactive-notice {
+            display: none;
+        }
+        
+        #label-email {
+            float: left;
+        }
+        
+        #sendnumber {
+            width: 100%;
+            font-size: 10pt;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body class="skin-default card-no-border">
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">Load..</p>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <section id="wrapper">
+        <div class="login-register">
+            <div class="login-box card" style="margin: auto;">
+                <div class="card-body">
+                    <form class="form-horizontal form-material" id="loginform">
+                        <h3 class="text-center m-b-20"><strong>ID 찾기</strong></h3>
+                        <div class="form-group mb-3">
+                            <div class="input-group">
+                                <input id="name-input" name="name" class="form-control" type="text" placeholder="사용자 이름" aria-describedby="name-notice">
+                            </div>
+                            <div class="row notice-area pl-3">
+                                <p id="name-notice" class="form-notice deactive-notice form-control-feedback" style="color: red;">이름을 입력하세요.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="text-align: center;">
+                            <label id="label-email" for="email-input">이메일 인증</label>
+                            <div class="input-group">
+                                <input id="email-input" name="eId" type="text" class="form-control" placeholder="Email" aria-describedby="" />
+                                <span class="ml-1 mr-1 mt-2">@</span>
+                                <input id="email-input2" name="eDomain" type="text" class="form-control" placeholder="Email Domain" aria-describedby="" />
+                            </div>
+                            <p id="email-notice" class="form-notice deactive-notice form-control-feedback" style="color: red;">이메일과 도메인을 모두 입력해 주세요.</p>
+                            <button id="sendnumber" class="btn btn-secondary active-notice" type="button">인증번호 전송</button>
+
+                            <div id="input-authnumber" class="deactive-notice">
+                                <div>
+                                    <input id="authnumber" name="authnumber" type="text" class="form-control mt-3" placeholder="" aria-describedby="" />
+                                </div>
+                                <p id="e-auth-notice" class="form-control-feedback" style="color: red;">이메일 인증 코드를 전달하였습니다. 인증번호를 입력해 주세요.</p>
+                                <button id="checknumber" class="btn btn-block btn-success" type="button">인증번호 확인</button>
+                            </div>
+                        </div>
+                        <div class="form-group text-center p-b-20">
+                            <div class="col-xs-12">
+                                <button class="btn btn-info btn-lg btn-block btn-rounded text-uppercase waves-effect waves-light" id="findId-btn" type="button">ID 찾기</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="result-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="modal-result-title" class="modal-title">고객님의 정보와 일치하는 아이디 입니다.</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body" style="height: 5.3rem; overflow:auto;">
+                    <h1 id="id-result" class="text-center"></h1>
+                </div>
+                <div class="modal-footer">
+                    <button id="modal-login-btn" type="button" class="modal-btn btn btn-success waves-effect">로그인</button>
+                    <button id="modal-pw-btn" type="button" class="modal-btn btn btn-secondary waves-effect">비밀번호 찾기</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+
+    <script src="/assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="/assets/node_modules/popper/popper.min.js"></script>
+    <script src="/assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/javascripts/config.js"></script>
+    <script src="/javascripts/commonUtil.js"></script>
+    <script src="/web/index/findId.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $(".preloader").fadeOut();
+        });
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+        // ============================================================== 
+        // Login and Recover Password 
+        // ============================================================== 
+        $('#signIn-btn').on('click', function() {
+            window.location = baseUrl
+        })
+    </script>
+</body>
+
+</html>

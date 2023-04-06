@@ -1,0 +1,852 @@
+<!--================================================================
+ *  건강상태 html
+ *  @author MiYeong Jang
+ *  @since 2021.04.12.
+ *  @history 2021.04.12. 최조작성
+             2021.04.30. 예외처리(처음 페이지 로드 시 데이터 없을 경우)
+             2021.05.03. 부분별 information 버튼 & 모달 추가
+ *  ================================================================-->
+
+{% extends "templates/p_appmainbase.html" %} {% block head %}
+<!-- datepicker CSS -->
+<link href="/assets/node_modules/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+<link href="/assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/assets/icons/material-design-iconic-font/css/material-design-iconic-font.css">{%endblock%}
+
+<!-- Content 시작 -->
+{% block contents%}
+<div class="skin-megna page-wrapper" style="padding: 0; overflow-y: scroll;">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <div class="col-md-6" style="font-size: large; text-align: center;">
+                <h4 class="col text-center" style="margin: 0 10px 10px 10px; padding: 5px;">
+                    <i class="fas fa-notes-medical"></i>
+                    <span id="user-name-info">{{userName}}</span>{{statePage.pageName}}
+                </h4>
+            </div>
+
+            <input type="text" class="form-control" id="state-datepicker" style="text-align: center; padding-top: 14px;">
+            <!-- datepicker 수정: public>assets>node_modules>bootstrap-material-datetimepicker>js>bootstrap-material-datetimepicker.js -->
+        </div>
+
+        <!-- 질병 -->
+        <div class="card">
+            <div class="card-title h4">
+                <img src="/images/icon/new_menu_emergency.png" width="30px" alt=""><span> {{statePage.cardList1}}</span>
+                <span><i class="mdi mdi-information-outline" id="dinfo" data-toggle="modal" data-target="#diseaseInfo"style="color:#01c0c8"></i></span>
+            </div>
+            <div class="card-body" id="d_simple" style="list-style:none; display:block;">
+                <div class="card-title h4">{{statePage.predict}}</div>
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="nav-item"><span class="nav-link hidden-xs-down" style="padding:0;">{{statePage.diseaseList1}}</span>
+                    </li>
+                    <li class="nav-item"><span class="nav-link hidden-xs-down" style="padding:0;">{{statePage.diseaseList5}}</span>
+                    </li>
+                    <li class="nav-item"><span class="nav-link hidden-xs-down" style="padding:0;">{{statePage.diseaseList4}}</span>
+                    </li>
+
+                </ul>
+                <div>
+                    <ul class="nav nav-justified">
+                        {% if stateData.drate != null %}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down drate">{{stateData.drate}}</span></span>
+                        </li>
+                        {% else %}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down drate">-</span></span>
+                        </li>
+                        {% endif %} {% if stateData.hrate != null %}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down hrate" >{{stateData.hrate}}</span></span>
+                        </li>
+                        {% else %}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down hrate">-</span></span>
+                        </li>
+                        {% endif %} {% if stateData.hlrate != null %}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down hlrate" >{{stateData.hlrate}}</span></span>
+                        </li>
+                        {% else %}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down hlrate">-</span></span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="card-title h4">{{statePage.class}} <span><i class="mdi mdi-information-outline" id="classinfo" data-toggle="modal" data-target="#classifyInfo"style="color:#01c0c8"></i></span></div>
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="nav-item"><span class="nav-link hidden-xs-down" style="padding:0;">{{statePage.diseaseList1}}</span>
+                    </li>
+                    <li class="nav-item"><span class="nav-link hidden-xs-down" style="padding:0;">{{statePage.diseaseList2}}</span>
+                    </li>
+                    <!-- <li class="nav-item"><span class="nav-link hidden-xs-down" style="padding:0;">{{statePage.diseaseList3}}</span>
+                    </li> -->
+                </ul>
+                <div>
+                    <ul class="nav nav-justified">
+                        {% if stateData.dlevel ==0 %}
+                        <li class="nav-item" id="diabetesnormal" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.normal}}</span></span>
+                        </li>
+                        <li class="nav-item" id="diabetesgreat" style="display: block;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.great}}</span></span>
+                        </li>
+                        <li class="nav-item" id="diabetesbad" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.bad}}</span></span>
+                        </li>
+                        <li class="nav-item" id="diabetesnone" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">-</span></span>
+                        </li>
+                        {%else%} {% if stateData.dlevel==1 %}
+                        <li class="nav-item" id="diabetesnormal" style="display: block;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.normal}}</span></span>
+                        </li>
+                        <li class="nav-item" id="diabetesgreat" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.great}}</span></span>
+                        </li>
+                        <li class="nav-item" id="diabetesbad" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.bad}}</span></span>
+                        </li>
+                        <li class="nav-item" id="diabetesnone" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">-</span></span>
+                        </li>
+                        {%else%} {% if stateData.dlevel==2 %}
+                        <li class="nav-item" id="diabetesnormal" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.normal}}</span></span>
+                        </li>
+                        <li class="nav-item" id="diabetesgreat" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.great}}</span></span>
+                        </li>
+                        <li class="nav-item" id="diabetesbad" style="display: block;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.bad}}</span></span>
+                        </li>
+                        <li class="nav-item" id="diabetesnone" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">-</span></span>
+                        </li>
+                        {% else %}
+                        <li class="nav-item" id="diabetesnormal" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.normal}}</span></span>
+                        </li>
+                        <li class="nav-item" id="diabetesgreat" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.great}}</span></span>
+                        </li>
+                        <li class="nav-item" id="diabetesbad" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.bad}}</span></span>
+                        </li>
+                        <li class="nav-item" id="diabetesnone" style="display: block;"> <span class="nav-link"><span class="hidden-xs-down dlevel">-</span></span>
+                        </li>
+                        {% endif %}{% endif %}{% endif %}
+                        <!--  -->
+                        {% if stateData.hlevel ==0%}
+                        <li class="nav-item" id="hnormal" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.normal}}</span></span>
+                        </li>
+                        <li class="nav-item" id="hgreat" style="display: block;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.great}}</span></span>
+                        </li>
+                        <li class="nav-item" id="hbad" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.bad}}</span></span>
+                        </li>
+                        <li class="nav-item" id="hnone" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">-</span></span>
+                        </li>
+                        {%else%} {% if stateData.hlevel==1%}
+                        <li class="nav-item" id="hnormal" style="display: block;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.normal}}</span></span>
+                        </li>
+                        <li class="nav-item" id="hgreat" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.great}}</span></span>
+                        </li>
+                        <li class="nav-item" id="hbad" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.bad}}</span></span>
+                        </li>
+                        <li class="nav-item" id="hnone" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">-</span></span>
+                        </li>
+                        {%else%} {% if stateData.hlevel==2%}
+                        <li class="nav-item" id="hnormal" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.normal}}</span></span>
+                        </li>
+                        <li class="nav-item" id="hgreat" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.great}}</span></span>
+                        </li>
+                        <li class="nav-item" id="hbad" style="display: block;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.bad}}</span></span>
+                        </li>
+                        <li class="nav-item" id="hnone" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">-</span></span>
+                        </li>
+                        {% else %}
+                        <li class="nav-item" id="hnormal" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.normal}}</span></span>
+                        </li>
+                        <li class="nav-item" id="hgreat" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.great}}</span></span>
+                        </li>
+                        <li class="nav-item" id="hbad" style="display: none;"> <span class="nav-link"><span class="hidden-xs-down dlevel">{{statePage.bad}}</span></span>
+                        </li>
+                        <li class="nav-item" id="hnone" style="display: block;"> <span class="nav-link"><span class="hidden-xs-down dlevel">-</span></span>
+                        </li>
+                        {% endif %}{% endif %} {% endif %}
+                    </ul>
+                </div>
+                <div class="card-title h4">{{statePage.diseaseList3}} <span><i class="mdi mdi-information-outline" id="afibinfo" data-toggle="modal" data-target="#afibInfo"style="color:#01c0c8"></i></span></div>
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="nav-item"><span class="nav-link hidden-xs-down" style="padding:0;">{{statePage.tratio}}</span>
+                    </li>
+                    <li class="nav-item"><span class="nav-link hidden-xs-down" style="padding:0;">{{statePage.bratio}}</span>
+                    </li>
+
+                </ul>
+                <div>
+                    <ul class="nav nav-justified">
+                        {% if stateData.tratio != null %}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down tratio">{{stateData.tratio}} %</span></span>
+                        </li>
+                        {% else %}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down tratio">-</span></span>
+                        </li>
+                        {% endif %} {% if stateData.bratio != null %}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down bratio" >{{stateData.bratio}} %</span></span>
+                        </li>
+                        {% else %}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down bratio">-</span></span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div class="card-body" id="d_detail" style="list-style:none; display:none;">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs customtab nav-justified" role="tablist" style="text-align: center;">
+                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#diabetes" role="tab" style="padding:0;"><span class="hidden-xs-down">{{statePage.diseaseList1}}</span></a> </li>
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#hypertension" role="tab" style="padding:0;"><span class="hidden-xs-down">{{statePage.diseaseList2}}</span></a> </li>
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#atrialfibrillation" role="tab" style="padding:0;"><span class="hidden-xs-down">{{statePage.diseaseList3}}</span></a> </li>
+                </ul>
+            </div>
+        </div>
+
+
+
+        <!-- 생체정보 -->
+        <div class="card ">
+            <div class="card-title h4">
+                <img src="/images/icon/new_menu_bio.png" width="30px" alt=""><span> {{statePage.cardList2}}</span>
+                <span><i class="mdi mdi-information-outline" id="binfo" data-toggle="modal" data-target="#biometricInfo" style="color:#01c0c8"></i></span>
+                <span class="float-right" onclick="bioinfo_open()">
+                     <i class="icons-Arrow-Down2" id="b_down" style="font-size: large; display: block;"></i>
+                     <i class="icons-Arrow-Up2" id="b_up" style="font-size: large; display: none;"></i>
+                 </span>
+            </div>
+            <div class="card-body" id="b_simple" style="list-style:none; display:block;">
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="nav-item">
+                        <span class="nav-link hidden-xs-down" style="padding:0;">{{statePage.bioinfoList1}}</span>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link hidden-xs-down" style="padding:0;">{{statePage.bioinfoList2}}</span>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link hidden-xs-down" style="padding:0;">{{statePage.bioinfoList3}}</span>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link hidden-xs-down" style="padding:0;">{{statePage.bioinfoList4}}</span>
+                    </li>
+                </ul>
+                <div>
+                    <ul class="nav nav-justified">
+                        {% if stateData.hravg != null %}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down hravg">{{stateData.hravg}}</span></span>
+                        </li>
+                        {%else%}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down hravg">-</span></span>
+                        </li>
+                        {%endif%}{% if stateData.rravg != null %}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down rravg">{{stateData.rravg}}</span></span>
+                        </li>
+                        {%else%}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down rravg">-</span></span>
+                        </li>
+                        {%endif%}{% if stateData.svavg != null %}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down svavg">{{stateData.svavg}}</span></span>
+                        </li>
+                        {%else%}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down svavg">-</span></span>
+                        </li>
+                        {%endif%}{% if stateData.svavg != null %}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down hrvavg">{{stateData.hrvavg}}</span></span>
+                        </li>
+                        {%else%}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down hrvavg">-</span></span>
+                        </li>
+                        {%endif%}
+                    </ul>
+                </div>
+            </div>
+            <div class="card-body" id="b_detail" style="list-style:none; display:none;">
+                <ul class="nav nav-tabs customtab nav-justified" role="tablist">
+                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#hr" role="tab" style="padding:0;"><span class="hidden-xs-down">{{statePage.bioinfoList1}}</span></a> </li>
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#rr" role="tab" style="padding:0;"><span class="hidden-xs-down">{{statePage.bioinfoList2}}</span></a> </li>
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#sv" role="tab" style="padding:0;"><span class="hidden-xs-down">{{statePage.bioinfoList3}}</span></a> </li>
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#hrv" role="tab" style="padding:0;"><span class="hidden-xs-down">{{statePage.bioinfoList4}}</span></a> </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane active" id="hr" role="tabpanel">
+                        <div class="p-10" id="hrdraw">
+                            <div class='text-center' id='hrempty' style='padding:3%; font-size: large; color: #dcdcdc;'>{{statePage.emptyData}}</div>
+                            <canvas id="hrchart" height="100px" width="200px"></canvas>
+                        </div>
+                        <div class="row" style="list-style: none; padding-top: 10px;">
+                            <div class="col text-center">
+                                <li>{{statePage.average}}</li>
+                            </div>
+                            <div class="col text-center">
+                                <li>{{statePage.maximum}}</li>
+                            </div>
+                            <div class="col text-center">
+                                <li>{{statePage.minimum}}</li>
+                            </div>
+                        </div>
+                        <div class="row" style="list-style: none;">
+                            <div class="col text-center">
+                                {%if stateData.hravg !=null%}
+                                <li class="hravg">{{stateData.hravg}}</li>
+                                {%else%}
+                                <li class="hravg">-</li>
+                                {%endif%}
+                            </div>
+                            <div class="col text-center">
+                                {%if stateData.hrmax !=null%}
+                                <li class="hrmax">{{stateData.hrmax}}</li>
+                                {%else%}
+                                <li class="hrmax">-</li>
+                                {%endif%}
+                            </div>
+                            <div class="col text-center">
+                                {%if stateData.hrmin !=null%}
+                                <li class="hrmin">{{stateData.hrmin}}</li>
+                                {%else%}
+                                <li class="hrmin">-</li>
+                                {%endif%}
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane" id="rr" role="tabpanel">
+                        <div class="p-10" id="rrdraw">
+                            <div class='text-center' id='rrempty' style='padding:3%; font-size: large; color: #dcdcdc;'>{{statePage.emptyData}}</div>
+                            <canvas id="rrchart" height="100px" width="200px"></canvas>
+                        </div>
+                        <div class="row" style="list-style: none; padding-top: 10px;">
+                            <div class="col text-center">
+                                <li>{{statePage.average}}</li>
+                            </div>
+                            <div class="col text-center">
+                                <li>{{statePage.maximum}}</li>
+                            </div>
+                            <div class="col text-center">
+                                <li>{{statePage.minimum}}</li>
+                            </div>
+                        </div>
+                        <div class="row" style="list-style: none;">
+                            <div class="col text-center">
+                                {%if stateData.rravg !=null%}
+                                <li class="rravg">{{stateData.rravg}}</li>
+                                {%else%}
+                                <li class="rravg">-</li>
+                                {%endif%}
+                            </div>
+                            <div class="col text-center">
+                                {%if stateData.rrmax !=null%}
+                                <li class="rrmax">{{stateData.rrmax}}</li>
+                                {%else%}
+                                <li class="rrmax">-</li>
+                                {%endif%}
+                            </div>
+                            <div class="col text-center">
+                                {%if stateData.rrmin !=null%}
+                                <li class="rrmin">{{stateData.rrmin}}</li>
+                                {%else%}
+                                <li class="rrmin">-</li>
+                                {%endif%}
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane" id="sv" role="tabpanel">
+                        <div class="p-10" id="svdraw">
+                            <div class='text-center hidden' id='svempty' style='padding:3%; font-size: large; color: #dcdcdc;'>{{statePage.emptyData}}</div>
+                            <canvas id="svchart" height="100px" width="200px"></canvas>
+                        </div>
+                        <div class="row" style="list-style: none; padding-top: 10px;">
+                            <div class="col text-center">
+                                <li>{{statePage.average}}</li>
+                            </div>
+                            <div class="col text-center">
+                                <li>{{statePage.maximum}}</li>
+                            </div>
+                            <div class="col text-center">
+                                <li>{{statePage.minimum}}</li>
+                            </div>
+                        </div>
+                        <div class="row" style="list-style: none;">
+                            <div class="col text-center">
+                                {%if stateData.svavg !=null%}
+                                <li class="svavg">{{stateData.svavg}}</li>
+                                {%else%}
+                                <li class="svavg">-</li>
+                                {%endif%}
+                            </div>
+                            <div class="col text-center">
+                                {%if stateData.svmax !=null%}
+                                <li class="svmax">{{stateData.svmax}}</li>
+                                {%else%}
+                                <li class="svmax">-</li>
+                                {%endif%}
+                            </div>
+                            <div class="col text-center">
+                                {%if stateData.svmin !=null%}
+                                <li class="svmin">{{stateData.svmin}}</li>
+                                {%else%}
+                                <li class="svmin">-</li>
+                                {%endif%}
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane" id="hrv" role="tabpanel">
+                        <div class="p-10" id="hrvdraw">
+                            <div class='text-center hidden' id='hrvempty' style='padding:3%; font-size: large; color: #dcdcdc;'>{{statePage.emptyData}}</div>
+                            <canvas id="hrvchart" height="100px" width="200px"></canvas>
+                        </div>
+                        <div class="row" style="list-style: none; padding-top: 10px;">
+                            <div class="col text-center">
+                                <li>{{statePage.average}}</li>
+                            </div>
+                            <div class="col text-center">
+                                <li>{{statePage.maximum}}</li>
+                            </div>
+                            <div class="col text-center">
+                                <li>{{statePage.minimum}}</li>
+                            </div>
+                        </div>
+                        <div class="row" style="list-style: none;">
+                            <div class="col text-center">
+                                {%if stateData.hrvavg !=null%}
+                                <li class="hrvavg">{{stateData.hrvavg}}</li>
+                                {%else%}
+                                <li class="hrvavg">-</li>
+                                {%endif%}
+                            </div>
+                            <div class="col text-center">
+                                {%if stateData.hrvmax !=null%}
+                                <li class="hrvmax">{{stateData.hrvmax}}</li>
+                                {%else%}
+                                <li class="hrvmax">-</li>
+                                {%endif%}
+                            </div>
+                            <div class="col text-center">
+                                {%if stateData.hrvmin !=null%}
+                                <li class="hrvmin">{{stateData.hrvmin}}</li>
+                                {%else%}
+                                <li class="hrvmin">-</li>
+                                {%endif%}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body" id="b_else" style="list-style:none;">
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="nav-item">
+                        <span class="nav-link hidden-xs-down" style="padding:0;">{{statePage.bioinfoList5}}</span>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link hidden-xs-down" style="padding:0;">{{statePage.bioinfoList6}}</span>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link hidden-xs-down" style="padding:0;">{{statePage.bioinfoList7}}</span>
+                    </li>
+                </ul>
+                <div>
+                    <ul class="nav nav-justified">
+                        {% if stateData.sdnn != null %}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down sdnn">{{stateData.sdnn}}</span></span>
+                        </li>
+                        {%else%}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down sdnn">-</span></span>
+                        </li>
+                        {%endif%} {% if stateData.rmssd != null %}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down rmssd">{{stateData.rmssd}}</span></span>
+                        </li>
+                        {%else%}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down rmssd">-</span></span>
+                        </li>
+                        {%endif%}{% if stateData.pnn50 != null %}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down pnn50">{{stateData.pnn50}} %</span></span>
+                        </li>
+                        {%else%}
+                        <li class="nav-item"> <span class="nav-link"><span class="hidden-xs-down pnn50">-</span></span>
+                        </li>
+                        {%endif%}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 스트레스 -->
+        <div class="card">
+            <div class="card-title h4">
+                <img src="/images/icon/new_menu_stress.png" width="30px" alt=""><span> {{statePage.cardList3}}</span>
+                <span><i class="mdi mdi-information-outline" id="stinfo" data-toggle="modal" data-target="#stressInfo" style="color:#01c0c8"></i></span>
+                <span class="float-right" onclick="stress_open()">
+                     <i class="icons-Arrow-Down2" id="st_down" style="font-size: large; display: block;"></i>
+                     <i class="icons-Arrow-Up2" id="st_up" style="font-size: large; display: none;"></i>
+                 </span>
+            </div>
+            <div class="card-body">
+                <p class="m-b-0" style="font-size: larger;">{{statePage.stress}} {%if stateData.stress != null%}
+                    <span class="float-right stressdata" style="font-size:large;">{{stateData.stress}}%</span> {%else%}
+                    <span class="float-right stressdata" style="font-size:large;">-%</span> {%endif%}
+                </p>
+                <!-- <div class="progress" style="height: 40px;">
+                     <div class="progress-bar bg-success" style="width: '{{stateData.stress}}'"> {{stateData.stress}} </div>
+                 </div> -->
+                <div id="st_detail" style="display:none; padding-top: 10px;">
+                    <!-- 차트수정: public/asset/node_modules/Chart.js/state-chart.js -->
+                    <div class="p-10" id="stressdraw">
+                        <div class='text-center hidden' id='stempty' style='padding:3%; font-size: large; color: #dcdcdc;'>{{statePage.emptyData}}</div>
+                        <canvas id="dstress" height="200px" width="350px"></canvas>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 수면 -->
+        <div class="card">
+            <div class="card-title h4">
+                <img src="/images/icon/new_menu_sleep.png" width="30px" alt=""><span> {{statePage.cardList4}}</span>
+                <span><i class="mdi mdi-information-outline" id="slinfo" data-toggle="modal" data-target="#sleepInfo" style="color:#01c0c8"></i></span>
+                <span class="float-right" onclick="sleep_open()">
+                     <i class="icons-Arrow-Down2" id="sl_down" style="font-size: large; display: block;"></i>
+                     <i class="icons-Arrow-Up2" id="sl_up" style="font-size: large; display: none;"></i>
+                 </span>
+            </div>
+            <div class="card-body" id="sl_detail" style="display:none; padding-top: 0;">
+                <p>{{statePage.sleepContents1}}{%if stateData.stress != null%}
+                    <span class="float-right apratio" style="font-size:large;">{{stateData.apratio}}%</span> {%else%}
+                    <span class="float-right apratio" style="font-size:large;">-%</span> {%endif%}
+                </p>
+                <!-- <div class="progress" style="width:70%;">
+                                     <div class="progress-bar bg-success" style="height: 40px; width: {{aprt}}%;"> {{aprt}}% </div>
+                                 </div> -->
+                <!-- <div class="progress" style="height: 40px;">
+                     <div class="progress-bar bg-success" style="width: {{stateData.apratio}}"> {{stateData.apratio}} </div>
+                 </div> -->
+                <div class="row" style="list-style: none; padding: 10px 0; border-bottom: 1px solid lightgray;">
+                    <div class="col text-center" style="padding:0;">
+                        <li>{{statePage.sleepContents2}}</li>
+                    </div>
+                    <div class="col text-center" style="padding:0;">
+                        <li>{{statePage.sleepContents3}}</li>
+                    </div>
+                    <div class="col text-center" style="padding:0;">
+                        <li>{{statePage.sleepContents4}}</li>
+                    </div>
+                    <!-- <div class="col text-center" style="padding:0;">
+                         <li>{{statePage.sleepContents5}}</li>
+                     </div> -->
+                </div>
+                <div>
+                    <div class="row" style="list-style: none; padding-top: 10px;">
+                        <div class="col text-center" style="padding:0;">
+                            <li>{%if stateData.slhour != null%}
+                                <span class="slhour">{{stateData.slhour}}</span> {%else%}
+                                <span class="slhour">- </span>{%endif%}
+                                <span>{{statePage.hour}}</span> {%if stateData.slminute != null%}
+                                <span class="slminute">{{stateData.slminute}}</span>{%else%}
+                                <span class="slminute">- </span>{%endif%}
+                                <span>{{statePage.minute}}</span>
+                            </li>
+                        </div>
+                        <div class="col text-center" style="padding:0;">
+                            <li>{%if stateData.apcount != null%}
+                                <span class="apcount">{{stateData.apcount}}</span>{%else%}
+                                <span class="apcount">- </span>{%endif%}
+                                <span>{{statePage.count}}</span>
+                            </li>
+                        </div>
+                        <div class="col text-center" style="padding:0;">
+                            <li>
+                                <!-- 무호흡 시간 -->
+                                {%if stateData.aphour != null%}
+                                <span class="aphour">{{stateData.aphour}}</span>{%else%}
+                                <span class="aphour">- </span>{%endif%}
+                                <span>{{statePage.hour}}</span>
+                                <!-- 무호흡 분 -->
+                                {%if stateData.apminute != null%}
+                                <span class="apminute">{{stateData.apminute}}</span>{%else%}
+                                <span class="apminute">- </span>{%endif%}
+                                <span>{{statePage.minute}}</span>
+                                <!-- 무호흡 초 -->
+                                {%if stateData.apsecond != null%}
+                                <span class="apsecond">{{stateData.apsecond}}</span>{%else%}
+                                <span class="apsecond">- </span>{%endif%}
+                                <span>{{statePage.second}}</span>
+                            </li>
+                        </div>
+                        <!-- <div class="col text-center" style="padding:0;">
+                             <li>{%if stateData.sltwist != null%}
+                                 <span class="sltwist">{{stateData.sltwist}}</span>{%else%}
+                                 <span class="sltwist">- </span>{%endif%}
+                                 <span>{{statePage.count}}</span>
+                             </li>
+                         </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="height: 100px; margin: 5px;"></div>
+    </div>
+</div>
+<!-- 질병 설명 모달 -->
+<div id="diseaseInfo" class="modal long-modal" tabindex="-1" role="dialog" aria-labelledby="longmodal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="longmodal">{{statePage.informationTitle1}}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li>{{statePage.dInfo1}}</li>
+                    {{statePage.dInfoContents1}}
+                    <div style="color:red">{{statePage.dInfoCaution1}}</div>
+                    <br>
+                    <li>{{statePage.dInfo2}}</li>
+                    {{statePage.dInfoContents2}}
+                    <div style="color:red">{{statePage.dInfoCaution2}}</div>
+                    <br>
+                    <li>{{statePage.dInfo3}}</li>
+                    {{statePage.dInfoContents3}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 질병 분류 설명 모달 -->
+<div id="classifyInfo" class="modal long-modal" tabindex="-1" role="dialog" aria-labelledby="longmodal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="longmodal">{{statePage.informationTitle5}}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <table class="table" style="text-align: center;">
+                    <thead>
+                        <tr>
+                            <th>{{statePage.infohead1}}</th>
+                            <th>{{statePage.infohead2}}</th>
+                            <th>{{statePage.infohead3}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{statePage.great}}</td>
+                            <td>{{statePage.dgreat}}</td>
+                            <td>{{statePage.hgreat}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{statePage.normal}}</td>
+                            <td>{{statePage.dnormal}}</td>
+                            <td>{{statePage.hnormal}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{statePage.bad}}</td>
+                            <td>{{statePage.dbad}}</td>
+                            <td>{{statePage.hbad}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 심방세동 설명 모달 -->
+<div id="afibInfo" class="modal long-modal" tabindex="-1" role="dialog" aria-labelledby="longmodal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="longmodal">{{statePage.diseaseList3}}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <table class="table" style="text-align: center;">
+                    <thead>
+                        <tr>
+                            <th>{{statePage.infohead1}}</th>
+                            <th>{{statePage.detailInfo}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{statePage.tachycardia}}</td>
+                            <td>{{statePage.tinfo}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{statePage.bradycardia}}</td>
+                            <td>{{statePage.binfo}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 생체정보 설명 모달 -->
+<div id="biometricInfo" class="modal" tabindex="-1" role="dialog" aria-labelledby="vcenter" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="vcenter">{{statePage.informationTitle2}}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li>{{statePage.bInfo1}}</li>
+                    {{statePage.bInfoContents1}}
+                    <br>
+                    <br>
+                    <li>{{statePage.bInfo2}}</li>
+                    {{statePage.bInfoContents2}}
+                    <br>
+                    <br>
+                    <li>{{statePage.bInfo3}}</li>
+                    {{statePage.bInfoContents3}}
+                    <br>
+                    <br>
+                    <li>{{statePage.bInfo4}}</li>
+                    {{statePage.bInfoContents4}}
+                    <br>
+                    <br>
+                    <li>{{statePage.bioinfoList5}}</li>
+                    {{statePage.bInfoContents5}}
+                    <br>
+                    <br>
+                    <li>{{statePage.bioinfoList6}}</li>
+                    {{statePage.bInfoContents6}}
+                    <br>
+                    <br>
+                    <li>{{statePage.bioinfoList7}}</li>
+                    {{statePage.bInfoContents7}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 스트레스 설명 모달 -->
+<div id="stressInfo" class="modal" tabindex="-1" role="dialog" aria-labelledby="vcenter" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="vcenter">{{statePage.informationTitle3}}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li style="color:blue">{{statePage.sInfo1}}</li>
+                    {{statePage.stInfoContents1}}
+                    <br>
+                    <li style="color:green">{{statePage.sInfo2}}</li>
+                    {{statePage.stInfoContents2}}
+                    <br>
+                    <li style="color:red">{{statePage.sInfo3}}</li>
+                    {{statePage.stInfoContents3}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 수면품질 설명 모달 -->
+<div id="sleepInfo" class="modal" tabindex="-1" role="dialog" aria-labelledby="vcenter" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="vcenter">{{statePage.informationTitle4}}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li>{{statePage.slInfo1}}</li>
+                    {{statePage.slInfoContents1}}
+                    <br>
+                    <li>{{statePage.slInfo2}}</li>
+                    {{statePage.slInfoContents2}}
+                    <br>
+                    <li>{{statePage.slInfo3}}</li>
+                    {{statePage.slInfoContents3}}
+                </ul>
+                <br>
+                <ul>
+                    <li style="color:blue">{{statePage.sInfo1}}</li>
+                    {{statePage.slInfoContents4}}
+                    <br>
+                    <li style="color:green">{{statePage.sInfo2}}</li>
+                    {{statePage.slInfoContents5}}
+                    <br>
+                    <li style="color:red">{{statePage.sInfo3}}</li>
+                    {{statePage.slInfoContents6}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %} {% block script %}
+
+<!--jquery knob -->
+<script src="/assets/node_modules/moment/moment.js"></script>
+<!-- Date Picker Plugin JavaScript -->
+<script src="/assets/node_modules/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+<script src="/assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="/assets/node_modules/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- Chart JS -->
+<!-- 건강상태 차트 수정 -->
+<script src="/web/state/js/state-chart.js"></script>
+<script src="/assets/node_modules/Chart.js/Chart.min.js"></script>
+<!-- Plugin JavaScript -->
+<script src="/javascripts/commonUtil.js"></script>
+<script src="/web/state/js/statesub.js"></script>
+
+
+<script>
+    let usercode = '{{userCode}}';
+    let accessToken = '{{accessToken}}';
+    let lang = '{{lang}}';
+</script>
+
+<script>
+    //chart 데이터 삽입 부분 
+    stateChartinit()
+
+    function stateChartinit() {
+        let emptyData = '{{statePage.emptyData}}',
+            biotime = '{{stateChart.bioTime}}'.split(',');
+
+        if ('{{stateChart.hr}}' != '') {
+            hrload = '{{stateChart.hr}}'.split(',');
+            statehrChart(hrload, biotime, emptyData);
+            $('#hrempty').hide();
+        } else {
+            $('#hrempty').show();
+            $('#hrchart').hide();
+        }
+        if ('{{stateChart.rr}}' != '') {
+            rrload = '{{stateChart.rr}}'.split(',');
+            staterrChart(rrload, biotime, emptyData);
+            $('#rrempty').hide();
+        } else {
+            $('#rrempty').show();
+            $('#rrchart').hide();
+        }
+        if ('{{stateChart.sv}}' != '') {
+            svload = '{{stateChart.sv}}'.split(',');
+            statesvChart(svload, biotime, emptyData);
+            $('#svempty').hide();
+        } else {
+            $('#svempty').show();
+            $('#svchart').hide();
+        }
+        if ('{{stateChart.hrv}}' != '') {
+            hrvload = '{{stateChart.hrv}}'.split(',');
+            statehrvChart(hrvload, biotime, emptyData);
+            $('#hrvempty').hide();
+        } else {
+            $('#hrvempty').show();
+            $('#hrvchart').hide();
+        }
+        if ('{{stateChart.stress}}' != '') {
+            stressload = '{{stateChart.stress}}'.split(',');
+            stresstime = '{{stateChart.stressTime}}'.split(',');
+            stateStressChart(stressload, stresstime, emptyData);
+            $('#stempty').hide();
+        } else {
+            $('#stempty').show();
+            $('#dstress').hide();
+        }
+    }
+</script>
+
+{% endblock %}

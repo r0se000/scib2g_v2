@@ -1,0 +1,112 @@
+ul, li{
+    margin:0;
+    padding: 0;
+    list-style: none;
+}
+.page-titles{
+    text-align: left;
+}
+#NoConnectBtn{
+    margin-left: 10px;
+}
+#allBtn{ /* 전체조회 Button */
+    float: left;
+    font-weight: bold;
+    margin-left: 10px;
+    background-color: lightgray;
+}
+#dateBtn, #nameBtn{ /* 날짜, 이름조회 Button */
+    float: left;
+    margin-left: 1px;
+}
+/* 날짜 조회 form */
+#searchDateFrm{
+    border-color: lightgray;
+    margin-top:20px;
+    margin-bottom:20px;
+    display: none;
+}
+#state-datepicker1, #state-datepicker2{
+    text-align: left;
+    padding:14px;
+    width:120px;
+}
+#searchDateFrm>input[type=submit]{
+    text-align:center;
+    font-size: 11pt;
+    width:50px;
+    padding:4px;
+    border-radius: 4px;
+    border:none;
+    background-color: lightgray;
+}
+/* 이름 조회 form */
+#searchNameFrm{
+    display:none;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+#search_name{
+    width:85%;
+    float:left;
+    margin-top:5px;
+}
+#searchNameFrm>input[type=submit]{
+    text-align:center;
+    font-size: 11pt;
+    margin-top:9px;
+    width:50px;
+    padding:4px;
+    border-radius: 4px;
+    border:none;
+    background-color: lightgray;
+}
+/* 응급 발생 이력 리스트 */
+#p_rimelist{
+    overflow: auto;
+    margin-bottom: 10px;
+}
+#p_rimelist>div>li{
+    float:left;
+    text-align: center;
+    height:50px;
+    line-height: 50px;
+    border-bottom:1px solid #ddd;
+    width:15%;
+}
+#p_rimelist>div>li:nth-child(4n+1){
+    width:15%;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+#p_rimelist>div>li:nth-child(4n+2){
+    width:30%;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+#p_rimelist>div>li:nth-child(4n+3){
+    width:30%;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+#p_rimelist>div>li:nth-child(4n+4){
+    width:20%;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+
+/* 상세 정보 테이블 */
+#user-detail-table{
+    font-size: 11pt;
+    text-align: left;
+}
+#userlist>tr>td{
+    border-bottom: 1px solid #ddd;
+}
+#userlist>tr>td:nth-child(1){
+    border-right: 1px solid #ddd;
+}

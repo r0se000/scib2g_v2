@@ -1,0 +1,185 @@
+<!--================================================================
+ *  건강 현황 - 스트레스 정보 html
+ *  @author MiYeong Jang
+ *  @since 
+ *  @history 2021.05.18 JG 페이지 초기화 함수(init) 및 이벤트 핸들러 추가,
+                           페이지 번역 작업, dom element id 재지정,
+                           미사용 script, css 삭제                          
+ *  ================================================================
+  -->
+{% extends 'templates/appmainbase.html' %} {% block head %}
+<!-- Date picker plugins css -->
+<link href="../../../assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<link href="../../../assets/node_modules/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+<link href="../../../assets/node_modules/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+
+<style>
+    [class*="empty-notice"] {
+        display: none;
+        padding: 3%;
+        font-size: large;
+        color: #dcdcdc;
+    }
+    
+    [id^="btn-level"],
+    #chart-notice-area {
+        display: none;
+    }
+</style>
+{% endblock %} {% block contents %}
+<div class="skin-megna page-wrapper" style="padding: 0px;">
+    <div class="container-fluid">
+        <div class="row page-titles" style="list-style:none;  margin-bottom:0;">
+            <div class="col">
+                <h4 class="text-center">
+                    <i class="fas fa-notes-medical"></i>
+                    <span id="user-name-info">{{userName}}</span>{{stressPage.pageName}}
+                </h4>
+                <hr class="m-t-24 m-b-0">
+
+
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs customtab nav-justified" role="tablist" style="text-align: center;">
+                    <li class="nav-item">
+                        <a id="tab-daily" class="nav-link active" data-toggle="tab" href="#tab-contents" role="tab">
+                            <span class="hidden-xs-down">{{tabTitle.daily}}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="tab-weekly" class="nav-link" data-toggle="tab" href="#tab-contents" role="tab">
+                            <span class="hidden-xs-down">{{tabTitle.weekly}}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="tab-monthly" class="nav-link" data-toggle="tab" href="#tab-contents" role="tab">
+                            <span class="hidden-xs-down">{{tabTitle.monthly}}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="tab-yearly" class="nav-link" data-toggle="tab" href="#tab-contents" role="tab">
+                            <span class="hidden-xs-down">{{tabTitle.yearly}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="page-titles">
+            <input type="text" class="form-control" id="stress-datepicker" style="text-align: center;">
+        </div>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab-contents" role="tabpanel">
+                <div class="card">
+                    <div>
+                        <h4 class="card-title" style="margin: 20px 20px 0px;">{{stressPage.chartTitle1}}
+                            <span class="float-right">
+                                <h3>
+                                    <span id="stress-scale-title">{{initStressInfo.stressAvg}}</span>
+                            </h3>
+                            </span>
+                        </h4>
+                        <div class="card-body">
+                            <div class="text-center">
+                                <div id="knob-empty-notice" class="empty-notice text-center">{{emptyData}}</div>
+                                <input id="stress-knob" data-plugin="knob" data-width="155" data-height="155" data-linecap=round data-step="0.1" value="{{initData.data0.stressScale}}" data-skin="tron" data-angleOffset="0" data-readOnly=true data-thickness=".1" />
+                            </div>
+                        </div>
+                        <div class="row" style="list-style: none; padding-top: 10px;">
+                            <div class="col text-center">
+                                <li>{{stressPage.minTitle}}</li>
+                            </div>
+                            <div class="col text-center">
+                                <li id="stress-level0">
+                                    <span id="btn-level0" class="btn waves-effect waves-light btn-rounded btn-info">
+                                        {{stressPage.stressLevel0}}
+                                    </span>
+                                </li>
+                                <li id="stress-level1">
+                                    <span id="btn-level1" class="btn waves-effect waves-light btn-rounded btn-success">
+                                        {{stressPage.stressLevel1}}
+                                    </span>
+                                </li>
+                                <li id="stress-level2">
+                                    <span id="btn-level2" class="btn waves-effect waves-light btn-rounded btn-danger">
+                                        {{stressPage.stressLevel2}}
+                                    </span>
+                                </li>
+                            </div>
+                            <div class="col text-center">
+                                <li>{{stressPage.maxTitle}}</li>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="row" style="list-style: none;">
+                                <div class="col text-center">
+                                    <li id="stress-scale-min">{{initStressInfo.stressMin}}</li>
+                                </div>
+                                <div class="col text-center">
+                                    <li></li>
+                                </div>
+                                <div class="col text-center">
+                                    <li id="stress-scale-max">{{initStressInfo.stressScaleMax}}</li>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+                <div class="card">
+                    <h4 class="card-title" style="margin: 20px 20px 0px;">{{stressPage.chartTitle2}}</h4>
+                    <div class="card-body">
+                        <div class="empty-notice text-center">{{emptyData}}</div>
+                        <canvas id="stress-chart-canvas" height="200" width="350"></canvas>
+                        <div id="chart-notice-area">
+                            <span>{{stressPage.chartNotice}}</span>
+                            <ul>
+                                <li>
+                                    <span class="text-info">{{stressPage.stressLevel0}}</span>
+                                    <span>: {{stressPage.level0Notice}}</span>
+                                </li>
+                                <li>
+                                    <span class="text-success">{{stressPage.stressLevel1}}</span>
+                                    <span>: {{stressPage.level1Notice}}</span>
+                                </li>
+                                <li>
+                                    <span class="text-danger">{{stressPage.stressLevel2}}</span>
+                                    <span>: {{stressPage.level2Notice}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="height: 100px; margin: 5px;"></div>
+    </div>
+</div>
+{% endblock %} {% block script %}
+<!-- Plugin JavaScript -->
+<script src="../../../assets/node_modules/moment/moment.js"></script>
+<!-- Date Picker Plugin JavaScript -->
+<script src="../../../assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="../../../assets/node_modules/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+<script src="../../../assets/node_modules/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- Chart JS -->
+<script src="../../../assets/node_modules/Chart.js/Chart.min.js"></script>
+<!--jquery knob -->
+<script src="../../../assets/node_modules/knob/jquery.knob.js"></script>
+
+<!-- Custom Script -->
+<script src="/javascripts/config.js"></script>
+<script src="/javascripts/commonUtil.js"></script>
+<script src="/web/status/js/stress.js"></script>
+<script>
+    let userCode = '{{userCode}}';
+    let pUserCode = '{{pUserCode}}';
+    let initData = '{{stressValues | safe }}';
+
+    initData = {
+        "stressValues": JSON.parse(initData)
+    };
+    init(initData);
+</script>
+
+{% endblock %}

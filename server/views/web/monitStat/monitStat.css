@@ -1,0 +1,75 @@
+.col-sm-31 {
+    flex: 0 0 32%;
+    max-width: 32%;
+    margin: 8px;
+}
+.col-sm-32 {
+    flex: 0 0 10%;
+    max-width: 5%;
+    max-height: 5%;
+    margin: 8px;
+    position: relative;
+    bottom: 15px;
+}
+
+.col-sm-33 {
+    flex: 0 0 10%;
+    max-width: 5%;
+    max-height: 5%;
+    margin: 8px;
+    position: relative;
+    bottom: 15px;
+}
+.col-sm-34 {
+    flex: 0 0 10%;
+    max-width: 10%;
+    max-height: 5%;
+    margin: 8px;
+    position: relative;
+    bottom: 15px;
+}
+
+
+/* -------------------------------------------- botton css -------------------------------------------- */
+button {
+    position: relative;
+    left: 30px;
+}
+button:hover {
+    border-color: rgba(0, 0, 0, 0.234);
+}
+/* ---------------------------------------------------------------------------------------------------- */
+
+
+/* -------------------------------------------- font css // select css -------------------------------------------- */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+
+select {
+    font-family: "Noto Sansf KR", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+
+    color: #444;
+    background-color: #fff;
+
+    padding: 0.6em 1.4em 0.5em 0.8em;
+    margin: 0;
+    position: relative;
+    left: 15px;
+
+    border: 1px solid #aaa;
+    border-radius: 0.5em;
+    box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
+    border-color: rgba(213, 212, 212, 0.583);
+}
+
+select:hover {
+    border-color: rgba(0, 0, 0, 0.234);
+  }
+
+#age-category {
+    position: relative;
+    left: 20px;
+}  
+/* ---------------------------------------------------------------------------------------------------------------- */

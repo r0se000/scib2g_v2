@@ -1,0 +1,40 @@
+<!--
+    라우팅, 시스템 오류 알림 화면
+    @author JG, Jo
+    @since 2021.04.30
+    @history 2021.05.07 JG 시스템 에러 알림 추가 
+-->
+
+{% extends "templates/mainbase.html" %}
+{% block head %}
+{%endblock%}
+
+{% block contents%}
+<div class="skin-megna page-wrapper" style="padding: 0;">
+    <div class="container-fluid">
+        <div class="alert alert-warning mt-5" style="list-style:none; display:block;">
+
+            <h3 class="text-warning">
+                <i class="fa fa-exclamation-triangle"></i>
+                {{errorTitle}}
+            </h3>
+            <div class="row ml-2">{{errorMsg}}</div>    
+        </div> <!-- alert(E) -->
+
+        <!-- <div class="float-right">
+            <button id="login-btn" class="btn waves-effect waves-light btn-success float-center">Login</button>
+        </div> -->
+
+    </div> <!-- container-fluid(E) -->
+</div> <!-- page-wrapper(E) -->
+{%endblock%}
+
+{% block script %}
+<script>
+    init(); // 에러 페이지 초기 실행 함수 JG 2021.04.30
+
+    function init() {
+        //window.parent.postMessage({action: 'removeClickEvent'}, '*');
+    }
+</script>
+{%endblock%}

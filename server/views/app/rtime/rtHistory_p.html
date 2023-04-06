@@ -1,0 +1,117 @@
+<!--================================================================
+ *  실시간 이력조회 html
+ *  @author MiYeong Jang
+ *  @since 
+ *  @history 2021.06.08 MY 최초작성                   
+ *  ================================================================
+  -->
+{% extends 'templates/appmainbase.html' %} {% block head %}
+<!-- Date picker plugins css -->
+<link href="/assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<link href="/assets/node_modules/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+<link href="/assets/node_modules/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=1, user-scalable=0">
+
+<style>
+    [class*="empty-notice"] {
+        display: none;
+        padding: 3%;
+        font-size: large;
+        color: #dcdcdc;
+    }
+</style>
+{% endblock %} {% block contents %}
+<div class="skin-megna page-wrapper" style="padding: 0px;">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <h4 class="col text-center" style="margin: 0 10px 10px 10px; padding: 5px;">
+                <i class="fas fa-notes-medical"></i>
+                <span id="user-name-info">{{userName}}</span>{{rtHisPage.pageName}}
+            </h4>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-sm-5">
+                <select class="form-control" id="historySelect">
+                    <option value="1">{{rtHisPage.selectList1}}</option>
+                    <option value="5">{{rtHisPage.selectList2}}</option>
+                    <option value="30">{{rtHisPage.selectList3}}</option>
+                    <option value="60">{{rtHisPage.selectList4}}</option>
+                    <option value="120">{{rtHisPage.selectList5}}</option>
+                    <option value="360">{{rtHisPage.selectList6}}</option>
+            </select>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-title" style="margin: 20px 20px 0px;">{{rtHisPage.hr}}</h3>
+            <div class="card-body">
+                <span>{{rtHisPage.hrNotice}}</span>
+                <div class="empty-notice text-center">{{emptyData}}</div>
+                <canvas id="hr-chart-canvas" height="150" width="200"></canvas>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-title" style="margin: 20px 20px 0px;">{{rtHisPage.rr}}</h3>
+            <div class="card-body">
+                <span>{{rtHisPage.rrNotice}}</span>
+                <div class="empty-notice text-center">{{emptyData}}</div>
+                <canvas id="rr-chart-canvas" height="150" width="200"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h3 class="card-title" style="margin: 20px 20px 0px;">{{rtHisPage.sv}}</h3>
+            <div class="card-body">
+                <span>{{rtHisPage.svNotice}}</span>
+                <div class="empty-notice text-center">{{emptyData}}</div>
+                <canvas id="sv-chart-canvas" height="150" width="200"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h3 class="card-title" style="margin: 20px 20px 0px;">{{rtHisPage.hrv}}</h3>
+            <div class="card-body">
+                <span>{{rtHisPage.hrvNotice}}</span>
+                <div class="empty-notice text-center">{{emptyData}}</div>
+                <canvas id="hrv-chart-canvas" height="150" width="200"></canvas>
+            </div>
+        </div>
+        <div style="height: 100px; margin: 5px;"></div>
+    </div>
+</div>
+
+
+{% endblock %} {% block script %}
+<script src="/web/rtime/js/rtHistory.js"></script>
+<script>
+    let userCode = '{{userCode}}';
+    let pUserCode = '{{pUserCode}}';
+    let hData = '{{historyData | safe}}'
+    let historyData = JSON.parse(hData)
+
+    init()
+</script>
+<!-- Chart JS -->
+
+<script src="/assets/node_modules/Chart.js/Chart.min.js"></script>
+
+<!-- Custom Script -->
+<script src="/javascripts/config.js"></script>
+<script src="/javascripts/commonUtil.js"></script>
+
+<script>
+    let timeLine = historyData.timeline,
+        hrData = historyData.hr,
+        rrData = historyData.rr,
+        svData = historyData.sv,
+        hrvData = historyData.hrv
+
+
+    historyChartDraw("#hr-chart-canvas", timeLine, hrData, "#009efb");
+    rrChart = historyChartDraw("#rr-chart-canvas", timeLine, rrData, "#26c6da");
+    svChart = historyChartDraw("#sv-chart-canvas", timeLine, svData, "#ffbc34");
+    hrvChart = historyChartDraw("#hrv-chart-canvas", timeLine, hrvData, "#7460ee");
+</script>
+
+{% endblock %}

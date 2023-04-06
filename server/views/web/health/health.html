@@ -1,0 +1,136 @@
+{% extends "templates/mainbase.html" %}
+
+<!-- ------------------------------------------------------------- -->
+{% block style%}
+<link href="/assets/node_modules/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+<link href="/assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/assets/icons/material-design-iconic-font/css/material-design-iconic-font.css">
+
+<style>
+    .col-sm-31 {
+        flex: 10 10 32%;
+        max-width: 33%;
+        margin: 8px;
+    }
+    
+    .form-control {
+        width: auto;
+    }
+</style>
+
+{%endblock%}
+<!-- ------------------------------------------------------------- -->
+
+<!-- ------------------------------------------------------------- -->
+{% block contents%}
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title m-b-0" style="margin:auto; text-align: center;">현재시간</h3>
+                <br>
+                <p class="card-title m-t-5 h4" id="clock-target" style="margin:auto; text-align: center;">ㅇㅇ</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title m-b-0" style="margin:auto; text-align: center;">금일 모니터링 발생</h3>
+                <br>
+                <p class="card-title m-t-5 h4" id="today-emergency-count" style="margin:auto; text-align: center;">
+                    {{emCount}}건</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-31">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title m-b-0" style="margin:auto; text-align: center;">건강지수(좋음)</h3>
+                <br>
+                <p class="card-title m-t-5 h4" id="safety-cnt" style="margin:auto; text-align: center;"></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-31">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title m-b-0" style="margin:auto; text-align: center;">건강지수(보통)</h3>
+                <br>
+                <p class="card-title m-t-5 h4" id="concern-cnt" style="margin:auto; text-align: center;"></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-31">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title m-b-0" style="margin:auto; text-align: center;">건강지수(나쁨)</h3>
+                <br>
+                <p class="card-title m-t-5 h4" id="careful-cnt" style="margin:auto; text-align: center;"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title m-b-0" style="margin:auto;">이전 건강상태 데이터</h3>
+                <h5>※관리 대상자의 이전 건강상태 분석값을 보여줍니다.</h5>
+            </div>
+            <div>
+                <label for="trip-start" class="card-title m-b-0" style="font-size:18px;">날짜 검색</label>
+                <input class="form-control" type="date" id="trip-start" minlength="4" maxlength="8">
+                <select class="form-control" id="classify-category">
+                    <option value="전체" selected>전체</option>
+                    <option value="좋음">좋음</option>
+                    <option value="보통">보통</option>
+                    <option value="나쁨">나쁨</option>
+                </select>
+                <button class="form-control" id="select_date_button" style="background-color: rgb(224, 223, 223);">조회</button>
+                <button type="button" class="form-control" id="excelDownload" style="background-color: rgb(224, 223, 223);">다운로드</button>
+            </div>
+
+            <p class="text-muted"></p>
+            <div class="table-responsive">
+                <table class="table table-hover h4" id="user-table" style="text-align:center">
+                    <thead>
+                        <tr>
+                            <th>성명</th>
+                            <th>대상자 ID</th>
+                            <th>심박수</th>
+                            <th>건강지수</th>
+                            <th>날짜</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userlist">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+<!-- ------------------------------------------------------------- -->
+
+
+<!-- ------------------------------------------------------------- -->
+{%block script%}
+<script type="text/javascript" src="/web/health/health.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+<!-- script 작성 -->
+<script>
+    let accessToken = '{{accessToken}}';
+    let userList = '{{userList | safe}}';
+    userList = JSON.parse(userList);
+    init();
+</script>
+
+{% endblock %}

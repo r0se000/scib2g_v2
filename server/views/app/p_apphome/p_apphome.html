@@ -1,0 +1,202 @@
+{% extends "templates/appmainbase.html" %}
+<!-- ------------------------------------------------------------- -->
+{% block head %}
+<!-- CSS -->
+<!-- datepicker CSS -->
+<link href="/assets/node_modules/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+<link href="/assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/assets/icons/material-design-iconic-font/css/material-design-iconic-font.css">
+
+<style>
+    .table td,
+    .table th {
+        padding: 1rem 0.3rem;
+    }
+</style>
+{%endblock%}
+<!-- ------------------------------------------------------------- -->
+
+
+
+<!-- ------------------------------------------------------------- -->
+<!-- Content 시작 -->
+{% block contents%}
+<!-- html -->
+<div class="skin-megna page-wrapper" style="padding: 0; overflow-y: scroll;">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <div class="col-sm-6" style="margin:auto;">
+                <div class="card m-b-0">
+                    <h3 class="card-title" style="margin:auto; text-align: center;">현재시간</h3>
+                    <br>
+                    <p class="card-title m-t-5 h4" id="clock-target" style="margin:auto; text-align: center;"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">모니터링 발생</h4>
+                <h6 class="card-subtitle">확인되지 않은 모니터링 발생 목록입니다.</h6>
+                <div class="table-responsive">
+                    <table class="table" id="em-list-table" style="text-align: center;">
+                        <thead>
+                            <tr>
+                                <th>이름</th>
+                                <th>발생시간</th>
+                                <th>세부정보</th>
+                                <th>모니터링 확인</th>
+                            </tr>
+                        </thead>
+                        <tbody id="em-list">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">관제 확인 모니터링목록</h4>
+                <h6 class="card-subtitle">조차가 완료되지 않은 모니터링 목록입니다. 웹에서 조치사항을 입력해주세요. <br><br>최근 발생한 모니터링 목록부터 나타납니다.</h6>
+                <div class="table-responsive">
+                    <table class="table" id="check-list-table" style="text-align: center;">
+                        <thead>
+                            <tr>
+                                <th>이름</th>
+                                <th>발생시간</th>
+                                <th>세부정보</th>
+                                <th>모니터링 확인</th>
+                            </tr>
+                        </thead>
+                        <tbody id="check-contents-list">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div style="height: 100px; margin: 5px;"></div>
+    </div>
+</div>
+<!-- 응급 세부정보 모달 -->
+<div id="em-detail" class="modal bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="longmodal" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="longmodal">세부정보</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover" id="em-detail-table" style=" text-align:center">
+                    <tbody id="emDetail">
+                        <tr>
+                            <td>성명</td>
+                            <td id="em-detail-name"></td>
+                        </tr>
+                        <tr>
+                            <td>생년월일</td>
+                            <td id="em-detail-birth"></td>
+                        </tr>
+                        <tr>
+                            <td>성별</td>
+                            <td id="em-detail-gender"></td>
+                        </tr>
+                        <tr>
+                            <td>주소</td>
+                            <td id="em-detail-address"></td>
+                        </tr>
+                        <tr>
+                            <td>개인 연락처</td>
+                            <td id="em-detail-user"></td>
+                        </tr>
+                        <tr>
+                            <td>보호자 연락처</td>
+                            <td id="em-detail-protector"></td>
+                        </tr>
+                        <tr>
+                            <td>모니터링 발생 시간</td>
+                            <td id="em-detail-em-time"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div>모니터링 발생 시점 생체정보</div>
+                <div></div>
+                <div>
+                    <canvas id="bioinfo-chart-canvas" height="100" width="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- 조치사항 세부정보 모달 -->
+<div id="check-contents-detail" class="modal long-modal" tabindex="-1" role="dialog" aria-labelledby="longmodal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="longmodal">세부정보</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover" id="user-detail-table" style=" text-align:center">
+                    <tbody id="userlist">
+                        <tr>
+                            <td>성명</td>
+                            <td id="check-detail-name"></td>
+                        </tr>
+                        <tr>
+                            <td>생년월일</td>
+                            <td id="check-detail-birth"></td>
+                        </tr>
+                        <tr>
+                            <td>성별</td>
+                            <td id="check-detail-gender"></td>
+                        </tr>
+                        <tr>
+                            <td>개인 연락처</td>
+                            <td id="check-detail-user"></td>
+                        </tr>
+                        <tr>
+                            <td>보호자 연락처</td>
+                            <td id="check-detail-protector"></td>
+                        </tr>
+                        <tr>
+                            <tr>
+                                <td>모니터링 발생 시간</td>
+                                <td id="check-detail-em-time"></td>
+                            </tr>
+                            <tr>
+                                <td>모니터링 알림 확인 시간</td>
+                                <td id="check-detail-em-check-time"></td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+<!-- ------------------------------------------------------------- -->
+
+
+
+<!-- ------------------------------------------------------------- -->
+{% block script %}
+<script src="/javascripts/config.js"></script>
+<script src="/assets/node_modules/moment/moment.js"></script>
+<script src="/assets/node_modules/Chart.js/Chart.min.js"></script>
+<script src="/javascripts/commonUtil.js"></script>
+<script type="text/javascript" src="/app/p_apphome/p_apphome.js"></script>
+<script>
+    let userCode = '{{userCode}}',
+        emergencyList = JSON.parse('{{emergencyList | safe}}'),
+        checkList = JSON.parse('{{checkList | safe}}'),
+        emDetail = JSON.parse('{{selectEmDetail | safe}}');
+
+
+    init();
+</script>
+
+{% endblock %}

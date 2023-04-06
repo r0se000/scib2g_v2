@@ -1,0 +1,157 @@
+<!--================================================================
+ *  실시간 생체정보 html
+ *  @author MiYeong Jang
+ *  @since 2021.06.02.
+ *  @history 2021.06.02. 최초작성
+             2021.06.03. 항목별 버튼 추가
+ *  ================================================================-->
+
+{% extends "templates/appmainbase.html" %}
+<!-- datepicker CSS -->
+{% block head %}
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=1.0" />
+<!-- <link rel="stylesheet" href="/assets/icons/material-design-iconic-font/css/material-design-iconic-font.css"> -->
+<!-- <link rel="stylesheet" type="text/css" href="/stylesheets/default.css" /> -->
+<link rel="stylesheet" type="text/css" href="/stylesheets/app.css" />
+<link href="assets/node_modules/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+<style>
+    .active {
+        margin-top: 0.7em;
+        margin-bottom: 0;
+        font-size: 9pt;
+    }
+    
+    .deactive {
+        display: none;
+    }
+</style>{%endblock%}
+
+<!-- Content 시작 -->
+{% block contents%}
+<div class="skin-megna page-wrapper" style="padding: 0; overflow-x: hidden;">
+    <!-- <div class="container-fluid"> -->
+    <div class="row page-titles">
+        <h4 class="col text-center" style="margin: 0 10px 10px 10px; padding: 5px;">
+            <label id="label-user" for="user-select">사용자 선택</label>
+            <select id="user-select" name="user" class="form-control custom-select" style="text-align:center">
+                <option value="0">성명</option>
+            </select>
+        </h4>
+    </div>
+
+    <div class="body deactive">
+        <div id="app">
+            <div class="m-l-5 sscontainer">ss
+                <span id="ssrate"></span>
+            </div>
+            <!-- Live 메뉴 -->
+            <div class="contentContainer graphsContainer transparentContainer" id="content_dashboard">
+                <div class="graphsContainer">
+                    <!-- chart부분 -->
+                    <div class="graphsArea chart" style="overflow-x: hidden">
+                        <svg version="1.0" id="chart" class="chartContainer" viewBox="100 10 500 100">
+                             <title id="title"></title>
+                             <g class="grid" id="chartXGrid"/>
+                             <g class="grid" id="chartYGrid"/>
+                             <defs>
+                             <linearGradient id="chartFillGradient" x1="0" x2="0" y1="0" y2="1">
+                                 <stop class="begin" offset="0"/>
+                                 <stop class="end" offset="100"/>
+                             </linearGradient>
+                             </defs>
+                         </svg>
+                    </div>
+                    <!-- chart부분 -->
+                    <!-- button 부분 -->
+
+                    <div class="graphsArea respirationrate" style="height: 133px; width: 50%;">
+                        <button class="datasetbutton primary primaryrr" id="respirationratebutton" dataset="rr">
+                             <span class="datasetName">호흡수</span>
+                             <span class="rateValue" id="respirationrate"></span>
+                             <span class="datasetFooter">회/분</span>
+                         </button>
+                    </div>
+
+                    <div class="graphsArea heartrate" style="height: 133px; width: 50%;">
+                        <button class="datasetbutton primary primaryhr selected" id="heartratebutton" dataset="hr">
+                             <span class="datasetName">심박수</span>
+                             <span class="rateValue" id="heartrate"></span>
+                             <span class="datasetFooter">회/분</span>
+                         </button>
+                    </div>
+                    <div class="graphsArea strokevolume" style="height: 133px; width: 50%;">
+                        <button class="datasetbutton secondary secondarysv" id="strokevolumebutton" dataset="sv">
+                             <span class="datasetName">심박출량</span>
+                             <span class="rateValue" id="strokevolume"></span>
+                             <span class="datasetFooter">ul</span>
+                         </button>
+                    </div>
+                    <div class="graphsArea heartratevariability" style="height: 133px; width: 50%;">
+                        <button class="datasetbutton secondary secondaryhrv" id="heartratevariabilitybutton" dataset="hrv">
+                             <span class="datasetName">심박변이도</span>
+                             <span class="rateValue" id="heartratevariability"></span>
+                             <span class="datasetFooter">ms</span>
+                         </button>
+                    </div>
+                    <!-- button 부분 -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-auto m-t-10">
+        <button type="button" class="btn btn-block btn-lg btn-dark" id="btn-history">이력조회</button>
+    </div>
+    <div style="height: 100px; margin: 5px;"></div>
+</div>
+
+
+
+{% endblock %} {% block script %}
+
+
+<script src="/assets/node_modules/moment/moment.js"></script>
+<!-- Chart JS -->
+
+<script src="/assets/node_modules/Chart.js/Chart.min.js"></script>
+<script src="/assets/node_modules/sweetalert2/dist/sweetalert2.all.min.js" aria-hidden="true"></script>
+<script src="/assets/node_modules/sweetalert2/sweet-alert.init.js" aria-hidden="true"></script>
+<!-- Plugin JavaScript -->
+<script src="/javascripts/config.js"></script>
+<script src="/javascripts/commonUtil.js"></script>
+
+
+
+<script src="/web/rtime/js/rtime.js"></script>
+
+<script>
+    let userCode = '{{userCode}}',
+        pUserCode = '{{pUserCode}}',
+        accessToken = '{{accessToken}}';
+    let selectuserList = '{{userList | safe}}';
+    selectuserList = JSON.parse(selectuserList);
+    let userCount = Object.keys(selectuserList).length
+    let hrtitle = '심박수';
+    let rrtitle = '호흡수';
+    let svtitle = '심박출량';
+    let hrvtitle = '심박변이도';
+    // let rtimeData = JSON.parse(rtData);
+
+    init()
+
+    $('#btn-history').on('click', function() {
+        let selectUserCode = ($('#user-select').val());
+        if (selectUserCode != 0) {
+
+            location.href = "/api/rtime/rtimeHistory" + "?userCode=" + userCode + "&selectUserCode=" + selectUserCode + "&lang=ko&accessToken=" + accessToken;
+        } else {
+            location.href = "/api/rtime/rtimeHistory" + "?userCode=" + userCode + "&lang=ko&accessToken=" + accessToken;
+        }
+
+    })
+</script>
+<!-- <script type="text/javascript" src="/web/rtime/js/original/algorithms.js"></script>
+<script type="text/javascript" src="/web/rtime/js/original/fakeBackend.js"></script> -->
+<script type="text/javascript" src="/web/rtime/js/original/touch.js"></script>
+<script type="text/javascript" src="/web/rtime/js/original/graphs.js"></script>
+
+{% endblock %}
