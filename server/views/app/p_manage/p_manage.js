@@ -64,21 +64,17 @@ $(function() {
         },
         cmmAsync = false,
         cmmSucc = function(result) {
-            let rtimeLength = Object.keys(result.userList.rowLength).length
-            if (result.userList.rowLength == 0) {
-                alert("유저리스트가 존재하지 않습니다.");
-            } else {
-                for (let i = 0; i < result.userList.rowLength; i++) {
-                    const temp = document.createElement("div")
-                    temp.setAttribute(`id`, `${result.userList.rows[i].user_code}`);
-                    temp.innerHTML = `
+            for (let i = 0; i < result.userList.rowLength; i++) {
+                console.log(result.userList.rows[i].user_code)
+                const temp = document.createElement("div")
+                temp.setAttribute(`id`, `${result.userList.rows[i].user_code}`);
+                temp.innerHTML = `
                 <li id ="name_${result.userList.rows[i].user_code}" onclick = "showInfo('${result.userList.rows[i].user_code}')">${result.userList.rows[i].name}</li>
                 <li id ="user_code_${result.userList.rows[i].user_code}" onclick = "showInfo('${result.userList.rows[i].user_code}')">${result.userList.rows[i].user_code}</li>
                 <li id = "registerDate_${result.userList.rows[i].user_code}" onclick = "showInfo('${result.userList.rows[i].user_code}')">${result.userList.rows[i].user_register_date}</li>
                 <li id = "count_${result.userList.rows[i].user_code}" onclick = "showInfo('${result.userList.rows[i].user_code}')">${result.countEmergency[result.userList.rows[i].user_code].cnt}</li>
                 `;
-                    document.querySelector("#user_inquiry").append(temp);
-                }
+                document.querySelector("#user_inquiry").append(temp);
             }
 
         },
