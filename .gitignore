@@ -1,0 +1,7 @@
+server/logs/
+server/node_modules
+
+application_gong/.DS_Store
+application_gong/node_modules/
+
+server_backup/

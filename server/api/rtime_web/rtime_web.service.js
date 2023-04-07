@@ -143,33 +143,37 @@ class RtimeService {
      *  @author SY
      *  @since 2023.03.22
      *  @history 2023.03.22 최초 작성
+     *           2023.04.07 selectUserList undefined 조건문 추가
      *  
      */
     async selectRtimeData(selectUserList) {
         let sendData = {};
-        for (let i = 0; i < selectUserList.length; i++) {
-            let bioData = new Array();
-            let rtFlag = await getAsync(selectUserList[i]); //userCode List
-            if (rtFlag != 0 && rtFlag != null) { // Redis DB에 usercode 존재하는 경우
-                bioData.push(await stringToNumberInArray(await lrangeAsync(selectUserList[i] + "hr", 0, 4)));
-                // bioData.push(await stringToNumberInArray(await lrangeAsync(selectUserList[i] + "rr", 0, 4)));
-                // bioData.push(await stringToNumberInArray(await lrangeAsync(selectUserList[i] + "sv", 0, 4)));
-                // bioData.push(await stringToNumberInArray(await lrangeAsync(selectUserList[i] + "hrv", 0, 4)));
-                bioData.push(await stringToNumberInArray(await lrangeAsync(selectUserList[i] + "state", 0, 4)));
+        if(selectUserList != undefined){
+            for (let i = 0; i < selectUserList.length; i++) {
+                let bioData = new Array();
+                let rtFlag = await getAsync(selectUserList[i]); //userCode List
+                if (rtFlag != 0 && rtFlag != null) { // Redis DB에 usercode 존재하는 경우
+                    bioData.push(await stringToNumberInArray(await lrangeAsync(selectUserList[i] + "hr", 0, 4)));
+                    // bioData.push(await stringToNumberInArray(await lrangeAsync(selectUserList[i] + "rr", 0, 4)));
+                    // bioData.push(await stringToNumberInArray(await lrangeAsync(selectUserList[i] + "sv", 0, 4)));
+                    // bioData.push(await stringToNumberInArray(await lrangeAsync(selectUserList[i] + "hrv", 0, 4)));
+                    bioData.push(await stringToNumberInArray(await lrangeAsync(selectUserList[i] + "state", 0, 4)));
 
-                bioData = transpose(bioData); //행, 열 전치(각 속성끼리 한 배열에 묶어주기)
-                bioData = bioData.reverse(); // 역순 정렬
-            } else { //// Redis DB에 selectUserList 존재하지 않는 경우 : 연결 없음
-                bioData = [
-                    [0, -1],
-                    [0, -1],
-                    [0, -1],
-                    [0, -1],
-                    [0, -1]
-                ];
+                    bioData = transpose(bioData); //행, 열 전치(각 속성끼리 한 배열에 묶어주기)
+                    bioData = bioData.reverse(); // 역순 정렬
+                } else { //// Redis DB에 selectUserList 존재하지 않는 경우 : 연결 없음
+                    bioData = [
+                        [0, -1],
+                        [0, -1],
+                        [0, -1],
+                        [0, -1],
+                        [0, -1]
+                    ];
+                }
+                sendData[selectUserList[i]] = bioData;
             }
-            sendData[selectUserList[i]] = bioData;
         }
+
         return sendData;
     };
 

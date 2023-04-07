@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=1, user-scalable=0" />
+    <title>Page Title</title>
+
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/17.0.18/i18next.min.js"></script>
+
+    <!-- This page CSS -->
+    <link href="../dist/css/pages/icon-page.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="../dist/css/style.css" rel="stylesheet" />
+    <link href="../dist/css/style.min.css" rel="stylesheet" />
+    <!-- page css -->
+    <link href="../dist/css/pages/login-register-lock.css" rel="stylesheet" />
+    <link href="../dist/css/pages/tab-page.css" rel="stylesheet" />
+</head>
+
+<body class="skin-megna fixed-layout" style="scroll-behavior: smooth; overflow-y: scroll">
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- topbar -->
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <!-- 사이드메뉴 아이콘 -->
+                        <li class="nav-item">
+                            <a class="nav-link nav-toggler waves-effect waves-dark">
+                                <i class="ti-menu menu-color"></i></a>
+                        </li>
+                    </ul>
+                    <!-- 화면상단 제목 -->
+                    <div class="container">
+                        <div class="col-10 text-center">
+                            <h4 id="app-page-title" class="text-themecolor" style="text-align: center; margin-bottom: 0; font-weight: bold; "></h4>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <!-- End Topbar header -->
+
+        <!-- ============================================================== -->
+        <!-- Left Sidebar -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <div class="nav-item">
+                            <li class="user-pro">
+                                <img src="../assets/images/icon/staff.png" alt="user-img" class="img-circle" />
+                                <span class="hide-menu" id="lm-btn-user-nm">사용자 이름</span>
+                            </li>
+                            <li class="user-pro" style="border-bottom: 1px dashed #bcbcbc"></li>
+
+                            <li><a id="sm-btn-sensor" href="javascript:void(0)"><i class="icon-settings"><span id="lm-btn-setting" class="hide-menu"> 관리대상자 장치등록</span></i></a>
+                            </li>
+                            <li><a id="sm-btn-log-out" href="#"><i class="fa fa-power-off"></i><span class="hide-menu">Log Out</span></a>
+                            </li>
+                        </div>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <!-- End Sidebar navigation -->
+
+        <!-- End Sidebar scroll-->
+
+        <!-- End Left side bar-->
+        <div id="contents-wrapper" class="page-wrapper" style="height: 700px; overflow: auto">
+            <!-- ============================================================== -->
+            <!-- contents-wrapper -->
+            <!-- ============================================================== -->
+
+            <iframe id="contents-area" name="contents-iframe" src="" style=" width: 100%; height: 100%; border: 0; overflow-y: scroll; scroll-behavior: smooth; overflow: auto;" ;></iframe>
+
+            <!-- End contents-wrapper -->
+
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer">
+                <div class="row">
+                    <a id="bm-btn-em" class="col bottom-menu" href="#">
+                        <i class="col icon-home"></i>
+                        <p class="col bmenu-name">모니터링 현황</p>
+                    </a>
+                    <a id="bm-btn-manage" class="col bottom-menu" href="#">
+                        <i class="icon-pie-chart"></i>
+                        <p class="bmenu-name">관리페이지</p>
+                    </a>
+                    <a id="bm-btn-rtime" class="col bottom-menu" href="#">
+                        <i class="icon-graph"></i>
+                        <p class="bmenu-name">실시간 조회</p>
+                    </a>
+                </div>
+            </footer>
+            <!-- End footer -->
+        </div>
+        </nav>
+        </aside>
+    </div>
+    </div>
+
+    <!-- 센서 설정 모달 -->
+    <!-- setup modal content -->
+    <div id="setup-grid-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="grid-title" aria-hidden="true" style="display: none; background-color: rgba(0, 0, 0, 0.6)">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="grid-title">Network Setting</h4>
+                    <button type="button" class="close" onclick="hideSetupModal()" aria-hidden="true">
+              ×
+            </button>
+                </div>
+                <div class="modal-body">
+                    <h4 id="user-code">대상자 ID</h4>
+                    <input class="form-control" id="select-user-code" value="" />
+                    <br />
+                    <h4>WIFI</h4>
+                    <select class="form-control" id="wifi-box" name="wifi-box">
+              <option class="wifi-box-item" value="">select-wifi</option>
+            </select>
+                    <br />
+                    <br />
+                    <h4 id="wifipassword">PASSWORD</h4>
+                    <input class="form-control" id="wifi-password" value="" />
+                    <br />
+                    <br />
+                    <button type="button" class="btn btn-success float-right" id="wifi-button">
+              confirm
+            </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <!-- End main-wrapper -->
+
+    <!--client javascript -->
+    <script src="../cordova.js"></script>
+    <!-- cordova.js 추가 2021.04.28 JG -->
+    <script src="../javascripts/common/config.js"></script>
+    <!-- 공통 변수 2021.05.10 JG -->
+    <script src="../javascripts/pageTrans/appMainTrans.js"></script>
+    <!-- 앱 메인 프레임 번역 리소스 추가 2021.05.10 JG -->
+    <script src="../javascripts/common/commonUtil.js"></script>
+    <script src="../javascripts/appMain.js"></script>
+    <script src="../dist/js/custom.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="../dist/js/perfect-scrollbar.jquery.min.js "></script>
+    <!--Wave Effects -->
+    <script src="../dist/js/waves.js "></script>
+    <!--Menu sidebar -->
+    <script src="../dist/js/sidebarmenu.js"></script>
+    <!-- Sweet-Alert  -->
+    <script src="../assets/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="../assets/node_modules/sweetalert2/sweet-alert.init.js"></script>
+</body>
+
+</html>

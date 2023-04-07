@@ -1,0 +1,315 @@
+<!--
+    회원가입 화면
+    @author MY, Jang
+    @since 
+    @history 2021.04.29 JG 레이아웃 수정 및 불필요 스크립트 제거
+             2021.05.03 JG 필수 스크립트 추가, 레이아웃 수정
+             2021.05.24 JG bytes 정보 추가
+             2021.05.25 JG 약관 동의 영역 레이아웃 수정             
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <title>Sign Up</title>
+    <!-- page css -->
+    <link href="../../dist/css/pages/login-register-lock.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="../../dist/css/style.min.css" rel="stylesheet">
+    <link href="../../dist/css/style.css" rel="stylesheet">
+
+    <style>
+        .active-notice,
+        .bytes-check {
+            margin-top: 0.7em;
+            margin-bottom: 0;
+            font-size: 9pt;
+        }
+        
+        .deactive-notice {
+            display: none;
+        }
+        
+        .notice-area {
+            flex-direction: row-reverse;
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/17.0.18/i18next.min.js"></script>
+</head>
+
+<body class="skin-default">
+    <div id="wrapper">
+        <div class="login-register">
+            <div class="login-box card">
+                <div class="h3 mb-0 p-t-10 nav-link waves-effect waves-dark"><i class="ti-arrow-left menu-color" id="signup-back"></i>
+                    <span><h3 id="page-title" class="card-title m-0" style="text-align: center;">Sign Up</h3></span>
+                </div>
+                <div class="card-body">
+                    <form class="form p-t-20">
+                        <div class="form-group mb-3">
+                            <label id="label-user-type" for="user-type">사용자유형</label>
+                            <div class="input-group">
+                                <select id="user-type" name="user-type" class="form-control custom-select notval">
+                                    <option value="user">사용자</option>
+                                    <option value="staff">담당자</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label id="label-userName" for="name-input">User Name</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="userNm-addon"><i class="ti-user"></i></span>
+                                </div>
+                                <input id="name-input" name="name" class="form-control" type="text" placeholder="User Name" aria-describedby="name-notice" required>
+                            </div>
+                            <div class="row notice-area">
+                                <p class="bytes-check ml-2 mr-2"></p>
+                                <p id="name-notice" class="deactive-notice form-control-feedback">Please enter at least 1 to 25 characters.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label id="label-userId" for="id-input">ID</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="userId-addon"><i class=" ti-marker-alt"></i></span>
+                                </div>
+                                <input id="id-input" name="id" class="form-control" type="text" placeholder="ID" aria-describedby="id-notice">
+                            </div>
+                            <div class="row notice-area">
+                                <p class="bytes-check ml-2 mr-2"></p>
+                                <p id="id-notice" class="deactive-notice form-control-feedback">Please enter a combination of 5 digits and 20 characters, numbers.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label id="label-pwd" for="label-pwd">Password</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon3"><i class="ti-lock"></i></span>
+                                </div>
+                                <input id="pwd-input" name="pwd" type="password" class="form-control" placeholder="Password" aria-describedby="pwd-notice">
+                            </div>
+                            <div class="row notice-area">
+                                <p class="bytes-check ml-2 mr-2"></p>
+                                <p id="pwd-notice" class="deactive-notice form-control-feedback">Please make up 9 to 16 digits of English, numbers, and special characters.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label id="label-pwd-confirm" for="label-pwd-confirm">Confirm Password</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="pwd-confirm-addon"><i class="ti-lock"></i></span>
+                                </div>
+                                <input id="pwd-confirm-input" name="pwd-confirm" type="password" class="form-control" placeholder="Confirm Password" aria-describedby="pwd-notice">
+                            </div>
+                            <div class="row notice-area">
+                                <p class="bytes-check ml-2 mr-2"></p>
+                                <p id="pwd-confirm-notice" class="deactive-notice form-control-feedback">The password does not match.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label id="label-email" for="email-input">E-Mail</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="email-confirm"><i class="ti-email"></i></span>
+                                </div>
+                                <input id="email-input" name="eId" type="text" class="form-control" placeholder="Email" aria-describedby="">
+                                <span class="ml-1 mr-1 mt-2">@</span>
+                                <input id="email-input2" name="eDomain" type="text" class="form-control" placeholder="Email Domain" aria-describedby="">
+                            </div>
+                            <div class="row notice-area" style="justify-content: space-around;">
+                                <p id="email-bytes2" class="bytes-check"></p>
+                                <p id="email-bytes1" class="bytes-check"></p>
+                            </div>
+                            <p id="email-notice2" class="active-notice form-control-feedback text-right"></p>
+                            <p id="email-notice" class="active-notice form-control-feedback text-info">Email is used to find ID, Password. Please enter it correctly.</p>
+                        </div>
+
+                        <div class="form-group mb-3" id="gender-area">
+                            <label id="label-gender" for="gender-select">Gender</label>
+                            <div class="input-group">
+                                <select id="gender-select" name="sex" class="form-control custom-select notval">
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" id="birth-area">
+                            <label id="label-birthday">Birth Day</label>
+                            <div class="form-group row mb-1" style="flex-direction: row;">
+                                <div class="ml-2 mr-2 row">
+                                    <div class="mr-2">
+                                        <select id="birth-year-input" name="bYear" class="form-control custom-select notval" placeholder="yyyy"></select>
+                                    </div>
+                                    <p id="year-notice" class="active-notice form-control-feedback text-center">Year</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group row" style="flex-direction: row;">
+                                <div class="ml-2 mr-2 row">
+                                    <div class="mr-2">
+                                        <select id="birth-month-input" name="bMonth" class="form-control custom-select notval" placeholder="mm"></select>
+                                    </div>
+                                    <p id="month-notice" class="active-notice form-control-feedback text-center">Month</p>
+                                </div>
+                                <div class="mr-2 row">
+                                    <div class="ml-2 mr-2">
+                                        <select id="birth-day-input" name="bDay" class="form-control custom-select notval" placeholder="dd"></select>
+                                    </div>
+                                    <p id="day-notice" class="active-notice form-control-feedback text-center">Day</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phonenumber">전화번호</label>
+                            <div class="input-group">
+                                <input type="text" id="phone1" name="phone1" class="form-control notval" placeholder="" aria-label="phonenumber" aria-describedby="basic-addon6">
+                                <p class="ml-2 mr-2 mt-2"> - </p>
+                                <input type="text" id="phone2" name="phone2" class="form-control notval" placeholder="" aria-label="phonenumber" aria-describedby="basic-addon6">
+                                <p class="ml-2 mr-2 mt-2"> - </p>
+                                <input type="text" id="phone3" name="phone3" class="form-control notval" placeholder="" aria-label="phonenumber" aria-describedby="basic-addon6">
+                            </div>
+                        </div>
+                        <div class="form-group" id="address-area">
+                            <label id="label-birthday">주소</label>
+                            <p id="address-notice" class="active-notice form-control-feedback text-info mt-1">'시/도' 와 '시/군/구' 선택 후 도로명주소와 상세주소를 입력해주세요.</p>
+                            <p id="address-notice" class="active-notice form-control-feedback text-info mt-1">예시)금남로 193-22 4층 405호</p>
+                            <div class="form-group row mb-1">
+                                <div class="ml-2 mr-2 row">
+                                    <div class="mr-2">
+                                        <select id="address1-input" name="address1" class="form-control custom-select notval" placeholder="시/도 선택" onchange="addressSet(this.value)">
+                                            <option>시/도</option>
+                                            <option value="seoul">서울특별시</option>
+                                            <option value="busan">부산광역시</option>
+                                            <option value="daegu">대구광역시</option>
+                                            <option value="incheon">인천광역시</option>
+                                            <option value="gwangju">광주광역시</option>
+                                            <option value="daejeon">대전광역시</option>
+                                            <option value="ulsan">울산광역시</option>
+                                            <option value="sejong">세종특별자치시</option>
+                                            <option value="gyeonggi">경기도</option>
+                                            <option value="gangwon">강원도</option>
+                                            <option value="chungbuk">충청북도</option>
+                                            <option value="chungnam">충청남도</option>
+                                            <option value="jeonbuk">전라북도</option>
+                                            <option value="jeonnam">전라남도</option>
+                                            <option value="gyeongbuk">경상북도</option>
+                                            <option value="gyeongnam">경상남도</option>
+                                            <option value="jeju">제주특별자치도</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="ml-2 mr-2 row">
+                                    <div class="mr-2">
+                                        <select id="address2-input" name="address2" class="form-control custom-select notval">
+                                            <option>시/군/구</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <input type="text" id="address3-input" name="address3" class="form-control ml-2 notval" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group" id="staff-area">
+                            <label for="phonenumber">담당자 ID</label>
+                            <div class="input-group">
+                                <input type="text" id="staff-name" name="staff-name" class="form-control notval" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label id="label-ToS">Terms and Conditions</label>
+                            <div class="card-body" style="background-color:#edf1f5; border-radius:5px; border-color:#edf1f5">
+                                <label class="custom-control custom-checkbox m-b-0">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <span id="all-requirements" class="custom-control-label">Accept All Required Items</span>
+                                </label>
+                                <div class="terms-of-service-area ml-4 mt-2">
+                                    <div class="row" style="justify-content: space-between;">
+                                        <label class="custom-control custom-checkbox m-b-0">
+                                            <input id="edl-ToS-chk" type="checkbox" class="custom-control-input" required>
+                                            <span id="edl-tos-span" class="custom-control-label">EDL Service Terms Agreement[Required]</span>
+                                        </label>
+                                        <a id="detail-tos" class="view-detail-modal text-muted mr-2" data-toggle="modal" data-target="#edl-tos-modal" href="javascript:void(0)"></a>
+                                    </div>
+                                    <div class="row" style="justify-content: space-between;">
+                                        <label class="custom-control custom-checkbox m-b-0">
+                                            <input id="private-policy-chk" type="checkbox" class="custom-control-input" required>
+                                            <span id="private-span" class="custom-control-label">Consent to the Use of Personal Information Collection[Required]</span>
+                                        </label>
+                                        <a id="detail-private" class="view-detail-modal text-muted mr-2" data-toggle="modal" data-target="#edl-tos-modal" href="javascript:void(0)"></a>
+                                    </div>
+                                    <div class="row" style="justify-content: space-between;">
+                                        <label class="custom-control custom-checkbox m-b-0">
+                                            <input id="provide-ToS-chk" type="checkbox" class="custom-control-input">
+                                            <span id="provide-span" class="custom-control-label">Agreement of providing personal information to 3rd party</span>
+                                        </label>
+                                        <a id="detail-provide" class="view-detail-modal text-muted mr-2" data-toggle="modal" data-target="#edl-tos-modal" href="javascript:void(0)"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="edl-tos-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 id="ToS-title" class="modal-title"></h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    </div>
+                                    <div class="modal-body" style="height: 30rem; overflow:auto;">
+                                        <span id="ToS-contents" style="white-space: pre-wrap; word-break: keep-all;"></span>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+
+                        <div class="row float-right">
+                            <button id="submit-btn" type="button" class="btn btn-success waves-effect waves-light m-r-10">Submit</button>
+                            <button id="cancel-btn" type="button" class="btn btn-light waves-effect waves-light">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- All Jquery -->
+    <script src="../../assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="../../assets/node_modules/popper/popper.min.js"></script>
+    <script src="../../assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="../../dist/js/perfect-scrollbar.jquery.min.js"></script>
+    <!--Wave Effects -->
+    <script src="../../dist/js/waves.js"></script>
+    <!--Custom JavaScript -->
+    <script src="../../dist/js/custom.min.js"></script>
+    <script src="../../javascripts/common/config.js"></script>
+    <!-- 공통 변수 2021.05.10 JG -->
+    <script src="../../javascripts/pageTrans/signupTrans.js"></script>
+    <!-- 회원가입 번역 리소스 추가 2021.05.10 JG -->
+    <script src="../../javascripts/common/commonUtil.js"></script>
+    <script src="../../javascripts/common/dateUtil.js"></script>
+    <script src="../../javascripts/user/signup.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</body>

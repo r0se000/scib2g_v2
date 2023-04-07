@@ -6,7 +6,7 @@ exports.select_key_string = `SELECT key_string FROM encryption_key_info WHERE ac
 exports.userlist = `
     SELECT user_code, name, user_register_date
     FROM user_info
-    WHERE user_status='Y'
+    WHERE user_code like ? and user_status='Y'
     ORDER BY name;
 `
 
@@ -14,7 +14,7 @@ exports.userlist = `
 exports.userinfo = `
     SELECT name, birth_year, birth_month, birth_date, sex, address_1, address_2, address_3, phone_first, phone_middle, phone_last, protector_phone_first, protector_phone_middle, protector_phone_last
     FROM user_info
-    WHERE user_code = ?;
+    WHERE user_code = ? and user_status='Y';
 `;
 
 // 누적 횟수
@@ -63,7 +63,7 @@ exports.asList = `
                 SELECT ui.user_code, ui.name, al.as_created_date, al.as_detail, al.as_num
                 FROM user_info ui JOIN as_list al
                 ON ui.user_code=al.user_code
-                WHERE ui.user_status='Y'
+                WHERE ui.user_status='Y' and ui.user_code like ?
                 ORDER BY al.as_num;
 
 `;

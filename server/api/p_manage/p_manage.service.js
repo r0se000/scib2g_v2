@@ -12,7 +12,7 @@ const queryList = require('./p_manage.sql');
 // crypto
 const cryptoUtil = require('../../public/javascripts/cryptoUtil');
 const e = require('express');
-
+let addressCode
 class p_manageService {
 
     // 유저 리스트 불러오기
@@ -21,7 +21,7 @@ class p_manageService {
         let cryptoKey = await mysqlDB('selectOne', queryList.select_key_string, []);
         cryptoKey = cryptoKey.row.key_string;
         let select_addressCode = await mysqlDB('selectOne', queryList.select_addressCode, [userCode])
-        let addressCode = select_addressCode.row.a_user_address1 + select_addressCode.row.a_user_address2;
+        addressCode = select_addressCode.row.a_user_address1 + select_addressCode.row.a_user_address2;
         if (addressCode == "9999") {
             addressCode = "%";
         } else {
@@ -44,8 +44,7 @@ class p_manageService {
     async selectAllInfo() {
         let cryptoKey = await mysqlDB('selectOne', queryList.select_key_string, []);
         cryptoKey = cryptoKey.row.key_string;
-        let result = await mysqlDB('select', queryList.userlist, [])
-
+        let result = await mysqlDB('select', queryList.userlist, [addressCode])
 
         for (var i = 0; i < result.rowLength; i++) {
             try {
@@ -244,7 +243,7 @@ class p_manageService {
 
     // ===============================  AS 조회 ==================================   
     async asList() {
-        let result = await mysqlDB('select', queryList.asList, [])
+        let result = await mysqlDB('select', queryList.asList, [addressCode])
         let cryptoKey = await mysqlDB('selectOne', queryList.select_key_string, []);
         cryptoKey = cryptoKey.row.key_string;
         if (result.rowLength == 0) {
