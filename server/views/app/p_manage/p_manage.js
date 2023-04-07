@@ -64,11 +64,12 @@ $(function() {
         },
         cmmAsync = false,
         cmmSucc = function(result) {
-            let rtimeLength = Object.keys(result.userList.rowLength).length
+
+
             if (result.userList.rowLength == 0) {
-                alert("유저리스트가 존재하지 않습니다.");
             } else {
                 for (let i = 0; i < result.userList.rowLength; i++) {
+                    console.log(result.countEmergency[result.userList.rows[i].user_code].cnt)
                     const temp = document.createElement("div")
                     temp.setAttribute(`id`, `${result.userList.rows[i].user_code}`);
                     temp.innerHTML = `
@@ -228,7 +229,7 @@ $nameBtn.click(function() {
     }
 
 });
-
+// 모니터링 전체조회
 
 $(function() {
     let cmmContentType = 'application/json',
@@ -247,10 +248,10 @@ $(function() {
 
                     const temp = document.createElement("div")
                     temp.innerHTML = `
-                <li class ="MList" onclick = "showInfo_M('${result.rows[i].user_code}')">${result.rows[i].name}</li>
-                <li class ="MList" onclick = "showInfo_M('${result.rows[i].user_code}')">${result.rows[i].user_code}</li>
-                <li class ="MList" onclick = "showInfo_M('${result.rows[i].user_code}')">${result.rows[i].emergency_time}</li>
-                <li class ="MList" onclick = "showInfo_M('${result.rows[i].user_code}')">${result.rows[i].emergency_check_contents}</li>
+                <li class ="MList" onclick = "showInfo_M('${result.rows[i].emergency_id}')">${result.rows[i].name}</li>
+                <li class ="MList" onclick = "showInfo_M('${result.rows[i].emergency_id}')">${result.rows[i].user_code}</li>
+                <li class ="MList" onclick = "showInfo_M('${result.rows[i].emergency_id}')">${result.rows[i].emergency_time}</li>
+                <li class ="MList" onclick = "showInfo_M('${result.rows[i].emergency_id}')">${result.rows[i].emergency_check_contents}</li>
                 `;
                     document.querySelector("#monitoring_inquiry").append(temp);
                 }
@@ -370,12 +371,12 @@ $searchNameFrm.submit(function() {
 
 
 // 모니터링 관리 상세정보 페이지 조회
-function showInfo_M(user_code) {
+function showInfo_M(emergency_id) {
     let cmmContentType = 'application/json',
         cmmType = 'post',
         cmmUrl = '/api/p_manage/monitoring_detail',
-        cmmReqDataObj = { // user_code를 userCode라는 변수에 담아서 router로 보냄.
-            userCode: user_code
+        cmmReqDataObj = { 
+            emergency_id: emergency_id
         },
         cmmAsync = false,
 
@@ -403,8 +404,6 @@ function showList_AS() {
             $('#as_inquiry>div>li').remove(".asList");
 
             if (result.userList.rowLength == 0) {
-                alert("유저리스트가 존재하지 않습니다.");
-
             } else {
                 for (let i = 0; i < result.userList.rowLength; i++) {
                     const temp = document.createElement("div")

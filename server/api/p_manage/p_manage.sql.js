@@ -38,7 +38,7 @@ exports.select_user_name_app = `
 
 // 관리 대상자 모니터링 기록 기간으로 조회
 exports.selectDate = `
-    SELECT ui.staff_code, ui.name, ui.address_1, ui.address_2, ui.address_3, em.emergency_id, em.user_code, em.emergency_time, em.emergency_web_check, em.emergency_check_contents
+    SELECT ui.staff_code, ui.name, ui.address_1, ui.address_2, ui.address_3, em.emergency_id, em.user_code, em.emergency_time, em.emergency_web_check, em.emergency_check_contents, em.emergency_id
     FROM user_info ui JOIN emergency_list em
     ON ui.user_code=em.user_code where em.emergency_time>=? and em.emergency_time<=? and ui.user_code like ? and ui.user_status='Y' ORDER BY em.emergency_time DESC;
 `;
@@ -54,7 +54,7 @@ exports.emList = `
                 SELECT ua.a_user_name, el.emergency_time, el.emergency_web_check, el.emergency_contents_time 
                 FROM emergency_list el JOIN user_admin ua
                 ON el.a_user_code=ua.a_user_code
-                WHERE el.user_code = ?;
+                WHERE el.emergency_id = ?;
 
 `;
 
