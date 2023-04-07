@@ -9,8 +9,8 @@
     </author> -->
     <content src="html/index.html" />
     <access origin="*" />
+    <allow-intent href="http://192.168.3.12:7070/*" />
     <allow-intent href="http://*"/>
-    <allow-intent href="http://192.168.3.164:7070/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
     <allow-intent href="sms:*" />
@@ -25,7 +25,7 @@
         <allow-intent href="market:*" />
         
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
-            <!-- <application android:usesCleartextTraffic="true" /> -->
+            <application android:usesCleartextTraffic="true" />
         </edit-config> <!-- android 보안 문제로 외부 사이트 접근 안 되는 문제 방지 -->
     </platform>
     <preference name="AndroidXEnabled" value="true" />

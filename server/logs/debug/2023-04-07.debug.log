@@ -4450,3 +4450,2489 @@
     "rowLength": 1,
     "state": true
 }
+[2023-04-07 10:51:05, info] "MySQL Query: SELECT a_user_refresh_token_app FROM user_admin WHERE a_user_code = ? and a_user_access_token_app = ?;"
+[2023-04-07 10:51:05, info] "MySQL Query Params: 3,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.gpDaPCBXtLoIxKFb8mf7_I6Rwb4znm2qNZFi70nJv8Y"
+[2023-04-07 10:51:05, debug] {
+    "row": {
+        "a_user_refresh_token_app": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.dCiWzKy2Y-smBVyMaPAN-R56_fTs1ostVcjKRMGEadY"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: UPDATE user_admin SET a_user_app_token=? WHERE a_user_code=?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: ,3"
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:51:07, info] "MySQL Query Params: "
+[2023-04-07 10:51:07, debug] {
+    "succ": 0,
+    "state": true
+}
+[2023-04-07 10:51:07, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT a_user_address1, a_user_address2 FROM user_admin WHERE a_user_code=?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: 3"
+[2023-04-07 10:51:07, debug] {
+    "row": {
+        "a_user_address1": "99",
+        "a_user_address2": "99"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT el.emergency_id, el.user_code, ui.name, el.emergency_time FROM emergency_list AS el, user_info AS ui WHERE el.emergency_web_check is NULL AND ui.user_code=el.user_code and el.user_code LIKE ?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: %"
+[2023-04-07 10:51:07, debug] {
+    "rows": [],
+    "rowLength": 0,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:51:07, info] "MySQL Query Params: "
+[2023-04-07 10:51:07, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT  ui.name, ui.birth_year, ui.birth_month, ui.birth_date, el.* FROM emergency_list AS el, user_info AS ui WHERE el.user_code LIKE ? and el.emergency_check_contents is NULL AND el.emergency_web_check is not NULL AND ui.user_code=el.user_code ORDER BY el.emergency_time DESC;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: %"
+[2023-04-07 10:51:07, debug] {
+    "rows": [],
+    "rowLength": 0,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:51:07, info] "MySQL Query Params: "
+[2023-04-07 10:51:07, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: select * from emergency_list"
+[2023-04-07 10:51:07, info] "MySQL Query Params: 3"
+[2023-04-07 10:51:07, debug] {
+    "rows": [
+        {
+            "emergency_id": 1,
+            "user_code": "04021",
+            "a_user_code": 3,
+            "emergency_time": "2023-03-24 07:00:35",
+            "emergency_web_check": "2023-03-30 10:32:51",
+            "emergency_app_admin_check": null,
+            "emergency_app_protect_check": null,
+            "emergency_check_contents": "이상없음",
+            "emergency_contents_time": "2023-03-30 10:32:55",
+            "emergency_check_state": "Y"
+        },
+        {
+            "emergency_id": 2,
+            "user_code": "04022",
+            "a_user_code": 3,
+            "emergency_time": "2023-03-24 07:00:35",
+            "emergency_web_check": "2023-03-30 10:33:08",
+            "emergency_app_admin_check": null,
+            "emergency_app_protect_check": null,
+            "emergency_check_contents": "119 연계",
+            "emergency_contents_time": "2023-03-30 10:33:12",
+            "emergency_check_state": "Y"
+        },
+        {
+            "emergency_id": 21,
+            "user_code": "04021",
+            "a_user_code": 3,
+            "emergency_time": "2023-03-30 11:14:23",
+            "emergency_web_check": "2023-03-30 11:29:40",
+            "emergency_app_admin_check": null,
+            "emergency_app_protect_check": null,
+            "emergency_check_contents": "119 연계",
+            "emergency_contents_time": "2023-03-30 11:29:48",
+            "emergency_check_state": "Y"
+        },
+        {
+            "emergency_id": 22,
+            "user_code": "04021",
+            "a_user_code": 3,
+            "emergency_time": "2023-03-30 11:30:51",
+            "emergency_web_check": "2023-03-30 11:31:52",
+            "emergency_app_admin_check": null,
+            "emergency_app_protect_check": null,
+            "emergency_check_contents": "이상없음",
+            "emergency_contents_time": "2023-03-30 11:31:56",
+            "emergency_check_state": "Y"
+        },
+        {
+            "emergency_id": 23,
+            "user_code": "04021",
+            "a_user_code": 3,
+            "emergency_time": "2023-03-30 11:32:25",
+            "emergency_web_check": "2023-03-30 11:34:34",
+            "emergency_app_admin_check": null,
+            "emergency_app_protect_check": null,
+            "emergency_check_contents": "이상없음",
+            "emergency_contents_time": "2023-03-30 14:35:44",
+            "emergency_check_state": "Y"
+        },
+        {
+            "emergency_id": 24,
+            "user_code": "04021",
+            "a_user_code": 3,
+            "emergency_time": "2023-03-30 11:58:08",
+            "emergency_web_check": "2023-03-30 17:11:54",
+            "emergency_app_admin_check": null,
+            "emergency_app_protect_check": null,
+            "emergency_check_contents": "이상없음",
+            "emergency_contents_time": "2023-03-30 17:42:54",
+            "emergency_check_state": "Y"
+        },
+        {
+            "emergency_id": 25,
+            "user_code": "04014",
+            "a_user_code": 3,
+            "emergency_time": "2023-04-06 10:17:12",
+            "emergency_web_check": "2023-04-06 10:17:13",
+            "emergency_app_admin_check": null,
+            "emergency_app_protect_check": null,
+            "emergency_check_contents": "119 연계",
+            "emergency_contents_time": "2023-04-06 10:17:27",
+            "emergency_check_state": "Y"
+        },
+        {
+            "emergency_id": 26,
+            "user_code": "04014",
+            "a_user_code": 3,
+            "emergency_time": "2023-04-06 10:17:17",
+            "emergency_web_check": "2023-04-06 10:17:17",
+            "emergency_app_admin_check": null,
+            "emergency_app_protect_check": null,
+            "emergency_check_contents": "119 연계",
+            "emergency_contents_time": "2023-04-06 10:17:32",
+            "emergency_check_state": "Y"
+        }
+    ],
+    "rowLength": 8,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT * from user_info where user_code=?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: 04021"
+[2023-04-07 10:51:07, debug] {
+    "row": {
+        "staff_code": 3,
+        "user_code": "04021",
+        "name": "8SF+NeQV3akt",
+        "birth_year": "KqHN6Q==",
+        "birth_month": "K64=",
+        "birth_date": "Kqs=",
+        "sex": "W",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BdnM+MZ",
+        "address_3": "9w5KMsIh3bcBnxu7FDT6gMUqgVjpcXedLXGirC0=",
+        "phone_first": "K6nO",
+        "phone_middle": "KqrN7Q==",
+        "phone_last": "Lq7J4Q==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqrN7Q==",
+        "protector_phone_last": "Lq7J4Q==",
+        "user_register_date": "2023-03-23 17:33:59",
+        "user_delete_date": "2023-04-05 16:31:45",
+        "user_status": "N",
+        "user_note": null,
+        "note_created_date": null
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT * FROM biometric_backup_data WHERE user_code=? AND created_time BETWEEN ? AND ?                             UNION                             SELECT * FROM biometric_real_time WHERE user_code=? AND created_time BETWEEN ? AND ?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: 04021,2023-03-24 06:59:35,2023-03-24 07:00:35,04021,2023-03-24 06:59:35,2023-03-24 07:00:35"
+[2023-04-07 10:51:07, debug] {
+    "rows": [],
+    "rowLength": 0,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT * from user_info where user_code=?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: 04022"
+[2023-04-07 10:51:07, debug] {
+    "row": {
+        "staff_code": 3,
+        "user_code": "04022",
+        "name": "8SF+NM09",
+        "birth_year": "KqHK7A==",
+        "birth_month": "K6s=",
+        "birth_date": "K6A=",
+        "sex": "M",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BdnM+MZ",
+        "address_3": "8SB2MtQd2oApVL4WB/VeNgiV4Q3W6WSfLqrXjA==",
+        "phone_first": "K6nO",
+        "phone_middle": "KqnP6A==",
+        "phone_last": "KarM6w==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqnP6A==",
+        "protector_phone_last": "KarM6w==",
+        "user_register_date": "2023-03-30 10:27:54",
+        "user_delete_date": null,
+        "user_status": "Y",
+        "user_note": "4/1~4/4 여행",
+        "note_created_date": "2023-04-06"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT * FROM biometric_backup_data WHERE user_code=? AND created_time BETWEEN ? AND ?                             UNION                             SELECT * FROM biometric_real_time WHERE user_code=? AND created_time BETWEEN ? AND ?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: 04022,2023-03-24 06:59:35,2023-03-24 07:00:35,04022,2023-03-24 06:59:35,2023-03-24 07:00:35"
+[2023-04-07 10:51:07, debug] {
+    "rows": [],
+    "rowLength": 0,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT * from user_info where user_code=?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: 04021"
+[2023-04-07 10:51:07, debug] {
+    "row": {
+        "staff_code": 3,
+        "user_code": "04021",
+        "name": "8SF+NeQV3akt",
+        "birth_year": "KqHN6Q==",
+        "birth_month": "K64=",
+        "birth_date": "Kqs=",
+        "sex": "W",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BdnM+MZ",
+        "address_3": "9w5KMsIh3bcBnxu7FDT6gMUqgVjpcXedLXGirC0=",
+        "phone_first": "K6nO",
+        "phone_middle": "KqrN7Q==",
+        "phone_last": "Lq7J4Q==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqrN7Q==",
+        "protector_phone_last": "Lq7J4Q==",
+        "user_register_date": "2023-03-23 17:33:59",
+        "user_delete_date": "2023-04-05 16:31:45",
+        "user_status": "N",
+        "user_note": null,
+        "note_created_date": null
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT * FROM biometric_backup_data WHERE user_code=? AND created_time BETWEEN ? AND ?                             UNION                             SELECT * FROM biometric_real_time WHERE user_code=? AND created_time BETWEEN ? AND ?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: 04021,2023-03-30 11:13:23,2023-03-30 11:14:23,04021,2023-03-30 11:13:23,2023-03-30 11:14:23"
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT a_user_refresh_token_app FROM user_admin WHERE a_user_code = ? and a_user_access_token_app = ?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: 3,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.gpDaPCBXtLoIxKFb8mf7_I6Rwb4znm2qNZFi70nJv8Y"
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT a_user_refresh_token_app FROM user_admin WHERE a_user_code = ? and a_user_access_token_app = ?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: 3,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.gpDaPCBXtLoIxKFb8mf7_I6Rwb4znm2qNZFi70nJv8Y"
+[2023-04-07 10:51:07, debug] {
+    "rows": [],
+    "rowLength": 0,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT * from user_info where user_code=?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: 04021"
+[2023-04-07 10:51:07, debug] {
+    "row": {
+        "a_user_refresh_token_app": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.dCiWzKy2Y-smBVyMaPAN-R56_fTs1ostVcjKRMGEadY"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:07, debug] {
+    "row": {
+        "staff_code": 3,
+        "user_code": "04021",
+        "name": "8SF+NeQV3akt",
+        "birth_year": "KqHN6Q==",
+        "birth_month": "K64=",
+        "birth_date": "Kqs=",
+        "sex": "W",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BdnM+MZ",
+        "address_3": "9w5KMsIh3bcBnxu7FDT6gMUqgVjpcXedLXGirC0=",
+        "phone_first": "K6nO",
+        "phone_middle": "KqrN7Q==",
+        "phone_last": "Lq7J4Q==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqrN7Q==",
+        "protector_phone_last": "Lq7J4Q==",
+        "user_register_date": "2023-03-23 17:33:59",
+        "user_delete_date": "2023-04-05 16:31:45",
+        "user_status": "N",
+        "user_note": null,
+        "note_created_date": null
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT * FROM biometric_backup_data WHERE user_code=? AND created_time BETWEEN ? AND ?                             UNION                             SELECT * FROM biometric_real_time WHERE user_code=? AND created_time BETWEEN ? AND ?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: 04021,2023-03-30 11:29:51,2023-03-30 11:30:51,04021,2023-03-30 11:29:51,2023-03-30 11:30:51"
+[2023-04-07 10:51:07, debug] {
+    "row": {
+        "a_user_refresh_token_app": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.dCiWzKy2Y-smBVyMaPAN-R56_fTs1ostVcjKRMGEadY"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:07, debug] {
+    "rows": [],
+    "rowLength": 0,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT * from user_info where user_code=?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: 04021"
+[2023-04-07 10:51:07, debug] {
+    "row": {
+        "staff_code": 3,
+        "user_code": "04021",
+        "name": "8SF+NeQV3akt",
+        "birth_year": "KqHN6Q==",
+        "birth_month": "K64=",
+        "birth_date": "Kqs=",
+        "sex": "W",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BdnM+MZ",
+        "address_3": "9w5KMsIh3bcBnxu7FDT6gMUqgVjpcXedLXGirC0=",
+        "phone_first": "K6nO",
+        "phone_middle": "KqrN7Q==",
+        "phone_last": "Lq7J4Q==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqrN7Q==",
+        "protector_phone_last": "Lq7J4Q==",
+        "user_register_date": "2023-03-23 17:33:59",
+        "user_delete_date": "2023-04-05 16:31:45",
+        "user_status": "N",
+        "user_note": null,
+        "note_created_date": null
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT * FROM biometric_backup_data WHERE user_code=? AND created_time BETWEEN ? AND ?                             UNION                             SELECT * FROM biometric_real_time WHERE user_code=? AND created_time BETWEEN ? AND ?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: 04021,2023-03-30 11:31:25,2023-03-30 11:32:25,04021,2023-03-30 11:31:25,2023-03-30 11:32:25"
+[2023-04-07 10:51:07, debug] {
+    "rows": [],
+    "rowLength": 0,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT * from user_info where user_code=?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: 04021"
+[2023-04-07 10:51:07, debug] {
+    "row": {
+        "staff_code": 3,
+        "user_code": "04021",
+        "name": "8SF+NeQV3akt",
+        "birth_year": "KqHN6Q==",
+        "birth_month": "K64=",
+        "birth_date": "Kqs=",
+        "sex": "W",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BdnM+MZ",
+        "address_3": "9w5KMsIh3bcBnxu7FDT6gMUqgVjpcXedLXGirC0=",
+        "phone_first": "K6nO",
+        "phone_middle": "KqrN7Q==",
+        "phone_last": "Lq7J4Q==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqrN7Q==",
+        "protector_phone_last": "Lq7J4Q==",
+        "user_register_date": "2023-03-23 17:33:59",
+        "user_delete_date": "2023-04-05 16:31:45",
+        "user_status": "N",
+        "user_note": null,
+        "note_created_date": null
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT * FROM biometric_backup_data WHERE user_code=? AND created_time BETWEEN ? AND ?                             UNION                             SELECT * FROM biometric_real_time WHERE user_code=? AND created_time BETWEEN ? AND ?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: 04021,2023-03-30 11:57:08,2023-03-30 11:58:08,04021,2023-03-30 11:57:08,2023-03-30 11:58:08"
+[2023-04-07 10:51:07, debug] {
+    "rows": [],
+    "rowLength": 0,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT * from user_info where user_code=?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: 04014"
+[2023-04-07 10:51:07, debug] {
+    "row": {
+        "staff_code": 3,
+        "user_code": "04014",
+        "name": "9wVKNeQV3akt",
+        "birth_year": "KqHJ6Q==",
+        "birth_month": "K6k=",
+        "birth_date": "K6k=",
+        "sex": "M",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BpWM+MZ",
+        "address_3": "KqrN7WM=",
+        "phone_first": "K6nO",
+        "phone_middle": "KqrN7Q==",
+        "phone_last": "Lq7J4Q==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqrN7Q==",
+        "protector_phone_last": "Lq7J4Q==",
+        "user_register_date": "2023-04-06 10:15:06",
+        "user_delete_date": null,
+        "user_status": "Y",
+        "user_note": null,
+        "note_created_date": null
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT * FROM biometric_backup_data WHERE user_code=? AND created_time BETWEEN ? AND ?                             UNION                             SELECT * FROM biometric_real_time WHERE user_code=? AND created_time BETWEEN ? AND ?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: 04014,2023-04-06 10:16:12,2023-04-06 10:17:12,04014,2023-04-06 10:16:12,2023-04-06 10:17:12"
+[2023-04-07 10:51:07, debug] {
+    "rows": [],
+    "rowLength": 0,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT * from user_info where user_code=?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: 04014"
+[2023-04-07 10:51:07, debug] {
+    "row": {
+        "staff_code": 3,
+        "user_code": "04014",
+        "name": "9wVKNeQV3akt",
+        "birth_year": "KqHJ6Q==",
+        "birth_month": "K6k=",
+        "birth_date": "K6k=",
+        "sex": "M",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BpWM+MZ",
+        "address_3": "KqrN7WM=",
+        "phone_first": "K6nO",
+        "phone_middle": "KqrN7Q==",
+        "phone_last": "Lq7J4Q==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqrN7Q==",
+        "protector_phone_last": "Lq7J4Q==",
+        "user_register_date": "2023-04-06 10:15:06",
+        "user_delete_date": null,
+        "user_status": "Y",
+        "user_note": null,
+        "note_created_date": null
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:07, info] "MySQL Query: SELECT * FROM biometric_backup_data WHERE user_code=? AND created_time BETWEEN ? AND ?                             UNION                             SELECT * FROM biometric_real_time WHERE user_code=? AND created_time BETWEEN ? AND ?;"
+[2023-04-07 10:51:07, info] "MySQL Query Params: 04014,2023-04-06 10:16:17,2023-04-06 10:17:17,04014,2023-04-06 10:16:17,2023-04-06 10:17:17"
+[2023-04-07 10:51:07, debug] {
+    "rows": [],
+    "rowLength": 0,
+    "state": true
+}
+[2023-04-07 10:51:08, info] "MySQL Query: SELECT a_user_refresh_token_app FROM user_admin WHERE a_user_code = ? and a_user_access_token_app = ?;"
+[2023-04-07 10:51:08, info] "MySQL Query Params: 3,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.gpDaPCBXtLoIxKFb8mf7_I6Rwb4znm2qNZFi70nJv8Y"
+[2023-04-07 10:51:08, debug] {
+    "row": {
+        "a_user_refresh_token_app": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.dCiWzKy2Y-smBVyMaPAN-R56_fTs1ostVcjKRMGEadY"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:08, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:51:08, info] "MySQL Query Params: "
+[2023-04-07 10:51:08, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:08, info] "MySQL Query: SELECT a_user_address1, a_user_address2 FROM user_admin WHERE a_user_code=?;"
+[2023-04-07 10:51:08, info] "MySQL Query Params: 3"
+[2023-04-07 10:51:08, debug] {
+    "row": {
+        "a_user_address1": "99",
+        "a_user_address2": "99"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:08, info] "MySQL Query: SELECT user_code, name FROM user_info WHERE user_status='Y' and user_code like ?;"
+[2023-04-07 10:51:08, info] "MySQL Query Params: %"
+[2023-04-07 10:51:08, debug] {
+    "rows": [
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt"
+        },
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09"
+        },
+        {
+            "user_code": "04023",
+            "name": "9gFzM+4N2q4s"
+        }
+    ],
+    "rowLength": 3,
+    "state": true
+}
+[2023-04-07 10:51:08, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:51:08, info] "MySQL Query Params: "
+[2023-04-07 10:51:08, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:08, info] "MySQL Query:     SELECT ui.user_code, ui.name    FROM user_info ui    join user_own_sensor uo    ON ui.user_code = uo.user_code    WHERE user_status='Y'    ORDER BY name;"
+[2023-04-07 10:51:08, info] "MySQL Query Params: "
+[2023-04-07 10:51:08, debug] {
+    "rows": [
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09"
+        },
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt"
+        }
+    ],
+    "rowLength": 2,
+    "state": true
+}
+[2023-04-07 10:51:09, info] "MySQL Query: SELECT a_user_refresh_token_app FROM user_admin WHERE a_user_code = ? and a_user_access_token_app = ?;"
+[2023-04-07 10:51:09, info] "MySQL Query Params: 3,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.gpDaPCBXtLoIxKFb8mf7_I6Rwb4znm2qNZFi70nJv8Y"
+[2023-04-07 10:51:09, debug] {
+    "row": {
+        "a_user_refresh_token_app": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.dCiWzKy2Y-smBVyMaPAN-R56_fTs1ostVcjKRMGEadY"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:09, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:51:09, info] "MySQL Query Params: "
+[2023-04-07 10:51:09, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:09, info] "MySQL Query:     SELECT a_user_address1, a_user_address2     FROM user_admin     WHERE a_user_code=?;"
+[2023-04-07 10:51:09, info] "MySQL Query Params: 3"
+[2023-04-07 10:51:09, debug] {
+    "row": {
+        "a_user_address1": "99",
+        "a_user_address2": "99"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:09, info] "MySQL Query:     SELECT user_code, name     FROM user_info     WHERE user_status='Y' and user_code like ?;"
+[2023-04-07 10:51:09, info] "MySQL Query Params: %"
+[2023-04-07 10:51:09, debug] {
+    "rows": [
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt"
+        },
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09"
+        },
+        {
+            "user_code": "04023",
+            "name": "9gFzM+4N2q4s"
+        }
+    ],
+    "rowLength": 3,
+    "state": true
+}
+[2023-04-07 10:51:10, info] "MySQL Query:                 SELECT ui.user_code, ui.name, al.as_created_date, al.as_detail, al.as_num                FROM user_info ui JOIN as_list al                ON ui.user_code=al.user_code                WHERE ui.user_status='Y'                ORDER BY al.as_num;"
+[2023-04-07 10:51:10, info] "MySQL Query Params: "
+[2023-04-07 10:51:10, debug] {
+    "rows": [
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09",
+            "as_created_date": "2023-04-06",
+            "as_detail": "라우터 전원 연결",
+            "as_num": 1
+        },
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt",
+            "as_created_date": "2023-04-06",
+            "as_detail": "아아아아아아",
+            "as_num": 2
+        },
+        {
+            "user_code": "04023",
+            "name": "9gFzM+4N2q4s",
+            "as_created_date": "2023-04-06",
+            "as_detail": "홍길동씨 전기 차단",
+            "as_num": 3
+        },
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09",
+            "as_created_date": "2023-04-06",
+            "as_detail": "센서교체",
+            "as_num": 5
+        }
+    ],
+    "rowLength": 4,
+    "state": true
+}
+[2023-04-07 10:51:10, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:51:10, info] "MySQL Query Params: "
+[2023-04-07 10:51:10, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:10, info] "MySQL Query:     SELECT count(*) AS cnt    FROM emergency_list    WHERE user_code = ?; "
+[2023-04-07 10:51:10, info] "MySQL Query Params: 04014"
+[2023-04-07 10:51:10, debug] {
+    "row": {
+        "cnt": 2
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:10, info] "MySQL Query:     SELECT count(*) AS cnt    FROM emergency_list    WHERE user_code = ?; "
+[2023-04-07 10:51:10, info] "MySQL Query Params: 04022"
+[2023-04-07 10:51:10, debug] {
+    "row": {
+        "cnt": 1
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:10, info] "MySQL Query:     SELECT count(*) AS cnt    FROM emergency_list    WHERE user_code = ?; "
+[2023-04-07 10:51:10, info] "MySQL Query Params: 04023"
+[2023-04-07 10:51:10, debug] {
+    "row": {
+        "cnt": 0
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:10, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:51:10, info] "MySQL Query Params: "
+[2023-04-07 10:51:10, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:10, info] "MySQL Query:     SELECT user_code, name, user_register_date    FROM user_info    WHERE user_status='Y'    ORDER BY name;"
+[2023-04-07 10:51:10, info] "MySQL Query Params: "
+[2023-04-07 10:51:10, debug] {
+    "rows": [
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09",
+            "user_register_date": "2023-03-30 10:27:54"
+        },
+        {
+            "user_code": "04023",
+            "name": "9gFzM+4N2q4s",
+            "user_register_date": "2023-04-05 16:54:49"
+        },
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt",
+            "user_register_date": "2023-04-06 10:15:06"
+        }
+    ],
+    "rowLength": 3,
+    "state": true
+}
+[2023-04-07 10:51:10, info] "MySQL Query:     SELECT a_user_address1, a_user_address2     FROM user_admin     WHERE a_user_code=?;"
+[2023-04-07 10:51:10, info] "MySQL Query Params: 3"
+[2023-04-07 10:51:10, debug] {
+    "row": {
+        "a_user_address1": "99",
+        "a_user_address2": "99"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:10, info] "MySQL Query:     SELECT ui.staff_code, ui.name, ui.address_1, ui.address_2, ui.address_3, em.emergency_id, em.user_code, em.emergency_time, em.emergency_web_check, em.emergency_check_contents, em.emergency_id    FROM user_info ui JOIN emergency_list em    ON ui.user_code=em.user_code where em.emergency_time>=? and em.emergency_time<=? and ui.user_code like ? and ui.user_status='Y' ORDER BY em.emergency_time DESC;"
+[2023-04-07 10:51:10, info] "MySQL Query Params: 2022-01-01 00:00:00,2023-04-07 23:59:59,%"
+[2023-04-07 10:51:10, debug] {
+    "rows": [
+        {
+            "staff_code": 3,
+            "name": "9wVKNeQV3akt",
+            "address_1": "8SxvNfUJ25UkmBiC2FPz",
+            "address_2": "8BpWM+MZ",
+            "address_3": "KqrN7WM=",
+            "emergency_id": 26,
+            "user_code": "04014",
+            "emergency_time": "2023-04-06 10:17:17",
+            "emergency_web_check": "2023-04-06 10:17:17",
+            "emergency_check_contents": "119 연계"
+        },
+        {
+            "staff_code": 3,
+            "name": "9wVKNeQV3akt",
+            "address_1": "8SxvNfUJ25UkmBiC2FPz",
+            "address_2": "8BpWM+MZ",
+            "address_3": "KqrN7WM=",
+            "emergency_id": 25,
+            "user_code": "04014",
+            "emergency_time": "2023-04-06 10:17:12",
+            "emergency_web_check": "2023-04-06 10:17:13",
+            "emergency_check_contents": "119 연계"
+        },
+        {
+            "staff_code": 3,
+            "name": "8SF+NM09",
+            "address_1": "8SxvNfUJ25UkmBiC2FPz",
+            "address_2": "8BdnM+MZ",
+            "address_3": "8SB2MtQd2oApVL4WB/VeNgiV4Q3W6WSfLqrXjA==",
+            "emergency_id": 2,
+            "user_code": "04022",
+            "emergency_time": "2023-03-24 07:00:35",
+            "emergency_web_check": "2023-03-30 10:33:08",
+            "emergency_check_contents": "119 연계"
+        }
+    ],
+    "rowLength": 3,
+    "state": true
+}
+[2023-04-07 10:51:10, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:51:10, info] "MySQL Query Params: "
+[2023-04-07 10:51:10, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:10, info] "MySQL Query: SELECT a_user_refresh_token_app FROM user_admin WHERE a_user_code = ? and a_user_access_token_app = ?;"
+[2023-04-07 10:51:10, info] "MySQL Query Params: 3,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.gpDaPCBXtLoIxKFb8mf7_I6Rwb4znm2qNZFi70nJv8Y"
+[2023-04-07 10:51:10, debug] {
+    "row": {
+        "a_user_refresh_token_app": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.dCiWzKy2Y-smBVyMaPAN-R56_fTs1ostVcjKRMGEadY"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:10, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:51:10, info] "MySQL Query Params: "
+[2023-04-07 10:51:10, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:10, info] "MySQL Query: SELECT a_user_address1, a_user_address2 FROM user_admin WHERE a_user_code=?;"
+[2023-04-07 10:51:10, info] "MySQL Query Params: 3"
+[2023-04-07 10:51:10, debug] {
+    "row": {
+        "a_user_address1": "99",
+        "a_user_address2": "99"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:10, info] "MySQL Query: SELECT user_code, name FROM user_info WHERE user_status='Y' and user_code like ?;"
+[2023-04-07 10:51:10, info] "MySQL Query Params: %"
+[2023-04-07 10:51:10, debug] {
+    "rows": [
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt"
+        },
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09"
+        },
+        {
+            "user_code": "04023",
+            "name": "9gFzM+4N2q4s"
+        }
+    ],
+    "rowLength": 3,
+    "state": true
+}
+[2023-04-07 10:51:11, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:51:11, info] "MySQL Query Params: "
+[2023-04-07 10:51:11, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:11, info] "MySQL Query:     SELECT ui.user_code, ui.name    FROM user_info ui    join user_own_sensor uo    ON ui.user_code = uo.user_code    WHERE user_status='Y'    ORDER BY name;"
+[2023-04-07 10:51:11, info] "MySQL Query Params: "
+[2023-04-07 10:51:11, debug] {
+    "rows": [
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09"
+        },
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt"
+        }
+    ],
+    "rowLength": 2,
+    "state": true
+}
+[2023-04-07 10:51:11, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:51:11, info] "MySQL Query Params: "
+[2023-04-07 10:51:11, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:11, info] "MySQL Query:     SELECT name, birth_year, birth_month, birth_date, sex, address_1, address_2, address_3, phone_first, phone_middle, phone_last, protector_phone_first, protector_phone_middle, protector_phone_last    FROM user_info    WHERE user_code = ?;"
+[2023-04-07 10:51:11, info] "MySQL Query Params: 04022"
+[2023-04-07 10:51:11, debug] {
+    "row": {
+        "name": "8SF+NM09",
+        "birth_year": "KqHK7A==",
+        "birth_month": "K6s=",
+        "birth_date": "K6A=",
+        "sex": "M",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BdnM+MZ",
+        "address_3": "8SB2MtQd2oApVL4WB/VeNgiV4Q3W6WSfLqrXjA==",
+        "phone_first": "K6nO",
+        "phone_middle": "KqnP6A==",
+        "phone_last": "KarM6w==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqnP6A==",
+        "protector_phone_last": "KarM6w=="
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:11, info] "MySQL Query:     SELECT created_time    FROM biometric_real_time    WHERE user_code =?    ORDER BY created_time DESC limit 1;"
+[2023-04-07 10:51:11, info] "MySQL Query Params: 04022"
+[2023-04-07 10:51:11, debug] {
+    "row": {
+        "created_time": "2023-04-06 11:55:07"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:15, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:51:15, info] "MySQL Query Params: "
+[2023-04-07 10:51:15, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:15, info] "MySQL Query:     SELECT name, birth_year, birth_month, birth_date, sex, address_1, address_2, address_3, phone_first, phone_middle, phone_last, protector_phone_first, protector_phone_middle, protector_phone_last    FROM user_info    WHERE user_code = ?;"
+[2023-04-07 10:51:15, info] "MySQL Query Params: 04014"
+[2023-04-07 10:51:15, debug] {
+    "row": {
+        "name": "9wVKNeQV3akt",
+        "birth_year": "KqHJ6Q==",
+        "birth_month": "K6k=",
+        "birth_date": "K6k=",
+        "sex": "M",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BpWM+MZ",
+        "address_3": "KqrN7WM=",
+        "phone_first": "K6nO",
+        "phone_middle": "KqrN7Q==",
+        "phone_last": "Lq7J4Q==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqrN7Q==",
+        "protector_phone_last": "Lq7J4Q=="
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:51:15, info] "MySQL Query:     SELECT created_time    FROM biometric_real_time    WHERE user_code =?    ORDER BY created_time DESC limit 1;"
+[2023-04-07 10:51:15, info] "MySQL Query Params: 04014"
+[2023-04-07 10:51:15, debug] {
+    "row": {},
+    "rowLength": 0,
+    "state": true
+}
+[2023-04-07 10:52:01, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:52:01, info] "MySQL Query Params: "
+[2023-04-07 10:52:01, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:01, info] "MySQL Query:     SELECT name, birth_year, birth_month, birth_date, sex, address_1, address_2, address_3, phone_first, phone_middle, phone_last, protector_phone_first, protector_phone_middle, protector_phone_last    FROM user_info    WHERE user_code = ?;"
+[2023-04-07 10:52:01, info] "MySQL Query Params: 04014"
+[2023-04-07 10:52:01, debug] {
+    "row": {
+        "name": "9wVKNeQV3akt",
+        "birth_year": "KqHJ6Q==",
+        "birth_month": "K6k=",
+        "birth_date": "K6k=",
+        "sex": "M",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BpWM+MZ",
+        "address_3": "KqrN7WM=",
+        "phone_first": "K6nO",
+        "phone_middle": "KqrN7Q==",
+        "phone_last": "Lq7J4Q==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqrN7Q==",
+        "protector_phone_last": "Lq7J4Q=="
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:01, info] "MySQL Query:     SELECT created_time    FROM biometric_real_time    WHERE user_code =?    ORDER BY created_time DESC limit 1;"
+[2023-04-07 10:52:01, info] "MySQL Query Params: 04014"
+[2023-04-07 10:52:01, debug] {
+    "row": {},
+    "rowLength": 0,
+    "state": true
+}
+[2023-04-07 10:52:02, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:52:02, info] "MySQL Query Params: "
+[2023-04-07 10:52:02, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:02, info] "MySQL Query:     SELECT name, birth_year, birth_month, birth_date, sex, address_1, address_2, address_3, phone_first, phone_middle, phone_last, protector_phone_first, protector_phone_middle, protector_phone_last    FROM user_info    WHERE user_code = ?;"
+[2023-04-07 10:52:02, info] "MySQL Query Params: 04022"
+[2023-04-07 10:52:02, debug] {
+    "row": {
+        "name": "8SF+NM09",
+        "birth_year": "KqHK7A==",
+        "birth_month": "K6s=",
+        "birth_date": "K6A=",
+        "sex": "M",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BdnM+MZ",
+        "address_3": "8SB2MtQd2oApVL4WB/VeNgiV4Q3W6WSfLqrXjA==",
+        "phone_first": "K6nO",
+        "phone_middle": "KqnP6A==",
+        "phone_last": "KarM6w==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqnP6A==",
+        "protector_phone_last": "KarM6w=="
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:02, info] "MySQL Query:     SELECT created_time    FROM biometric_real_time    WHERE user_code =?    ORDER BY created_time DESC limit 1;"
+[2023-04-07 10:52:02, info] "MySQL Query Params: 04022"
+[2023-04-07 10:52:02, debug] {
+    "row": {
+        "created_time": "2023-04-06 11:55:07"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:03, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:52:03, info] "MySQL Query Params: "
+[2023-04-07 10:52:03, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:03, info] "MySQL Query:     SELECT name, birth_year, birth_month, birth_date, sex, address_1, address_2, address_3, phone_first, phone_middle, phone_last, protector_phone_first, protector_phone_middle, protector_phone_last    FROM user_info    WHERE user_code = ?;"
+[2023-04-07 10:52:03, info] "MySQL Query Params: 04014"
+[2023-04-07 10:52:03, debug] {
+    "row": {
+        "name": "9wVKNeQV3akt",
+        "birth_year": "KqHJ6Q==",
+        "birth_month": "K6k=",
+        "birth_date": "K6k=",
+        "sex": "M",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BpWM+MZ",
+        "address_3": "KqrN7WM=",
+        "phone_first": "K6nO",
+        "phone_middle": "KqrN7Q==",
+        "phone_last": "Lq7J4Q==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqrN7Q==",
+        "protector_phone_last": "Lq7J4Q=="
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:03, info] "MySQL Query:     SELECT created_time    FROM biometric_real_time    WHERE user_code =?    ORDER BY created_time DESC limit 1;"
+[2023-04-07 10:52:03, info] "MySQL Query Params: 04014"
+[2023-04-07 10:52:03, debug] {
+    "row": {},
+    "rowLength": 0,
+    "state": true
+}
+[2023-04-07 10:52:04, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:52:04, info] "MySQL Query Params: "
+[2023-04-07 10:52:04, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:04, info] "MySQL Query:     SELECT name, birth_year, birth_month, birth_date, sex, address_1, address_2, address_3, phone_first, phone_middle, phone_last, protector_phone_first, protector_phone_middle, protector_phone_last    FROM user_info    WHERE user_code = ?;"
+[2023-04-07 10:52:04, info] "MySQL Query Params: 04022"
+[2023-04-07 10:52:04, debug] {
+    "row": {
+        "name": "8SF+NM09",
+        "birth_year": "KqHK7A==",
+        "birth_month": "K6s=",
+        "birth_date": "K6A=",
+        "sex": "M",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BdnM+MZ",
+        "address_3": "8SB2MtQd2oApVL4WB/VeNgiV4Q3W6WSfLqrXjA==",
+        "phone_first": "K6nO",
+        "phone_middle": "KqnP6A==",
+        "phone_last": "KarM6w==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqnP6A==",
+        "protector_phone_last": "KarM6w=="
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:04, info] "MySQL Query:     SELECT created_time    FROM biometric_real_time    WHERE user_code =?    ORDER BY created_time DESC limit 1;"
+[2023-04-07 10:52:04, info] "MySQL Query Params: 04022"
+[2023-04-07 10:52:04, debug] {
+    "row": {
+        "created_time": "2023-04-06 11:55:07"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:05, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:52:05, info] "MySQL Query Params: "
+[2023-04-07 10:52:05, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:05, info] "MySQL Query:     SELECT name, birth_year, birth_month, birth_date, sex, address_1, address_2, address_3, phone_first, phone_middle, phone_last, protector_phone_first, protector_phone_middle, protector_phone_last    FROM user_info    WHERE user_code = ?;"
+[2023-04-07 10:52:05, info] "MySQL Query Params: 04014"
+[2023-04-07 10:52:05, debug] {
+    "row": {
+        "name": "9wVKNeQV3akt",
+        "birth_year": "KqHJ6Q==",
+        "birth_month": "K6k=",
+        "birth_date": "K6k=",
+        "sex": "M",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BpWM+MZ",
+        "address_3": "KqrN7WM=",
+        "phone_first": "K6nO",
+        "phone_middle": "KqrN7Q==",
+        "phone_last": "Lq7J4Q==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqrN7Q==",
+        "protector_phone_last": "Lq7J4Q=="
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:05, info] "MySQL Query:     SELECT created_time    FROM biometric_real_time    WHERE user_code =?    ORDER BY created_time DESC limit 1;"
+[2023-04-07 10:52:05, info] "MySQL Query Params: 04014"
+[2023-04-07 10:52:05, debug] {
+    "row": {},
+    "rowLength": 0,
+    "state": true
+}
+[2023-04-07 10:52:06, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:52:06, info] "MySQL Query Params: "
+[2023-04-07 10:52:06, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:06, info] "MySQL Query:     SELECT name, birth_year, birth_month, birth_date, sex, address_1, address_2, address_3, phone_first, phone_middle, phone_last, protector_phone_first, protector_phone_middle, protector_phone_last    FROM user_info    WHERE user_code = ?;"
+[2023-04-07 10:52:06, info] "MySQL Query Params: 04022"
+[2023-04-07 10:52:06, debug] {
+    "row": {
+        "name": "8SF+NM09",
+        "birth_year": "KqHK7A==",
+        "birth_month": "K6s=",
+        "birth_date": "K6A=",
+        "sex": "M",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BdnM+MZ",
+        "address_3": "8SB2MtQd2oApVL4WB/VeNgiV4Q3W6WSfLqrXjA==",
+        "phone_first": "K6nO",
+        "phone_middle": "KqnP6A==",
+        "phone_last": "KarM6w==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqnP6A==",
+        "protector_phone_last": "KarM6w=="
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:06, info] "MySQL Query:     SELECT created_time    FROM biometric_real_time    WHERE user_code =?    ORDER BY created_time DESC limit 1;"
+[2023-04-07 10:52:06, info] "MySQL Query Params: 04022"
+[2023-04-07 10:52:06, debug] {
+    "row": {
+        "created_time": "2023-04-06 11:55:07"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:09, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:52:09, info] "MySQL Query Params: "
+[2023-04-07 10:52:09, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:09, info] "MySQL Query:     SELECT name, birth_year, birth_month, birth_date, sex, address_1, address_2, address_3, phone_first, phone_middle, phone_last, protector_phone_first, protector_phone_middle, protector_phone_last    FROM user_info    WHERE user_code = ?;"
+[2023-04-07 10:52:09, info] "MySQL Query Params: 04014"
+[2023-04-07 10:52:09, debug] {
+    "row": {
+        "name": "9wVKNeQV3akt",
+        "birth_year": "KqHJ6Q==",
+        "birth_month": "K6k=",
+        "birth_date": "K6k=",
+        "sex": "M",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BpWM+MZ",
+        "address_3": "KqrN7WM=",
+        "phone_first": "K6nO",
+        "phone_middle": "KqrN7Q==",
+        "phone_last": "Lq7J4Q==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqrN7Q==",
+        "protector_phone_last": "Lq7J4Q=="
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:09, info] "MySQL Query:     SELECT created_time    FROM biometric_real_time    WHERE user_code =?    ORDER BY created_time DESC limit 1;"
+[2023-04-07 10:52:09, info] "MySQL Query Params: 04014"
+[2023-04-07 10:52:09, debug] {
+    "row": {},
+    "rowLength": 0,
+    "state": true
+}
+[2023-04-07 10:52:34, info] "MySQL Query: SELECT a_user_refresh_token_app FROM user_admin WHERE a_user_code = ? and a_user_access_token_app = ?;"
+[2023-04-07 10:52:34, info] "MySQL Query Params: 3,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.gpDaPCBXtLoIxKFb8mf7_I6Rwb4znm2qNZFi70nJv8Y"
+[2023-04-07 10:52:34, debug] {
+    "row": {
+        "a_user_refresh_token_app": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.dCiWzKy2Y-smBVyMaPAN-R56_fTs1ostVcjKRMGEadY"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:34, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:52:34, info] "MySQL Query Params: "
+[2023-04-07 10:52:34, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:34, info] "MySQL Query:     SELECT a_user_address1, a_user_address2     FROM user_admin     WHERE a_user_code=?;"
+[2023-04-07 10:52:34, info] "MySQL Query Params: 3"
+[2023-04-07 10:52:34, debug] {
+    "row": {
+        "a_user_address1": "99",
+        "a_user_address2": "99"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:34, info] "MySQL Query:     SELECT user_code, name     FROM user_info     WHERE user_status='Y' and user_code like ?;"
+[2023-04-07 10:52:34, info] "MySQL Query Params: %"
+[2023-04-07 10:52:34, debug] {
+    "rows": [
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt"
+        },
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09"
+        },
+        {
+            "user_code": "04023",
+            "name": "9gFzM+4N2q4s"
+        }
+    ],
+    "rowLength": 3,
+    "state": true
+}
+[2023-04-07 10:52:34, info] "MySQL Query:                 SELECT ui.user_code, ui.name, al.as_created_date, al.as_detail, al.as_num                FROM user_info ui JOIN as_list al                ON ui.user_code=al.user_code                WHERE ui.user_status='Y'                ORDER BY al.as_num;"
+[2023-04-07 10:52:34, info] "MySQL Query Params: "
+[2023-04-07 10:52:34, debug] {
+    "rows": [
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09",
+            "as_created_date": "2023-04-06",
+            "as_detail": "라우터 전원 연결",
+            "as_num": 1
+        },
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt",
+            "as_created_date": "2023-04-06",
+            "as_detail": "아아아아아아",
+            "as_num": 2
+        },
+        {
+            "user_code": "04023",
+            "name": "9gFzM+4N2q4s",
+            "as_created_date": "2023-04-06",
+            "as_detail": "홍길동씨 전기 차단",
+            "as_num": 3
+        },
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09",
+            "as_created_date": "2023-04-06",
+            "as_detail": "센서교체",
+            "as_num": 5
+        }
+    ],
+    "rowLength": 4,
+    "state": true
+}
+[2023-04-07 10:52:34, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:52:34, info] "MySQL Query Params: "
+[2023-04-07 10:52:34, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:34, info] "MySQL Query:     SELECT count(*) AS cnt    FROM emergency_list    WHERE user_code = ?; "
+[2023-04-07 10:52:34, info] "MySQL Query Params: 04014"
+[2023-04-07 10:52:34, debug] {
+    "row": {
+        "cnt": 2
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:34, info] "MySQL Query:     SELECT count(*) AS cnt    FROM emergency_list    WHERE user_code = ?; "
+[2023-04-07 10:52:34, info] "MySQL Query Params: 04022"
+[2023-04-07 10:52:34, debug] {
+    "row": {
+        "cnt": 1
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:34, info] "MySQL Query:     SELECT count(*) AS cnt    FROM emergency_list    WHERE user_code = ?; "
+[2023-04-07 10:52:34, info] "MySQL Query Params: 04023"
+[2023-04-07 10:52:34, debug] {
+    "row": {
+        "cnt": 0
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:34, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:52:34, info] "MySQL Query Params: "
+[2023-04-07 10:52:34, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:34, info] "MySQL Query:     SELECT user_code, name, user_register_date    FROM user_info    WHERE user_status='Y'    ORDER BY name;"
+[2023-04-07 10:52:34, info] "MySQL Query Params: "
+[2023-04-07 10:52:34, debug] {
+    "rows": [
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09",
+            "user_register_date": "2023-03-30 10:27:54"
+        },
+        {
+            "user_code": "04023",
+            "name": "9gFzM+4N2q4s",
+            "user_register_date": "2023-04-05 16:54:49"
+        },
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt",
+            "user_register_date": "2023-04-06 10:15:06"
+        }
+    ],
+    "rowLength": 3,
+    "state": true
+}
+[2023-04-07 10:52:34, info] "MySQL Query:     SELECT a_user_address1, a_user_address2     FROM user_admin     WHERE a_user_code=?;"
+[2023-04-07 10:52:34, info] "MySQL Query Params: 3"
+[2023-04-07 10:52:34, debug] {
+    "row": {
+        "a_user_address1": "99",
+        "a_user_address2": "99"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:34, info] "MySQL Query:     SELECT ui.staff_code, ui.name, ui.address_1, ui.address_2, ui.address_3, em.emergency_id, em.user_code, em.emergency_time, em.emergency_web_check, em.emergency_check_contents, em.emergency_id    FROM user_info ui JOIN emergency_list em    ON ui.user_code=em.user_code where em.emergency_time>=? and em.emergency_time<=? and ui.user_code like ? and ui.user_status='Y' ORDER BY em.emergency_time DESC;"
+[2023-04-07 10:52:34, info] "MySQL Query Params: 2022-01-01 00:00:00,2023-04-07 23:59:59,%"
+[2023-04-07 10:52:34, debug] {
+    "rows": [
+        {
+            "staff_code": 3,
+            "name": "9wVKNeQV3akt",
+            "address_1": "8SxvNfUJ25UkmBiC2FPz",
+            "address_2": "8BpWM+MZ",
+            "address_3": "KqrN7WM=",
+            "emergency_id": 26,
+            "user_code": "04014",
+            "emergency_time": "2023-04-06 10:17:17",
+            "emergency_web_check": "2023-04-06 10:17:17",
+            "emergency_check_contents": "119 연계"
+        },
+        {
+            "staff_code": 3,
+            "name": "9wVKNeQV3akt",
+            "address_1": "8SxvNfUJ25UkmBiC2FPz",
+            "address_2": "8BpWM+MZ",
+            "address_3": "KqrN7WM=",
+            "emergency_id": 25,
+            "user_code": "04014",
+            "emergency_time": "2023-04-06 10:17:12",
+            "emergency_web_check": "2023-04-06 10:17:13",
+            "emergency_check_contents": "119 연계"
+        },
+        {
+            "staff_code": 3,
+            "name": "8SF+NM09",
+            "address_1": "8SxvNfUJ25UkmBiC2FPz",
+            "address_2": "8BdnM+MZ",
+            "address_3": "8SB2MtQd2oApVL4WB/VeNgiV4Q3W6WSfLqrXjA==",
+            "emergency_id": 2,
+            "user_code": "04022",
+            "emergency_time": "2023-03-24 07:00:35",
+            "emergency_web_check": "2023-03-30 10:33:08",
+            "emergency_check_contents": "119 연계"
+        }
+    ],
+    "rowLength": 3,
+    "state": true
+}
+[2023-04-07 10:52:34, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:52:34, info] "MySQL Query Params: "
+[2023-04-07 10:52:34, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:35, info] "MySQL Query: SELECT a_user_refresh_token_app FROM user_admin WHERE a_user_code = ? and a_user_access_token_app = ?;"
+[2023-04-07 10:52:35, info] "MySQL Query Params: 3,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.gpDaPCBXtLoIxKFb8mf7_I6Rwb4znm2qNZFi70nJv8Y"
+[2023-04-07 10:52:35, debug] {
+    "row": {
+        "a_user_refresh_token_app": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.dCiWzKy2Y-smBVyMaPAN-R56_fTs1ostVcjKRMGEadY"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:35, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:52:35, info] "MySQL Query Params: "
+[2023-04-07 10:52:35, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:35, info] "MySQL Query: SELECT a_user_address1, a_user_address2 FROM user_admin WHERE a_user_code=?;"
+[2023-04-07 10:52:35, info] "MySQL Query Params: 3"
+[2023-04-07 10:52:35, debug] {
+    "row": {
+        "a_user_address1": "99",
+        "a_user_address2": "99"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:35, info] "MySQL Query: SELECT user_code, name FROM user_info WHERE user_status='Y' and user_code like ?;"
+[2023-04-07 10:52:35, info] "MySQL Query Params: %"
+[2023-04-07 10:52:35, debug] {
+    "rows": [
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt"
+        },
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09"
+        },
+        {
+            "user_code": "04023",
+            "name": "9gFzM+4N2q4s"
+        }
+    ],
+    "rowLength": 3,
+    "state": true
+}
+[2023-04-07 10:52:35, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:52:35, info] "MySQL Query Params: "
+[2023-04-07 10:52:35, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:35, info] "MySQL Query:     SELECT ui.user_code, ui.name    FROM user_info ui    join user_own_sensor uo    ON ui.user_code = uo.user_code    WHERE user_status='Y'    ORDER BY name;"
+[2023-04-07 10:52:35, info] "MySQL Query Params: "
+[2023-04-07 10:52:35, debug] {
+    "rows": [
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09"
+        },
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt"
+        }
+    ],
+    "rowLength": 2,
+    "state": true
+}
+[2023-04-07 10:52:36, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:52:36, info] "MySQL Query Params: "
+[2023-04-07 10:52:36, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:36, info] "MySQL Query:     SELECT name, birth_year, birth_month, birth_date, sex, address_1, address_2, address_3, phone_first, phone_middle, phone_last, protector_phone_first, protector_phone_middle, protector_phone_last    FROM user_info    WHERE user_code = ?;"
+[2023-04-07 10:52:36, info] "MySQL Query Params: 04014"
+[2023-04-07 10:52:36, debug] {
+    "row": {
+        "name": "9wVKNeQV3akt",
+        "birth_year": "KqHJ6Q==",
+        "birth_month": "K6k=",
+        "birth_date": "K6k=",
+        "sex": "M",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BpWM+MZ",
+        "address_3": "KqrN7WM=",
+        "phone_first": "K6nO",
+        "phone_middle": "KqrN7Q==",
+        "phone_last": "Lq7J4Q==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqrN7Q==",
+        "protector_phone_last": "Lq7J4Q=="
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:52:36, info] "MySQL Query:     SELECT created_time    FROM biometric_real_time    WHERE user_code =?    ORDER BY created_time DESC limit 1;"
+[2023-04-07 10:52:36, info] "MySQL Query Params: 04014"
+[2023-04-07 10:52:36, debug] {
+    "row": {},
+    "rowLength": 0,
+    "state": true
+}
+[2023-04-07 10:53:00, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:53:00, info] "MySQL Query Params: "
+[2023-04-07 10:53:00, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:53:00, info] "MySQL Query:     SELECT ui.user_code, ui.name    FROM user_info ui    join user_own_sensor uo    ON ui.user_code = uo.user_code    WHERE user_status='Y'    ORDER BY name;"
+[2023-04-07 10:53:00, info] "MySQL Query Params: "
+[2023-04-07 10:53:00, debug] {
+    "rows": [
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09"
+        },
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt"
+        }
+    ],
+    "rowLength": 2,
+    "state": true
+}
+[2023-04-07 10:53:01, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:53:01, info] "MySQL Query Params: "
+[2023-04-07 10:53:01, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:53:01, info] "MySQL Query:     SELECT ui.user_code, ui.name    FROM user_info ui    join user_own_sensor uo    ON ui.user_code = uo.user_code    WHERE user_status='Y'    ORDER BY name;"
+[2023-04-07 10:53:01, info] "MySQL Query Params: "
+[2023-04-07 10:53:01, debug] {
+    "rows": [
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09"
+        },
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt"
+        }
+    ],
+    "rowLength": 2,
+    "state": true
+}
+[2023-04-07 10:53:01, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:53:01, info] "MySQL Query Params: "
+[2023-04-07 10:53:01, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:53:01, info] "MySQL Query:     SELECT ui.user_code, ui.name    FROM user_info ui    join user_own_sensor uo    ON ui.user_code = uo.user_code    WHERE user_status='Y'    ORDER BY name;"
+[2023-04-07 10:53:01, info] "MySQL Query Params: "
+[2023-04-07 10:53:01, debug] {
+    "rows": [
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09"
+        },
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt"
+        }
+    ],
+    "rowLength": 2,
+    "state": true
+}
+[2023-04-07 10:53:02, info] "MySQL Query: SELECT a_user_refresh_token_app FROM user_admin WHERE a_user_code = ? and a_user_access_token_app = ?;"
+[2023-04-07 10:53:02, info] "MySQL Query Params: 3,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.gpDaPCBXtLoIxKFb8mf7_I6Rwb4znm2qNZFi70nJv8Y"
+[2023-04-07 10:53:02, debug] {
+    "row": {
+        "a_user_refresh_token_app": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.dCiWzKy2Y-smBVyMaPAN-R56_fTs1ostVcjKRMGEadY"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:53:02, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:53:02, info] "MySQL Query Params: "
+[2023-04-07 10:53:02, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:53:02, info] "MySQL Query:     SELECT a_user_address1, a_user_address2     FROM user_admin     WHERE a_user_code=?;"
+[2023-04-07 10:53:02, info] "MySQL Query Params: 3"
+[2023-04-07 10:53:02, debug] {
+    "row": {
+        "a_user_address1": "99",
+        "a_user_address2": "99"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:53:02, info] "MySQL Query:     SELECT user_code, name     FROM user_info     WHERE user_status='Y' and user_code like ?;"
+[2023-04-07 10:53:02, info] "MySQL Query Params: %"
+[2023-04-07 10:53:02, debug] {
+    "rows": [
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt"
+        },
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09"
+        },
+        {
+            "user_code": "04023",
+            "name": "9gFzM+4N2q4s"
+        }
+    ],
+    "rowLength": 3,
+    "state": true
+}
+[2023-04-07 10:53:02, info] "MySQL Query:                 SELECT ui.user_code, ui.name, al.as_created_date, al.as_detail, al.as_num                FROM user_info ui JOIN as_list al                ON ui.user_code=al.user_code                WHERE ui.user_status='Y'                ORDER BY al.as_num;"
+[2023-04-07 10:53:02, info] "MySQL Query Params: "
+[2023-04-07 10:53:02, debug] {
+    "rows": [
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09",
+            "as_created_date": "2023-04-06",
+            "as_detail": "라우터 전원 연결",
+            "as_num": 1
+        },
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt",
+            "as_created_date": "2023-04-06",
+            "as_detail": "아아아아아아",
+            "as_num": 2
+        },
+        {
+            "user_code": "04023",
+            "name": "9gFzM+4N2q4s",
+            "as_created_date": "2023-04-06",
+            "as_detail": "홍길동씨 전기 차단",
+            "as_num": 3
+        },
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09",
+            "as_created_date": "2023-04-06",
+            "as_detail": "센서교체",
+            "as_num": 5
+        }
+    ],
+    "rowLength": 4,
+    "state": true
+}
+[2023-04-07 10:53:02, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:53:02, info] "MySQL Query Params: "
+[2023-04-07 10:53:02, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:53:02, info] "MySQL Query:     SELECT count(*) AS cnt    FROM emergency_list    WHERE user_code = ?; "
+[2023-04-07 10:53:02, info] "MySQL Query Params: 04014"
+[2023-04-07 10:53:02, debug] {
+    "row": {
+        "cnt": 2
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:53:02, info] "MySQL Query:     SELECT count(*) AS cnt    FROM emergency_list    WHERE user_code = ?; "
+[2023-04-07 10:53:02, info] "MySQL Query Params: 04022"
+[2023-04-07 10:53:02, debug] {
+    "row": {
+        "cnt": 1
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:53:02, info] "MySQL Query:     SELECT count(*) AS cnt    FROM emergency_list    WHERE user_code = ?; "
+[2023-04-07 10:53:02, info] "MySQL Query Params: 04023"
+[2023-04-07 10:53:02, debug] {
+    "row": {
+        "cnt": 0
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:53:02, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:53:02, info] "MySQL Query Params: "
+[2023-04-07 10:53:02, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:53:02, info] "MySQL Query:     SELECT user_code, name, user_register_date    FROM user_info    WHERE user_status='Y'    ORDER BY name;"
+[2023-04-07 10:53:02, info] "MySQL Query Params: "
+[2023-04-07 10:53:02, debug] {
+    "rows": [
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09",
+            "user_register_date": "2023-03-30 10:27:54"
+        },
+        {
+            "user_code": "04023",
+            "name": "9gFzM+4N2q4s",
+            "user_register_date": "2023-04-05 16:54:49"
+        },
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt",
+            "user_register_date": "2023-04-06 10:15:06"
+        }
+    ],
+    "rowLength": 3,
+    "state": true
+}
+[2023-04-07 10:53:02, info] "MySQL Query:     SELECT a_user_address1, a_user_address2     FROM user_admin     WHERE a_user_code=?;"
+[2023-04-07 10:53:02, info] "MySQL Query Params: 3"
+[2023-04-07 10:53:02, debug] {
+    "row": {
+        "a_user_address1": "99",
+        "a_user_address2": "99"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:53:02, info] "MySQL Query:     SELECT ui.staff_code, ui.name, ui.address_1, ui.address_2, ui.address_3, em.emergency_id, em.user_code, em.emergency_time, em.emergency_web_check, em.emergency_check_contents, em.emergency_id    FROM user_info ui JOIN emergency_list em    ON ui.user_code=em.user_code where em.emergency_time>=? and em.emergency_time<=? and ui.user_code like ? and ui.user_status='Y' ORDER BY em.emergency_time DESC;"
+[2023-04-07 10:53:02, info] "MySQL Query Params: 2022-01-01 00:00:00,2023-04-07 23:59:59,%"
+[2023-04-07 10:53:02, debug] {
+    "rows": [
+        {
+            "staff_code": 3,
+            "name": "9wVKNeQV3akt",
+            "address_1": "8SxvNfUJ25UkmBiC2FPz",
+            "address_2": "8BpWM+MZ",
+            "address_3": "KqrN7WM=",
+            "emergency_id": 26,
+            "user_code": "04014",
+            "emergency_time": "2023-04-06 10:17:17",
+            "emergency_web_check": "2023-04-06 10:17:17",
+            "emergency_check_contents": "119 연계"
+        },
+        {
+            "staff_code": 3,
+            "name": "9wVKNeQV3akt",
+            "address_1": "8SxvNfUJ25UkmBiC2FPz",
+            "address_2": "8BpWM+MZ",
+            "address_3": "KqrN7WM=",
+            "emergency_id": 25,
+            "user_code": "04014",
+            "emergency_time": "2023-04-06 10:17:12",
+            "emergency_web_check": "2023-04-06 10:17:13",
+            "emergency_check_contents": "119 연계"
+        },
+        {
+            "staff_code": 3,
+            "name": "8SF+NM09",
+            "address_1": "8SxvNfUJ25UkmBiC2FPz",
+            "address_2": "8BdnM+MZ",
+            "address_3": "8SB2MtQd2oApVL4WB/VeNgiV4Q3W6WSfLqrXjA==",
+            "emergency_id": 2,
+            "user_code": "04022",
+            "emergency_time": "2023-03-24 07:00:35",
+            "emergency_web_check": "2023-03-30 10:33:08",
+            "emergency_check_contents": "119 연계"
+        }
+    ],
+    "rowLength": 3,
+    "state": true
+}
+[2023-04-07 10:53:02, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:53:02, info] "MySQL Query Params: "
+[2023-04-07 10:53:02, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:53:05, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:53:05, info] "MySQL Query Params: "
+[2023-04-07 10:53:05, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:53:05, info] "MySQL Query:                 SELECT ui.birth_year, ui.birth_month, ui.birth_date, ui.name, al.as_created_date, al.as_detail, al.user_code, al.as_num                FROM user_info ui JOIN as_list al                ON ui.user_code=al.user_code                WHERE al.as_num =?;"
+[2023-04-07 10:53:05, info] "MySQL Query Params: 1"
+[2023-04-07 10:53:05, debug] {
+    "row": {
+        "birth_year": "KqHK7A==",
+        "birth_month": "K6s=",
+        "birth_date": "K6A=",
+        "name": "8SF+NM09",
+        "as_created_date": "2023-04-06",
+        "as_detail": "라우터 전원 연결",
+        "user_code": "04022",
+        "as_num": 1
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:53:08, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:53:08, info] "MySQL Query Params: "
+[2023-04-07 10:53:08, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:53:08, info] "MySQL Query:                 SELECT ui.birth_year, ui.birth_month, ui.birth_date, ui.name, al.as_created_date, al.as_detail, al.user_code, al.as_num                FROM user_info ui JOIN as_list al                ON ui.user_code=al.user_code                WHERE al.as_num =?;"
+[2023-04-07 10:53:08, info] "MySQL Query Params: 1"
+[2023-04-07 10:53:08, debug] {
+    "row": {
+        "birth_year": "KqHK7A==",
+        "birth_month": "K6s=",
+        "birth_date": "K6A=",
+        "name": "8SF+NM09",
+        "as_created_date": "2023-04-06",
+        "as_detail": "라우터 전원 연결",
+        "user_code": "04022",
+        "as_num": 1
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:53:52, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:53:52, info] "MySQL Query Params: "
+[2023-04-07 10:53:52, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:53:52, info] "MySQL Query:                 SELECT ui.birth_year, ui.birth_month, ui.birth_date, ui.name, al.as_created_date, al.as_detail, al.user_code, al.as_num                FROM user_info ui JOIN as_list al                ON ui.user_code=al.user_code                WHERE al.as_num =?;"
+[2023-04-07 10:53:52, info] "MySQL Query Params: 2"
+[2023-04-07 10:53:52, debug] {
+    "row": {
+        "birth_year": "KqHJ6Q==",
+        "birth_month": "K6k=",
+        "birth_date": "K6k=",
+        "name": "9wVKNeQV3akt",
+        "as_created_date": "2023-04-06",
+        "as_detail": "아아아아아아",
+        "user_code": "04014",
+        "as_num": 2
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:55:03, error] "[Router Error]: /dist/css/fonts/themify.ttf"
+[2023-04-07 10:57:11, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:57:11, info] "MySQL Query Params: "
+[2023-04-07 10:57:11, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:57:11, info] "MySQL Query:                 SELECT ui.birth_year, ui.birth_month, ui.birth_date, ui.name, al.as_created_date, al.as_detail, al.user_code, al.as_num                FROM user_info ui JOIN as_list al                ON ui.user_code=al.user_code                WHERE al.as_num =?;"
+[2023-04-07 10:57:11, info] "MySQL Query Params: 1"
+[2023-04-07 10:57:11, debug] {
+    "row": {
+        "birth_year": "KqHK7A==",
+        "birth_month": "K6s=",
+        "birth_date": "K6A=",
+        "name": "8SF+NM09",
+        "as_created_date": "2023-04-06",
+        "as_detail": "라우터 전원 연결",
+        "user_code": "04022",
+        "as_num": 1
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:57:15, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:57:15, info] "MySQL Query Params: "
+[2023-04-07 10:57:15, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:57:15, info] "MySQL Query:                 SELECT ui.birth_year, ui.birth_month, ui.birth_date, ui.name, al.as_created_date, al.as_detail, al.user_code, al.as_num                FROM user_info ui JOIN as_list al                ON ui.user_code=al.user_code                WHERE al.as_num =?;"
+[2023-04-07 10:57:15, info] "MySQL Query Params: 2"
+[2023-04-07 10:57:15, debug] {
+    "row": {
+        "birth_year": "KqHJ6Q==",
+        "birth_month": "K6k=",
+        "birth_date": "K6k=",
+        "name": "9wVKNeQV3akt",
+        "as_created_date": "2023-04-06",
+        "as_detail": "아아아아아아",
+        "user_code": "04014",
+        "as_num": 2
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:13, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:58:13, info] "MySQL Query Params: "
+[2023-04-07 10:58:13, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:13, info] "MySQL Query:                 SELECT ui.birth_year, ui.birth_month, ui.birth_date, ui.name, al.as_created_date, al.as_detail, al.user_code, al.as_num                FROM user_info ui JOIN as_list al                ON ui.user_code=al.user_code                WHERE al.as_num =?;"
+[2023-04-07 10:58:13, info] "MySQL Query Params: 1"
+[2023-04-07 10:58:13, debug] {
+    "row": {
+        "birth_year": "KqHK7A==",
+        "birth_month": "K6s=",
+        "birth_date": "K6A=",
+        "name": "8SF+NM09",
+        "as_created_date": "2023-04-06",
+        "as_detail": "라우터 전원 연결",
+        "user_code": "04022",
+        "as_num": 1
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:19, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:58:19, info] "MySQL Query Params: "
+[2023-04-07 10:58:19, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:19, info] "MySQL Query:                 SELECT ua.a_user_name, el.emergency_time, el.emergency_web_check, el.emergency_contents_time                 FROM emergency_list el JOIN user_admin ua                ON el.a_user_code=ua.a_user_code                WHERE el.emergency_id = ?;"
+[2023-04-07 10:58:19, info] "MySQL Query Params: 26"
+[2023-04-07 10:58:19, debug] {
+    "row": {
+        "a_user_name": "9h1yNdwR3KsN",
+        "emergency_time": "2023-04-06 10:17:17",
+        "emergency_web_check": "2023-04-06 10:17:17",
+        "emergency_contents_time": "2023-04-06 10:17:32"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:20, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:58:20, info] "MySQL Query Params: "
+[2023-04-07 10:58:20, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:20, info] "MySQL Query:                 SELECT ua.a_user_name, el.emergency_time, el.emergency_web_check, el.emergency_contents_time                 FROM emergency_list el JOIN user_admin ua                ON el.a_user_code=ua.a_user_code                WHERE el.emergency_id = ?;"
+[2023-04-07 10:58:20, info] "MySQL Query Params: 25"
+[2023-04-07 10:58:20, debug] {
+    "row": {
+        "a_user_name": "9h1yNdwR3KsN",
+        "emergency_time": "2023-04-06 10:17:12",
+        "emergency_web_check": "2023-04-06 10:17:13",
+        "emergency_contents_time": "2023-04-06 10:17:27"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:21, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:58:21, info] "MySQL Query Params: "
+[2023-04-07 10:58:21, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:21, info] "MySQL Query:     SELECT name, birth_year, birth_month, birth_date, sex, address_1, address_2, address_3, phone_first, phone_middle, phone_last, protector_phone_first, protector_phone_middle, protector_phone_last    FROM user_info    WHERE user_code = ?;"
+[2023-04-07 10:58:21, info] "MySQL Query Params: 04014"
+[2023-04-07 10:58:21, debug] {
+    "row": {
+        "name": "9wVKNeQV3akt",
+        "birth_year": "KqHJ6Q==",
+        "birth_month": "K6k=",
+        "birth_date": "K6k=",
+        "sex": "M",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BpWM+MZ",
+        "address_3": "KqrN7WM=",
+        "phone_first": "K6nO",
+        "phone_middle": "KqrN7Q==",
+        "phone_last": "Lq7J4Q==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqrN7Q==",
+        "protector_phone_last": "Lq7J4Q=="
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:23, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:58:23, info] "MySQL Query Params: "
+[2023-04-07 10:58:23, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:23, info] "MySQL Query:     SELECT name, birth_year, birth_month, birth_date, sex, address_1, address_2, address_3, phone_first, phone_middle, phone_last, protector_phone_first, protector_phone_middle, protector_phone_last    FROM user_info    WHERE user_code = ?;"
+[2023-04-07 10:58:23, info] "MySQL Query Params: 04022"
+[2023-04-07 10:58:23, debug] {
+    "row": {
+        "name": "8SF+NM09",
+        "birth_year": "KqHK7A==",
+        "birth_month": "K6s=",
+        "birth_date": "K6A=",
+        "sex": "M",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BdnM+MZ",
+        "address_3": "8SB2MtQd2oApVL4WB/VeNgiV4Q3W6WSfLqrXjA==",
+        "phone_first": "K6nO",
+        "phone_middle": "KqnP6A==",
+        "phone_last": "KarM6w==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqnP6A==",
+        "protector_phone_last": "KarM6w=="
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:24, info] "MySQL Query: SELECT a_user_refresh_token_app FROM user_admin WHERE a_user_code = ? and a_user_access_token_app = ?;"
+[2023-04-07 10:58:24, info] "MySQL Query Params: 3,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.gpDaPCBXtLoIxKFb8mf7_I6Rwb4znm2qNZFi70nJv8Y"
+[2023-04-07 10:58:24, debug] {
+    "row": {
+        "a_user_refresh_token_app": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.dCiWzKy2Y-smBVyMaPAN-R56_fTs1ostVcjKRMGEadY"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:24, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:58:24, info] "MySQL Query Params: "
+[2023-04-07 10:58:24, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:24, info] "MySQL Query: SELECT a_user_address1, a_user_address2 FROM user_admin WHERE a_user_code=?;"
+[2023-04-07 10:58:24, info] "MySQL Query Params: 3"
+[2023-04-07 10:58:24, debug] {
+    "row": {
+        "a_user_address1": "99",
+        "a_user_address2": "99"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:24, info] "MySQL Query: SELECT user_code, name FROM user_info WHERE user_status='Y' and user_code like ?;"
+[2023-04-07 10:58:24, info] "MySQL Query Params: %"
+[2023-04-07 10:58:24, debug] {
+    "rows": [
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt"
+        },
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09"
+        },
+        {
+            "user_code": "04023",
+            "name": "9gFzM+4N2q4s"
+        }
+    ],
+    "rowLength": 3,
+    "state": true
+}
+[2023-04-07 10:58:24, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:58:24, info] "MySQL Query Params: "
+[2023-04-07 10:58:24, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:24, info] "MySQL Query:     SELECT ui.user_code, ui.name    FROM user_info ui    join user_own_sensor uo    ON ui.user_code = uo.user_code    WHERE user_status='Y'    ORDER BY name;"
+[2023-04-07 10:58:24, info] "MySQL Query Params: "
+[2023-04-07 10:58:24, debug] {
+    "rows": [
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09"
+        },
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt"
+        }
+    ],
+    "rowLength": 2,
+    "state": true
+}
+[2023-04-07 10:58:25, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:58:25, info] "MySQL Query Params: "
+[2023-04-07 10:58:25, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:25, info] "MySQL Query:     SELECT name, birth_year, birth_month, birth_date, sex, address_1, address_2, address_3, phone_first, phone_middle, phone_last, protector_phone_first, protector_phone_middle, protector_phone_last    FROM user_info    WHERE user_code = ?;"
+[2023-04-07 10:58:25, info] "MySQL Query Params: 04022"
+[2023-04-07 10:58:25, debug] {
+    "row": {
+        "name": "8SF+NM09",
+        "birth_year": "KqHK7A==",
+        "birth_month": "K6s=",
+        "birth_date": "K6A=",
+        "sex": "M",
+        "address_1": "8SxvNfUJ25UkmBiC2FPz",
+        "address_2": "8BdnM+MZ",
+        "address_3": "8SB2MtQd2oApVL4WB/VeNgiV4Q3W6WSfLqrXjA==",
+        "phone_first": "K6nO",
+        "phone_middle": "KqnP6A==",
+        "phone_last": "KarM6w==",
+        "protector_phone_first": "K6nO",
+        "protector_phone_middle": "KqnP6A==",
+        "protector_phone_last": "KarM6w=="
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:25, info] "MySQL Query:     SELECT created_time    FROM biometric_real_time    WHERE user_code =?    ORDER BY created_time DESC limit 1;"
+[2023-04-07 10:58:25, info] "MySQL Query Params: 04022"
+[2023-04-07 10:58:25, debug] {
+    "row": {
+        "created_time": "2023-04-06 11:55:07"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:26, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:58:26, info] "MySQL Query Params: "
+[2023-04-07 10:58:26, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:26, info] "MySQL Query:     SELECT ui.user_code, ui.name    FROM user_info ui    join user_own_sensor uo    ON ui.user_code = uo.user_code    WHERE user_status='Y'    ORDER BY name;"
+[2023-04-07 10:58:26, info] "MySQL Query Params: "
+[2023-04-07 10:58:26, debug] {
+    "rows": [
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09"
+        },
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt"
+        }
+    ],
+    "rowLength": 2,
+    "state": true
+}
+[2023-04-07 10:58:27, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:58:27, info] "MySQL Query Params: "
+[2023-04-07 10:58:27, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:27, info] "MySQL Query:     SELECT ui.user_code, ui.name    FROM user_info ui    join user_own_sensor uo    ON ui.user_code = uo.user_code    WHERE user_status='Y'    ORDER BY name;"
+[2023-04-07 10:58:27, info] "MySQL Query Params: "
+[2023-04-07 10:58:27, debug] {
+    "rows": [
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09"
+        },
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt"
+        }
+    ],
+    "rowLength": 2,
+    "state": true
+}
+[2023-04-07 10:58:28, info] "MySQL Query: SELECT a_user_refresh_token_app FROM user_admin WHERE a_user_code = ? and a_user_access_token_app = ?;"
+[2023-04-07 10:58:28, info] "MySQL Query Params: 3,eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.gpDaPCBXtLoIxKFb8mf7_I6Rwb4znm2qNZFi70nJv8Y"
+[2023-04-07 10:58:28, debug] {
+    "row": {
+        "a_user_refresh_token_app": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiJ0ZXN0MTExMSIsImlhdCI6MTY4MDgzMDM3NiwiZXhwIjoxNjg4NjA2Mzc2fQ.dCiWzKy2Y-smBVyMaPAN-R56_fTs1ostVcjKRMGEadY"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:28, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:58:28, info] "MySQL Query Params: "
+[2023-04-07 10:58:28, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:28, info] "MySQL Query:     SELECT a_user_address1, a_user_address2     FROM user_admin     WHERE a_user_code=?;"
+[2023-04-07 10:58:28, info] "MySQL Query Params: 3"
+[2023-04-07 10:58:28, debug] {
+    "row": {
+        "a_user_address1": "99",
+        "a_user_address2": "99"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:28, info] "MySQL Query:     SELECT user_code, name     FROM user_info     WHERE user_status='Y' and user_code like ?;"
+[2023-04-07 10:58:28, info] "MySQL Query Params: %"
+[2023-04-07 10:58:28, debug] {
+    "rows": [
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt"
+        },
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09"
+        },
+        {
+            "user_code": "04023",
+            "name": "9gFzM+4N2q4s"
+        }
+    ],
+    "rowLength": 3,
+    "state": true
+}
+[2023-04-07 10:58:28, info] "MySQL Query:                 SELECT ui.user_code, ui.name, al.as_created_date, al.as_detail, al.as_num                FROM user_info ui JOIN as_list al                ON ui.user_code=al.user_code                WHERE ui.user_status='Y'                ORDER BY al.as_num;"
+[2023-04-07 10:58:28, info] "MySQL Query Params: "
+[2023-04-07 10:58:28, debug] {
+    "rows": [
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09",
+            "as_created_date": "2023-04-06",
+            "as_detail": "라우터 전원 연결",
+            "as_num": 1
+        },
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt",
+            "as_created_date": "2023-04-06",
+            "as_detail": "아아아아아아",
+            "as_num": 2
+        },
+        {
+            "user_code": "04023",
+            "name": "9gFzM+4N2q4s",
+            "as_created_date": "2023-04-06",
+            "as_detail": "홍길동씨 전기 차단",
+            "as_num": 3
+        },
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09",
+            "as_created_date": "2023-04-06",
+            "as_detail": "센서교체",
+            "as_num": 5
+        }
+    ],
+    "rowLength": 4,
+    "state": true
+}
+[2023-04-07 10:58:28, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:58:28, info] "MySQL Query Params: "
+[2023-04-07 10:58:28, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:28, info] "MySQL Query:     SELECT count(*) AS cnt    FROM emergency_list    WHERE user_code = ?; "
+[2023-04-07 10:58:28, info] "MySQL Query Params: 04014"
+[2023-04-07 10:58:28, debug] {
+    "row": {
+        "cnt": 2
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:28, info] "MySQL Query:     SELECT count(*) AS cnt    FROM emergency_list    WHERE user_code = ?; "
+[2023-04-07 10:58:28, info] "MySQL Query Params: 04022"
+[2023-04-07 10:58:28, debug] {
+    "row": {
+        "cnt": 1
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:28, info] "MySQL Query:     SELECT count(*) AS cnt    FROM emergency_list    WHERE user_code = ?; "
+[2023-04-07 10:58:28, info] "MySQL Query Params: 04023"
+[2023-04-07 10:58:28, debug] {
+    "row": {
+        "cnt": 0
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:28, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:58:28, info] "MySQL Query Params: "
+[2023-04-07 10:58:28, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:28, info] "MySQL Query:     SELECT user_code, name, user_register_date    FROM user_info    WHERE user_status='Y'    ORDER BY name;"
+[2023-04-07 10:58:28, info] "MySQL Query Params: "
+[2023-04-07 10:58:28, debug] {
+    "rows": [
+        {
+            "user_code": "04022",
+            "name": "8SF+NM09",
+            "user_register_date": "2023-03-30 10:27:54"
+        },
+        {
+            "user_code": "04023",
+            "name": "9gFzM+4N2q4s",
+            "user_register_date": "2023-04-05 16:54:49"
+        },
+        {
+            "user_code": "04014",
+            "name": "9wVKNeQV3akt",
+            "user_register_date": "2023-04-06 10:15:06"
+        }
+    ],
+    "rowLength": 3,
+    "state": true
+}
+[2023-04-07 10:58:28, info] "MySQL Query:     SELECT a_user_address1, a_user_address2     FROM user_admin     WHERE a_user_code=?;"
+[2023-04-07 10:58:28, info] "MySQL Query Params: 3"
+[2023-04-07 10:58:28, debug] {
+    "row": {
+        "a_user_address1": "99",
+        "a_user_address2": "99"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:28, info] "MySQL Query:     SELECT ui.staff_code, ui.name, ui.address_1, ui.address_2, ui.address_3, em.emergency_id, em.user_code, em.emergency_time, em.emergency_web_check, em.emergency_check_contents, em.emergency_id    FROM user_info ui JOIN emergency_list em    ON ui.user_code=em.user_code where em.emergency_time>=? and em.emergency_time<=? and ui.user_code like ? and ui.user_status='Y' ORDER BY em.emergency_time DESC;"
+[2023-04-07 10:58:28, info] "MySQL Query Params: 2022-01-01 00:00:00,2023-04-07 23:59:59,%"
+[2023-04-07 10:58:28, debug] {
+    "rows": [
+        {
+            "staff_code": 3,
+            "name": "9wVKNeQV3akt",
+            "address_1": "8SxvNfUJ25UkmBiC2FPz",
+            "address_2": "8BpWM+MZ",
+            "address_3": "KqrN7WM=",
+            "emergency_id": 26,
+            "user_code": "04014",
+            "emergency_time": "2023-04-06 10:17:17",
+            "emergency_web_check": "2023-04-06 10:17:17",
+            "emergency_check_contents": "119 연계"
+        },
+        {
+            "staff_code": 3,
+            "name": "9wVKNeQV3akt",
+            "address_1": "8SxvNfUJ25UkmBiC2FPz",
+            "address_2": "8BpWM+MZ",
+            "address_3": "KqrN7WM=",
+            "emergency_id": 25,
+            "user_code": "04014",
+            "emergency_time": "2023-04-06 10:17:12",
+            "emergency_web_check": "2023-04-06 10:17:13",
+            "emergency_check_contents": "119 연계"
+        },
+        {
+            "staff_code": 3,
+            "name": "8SF+NM09",
+            "address_1": "8SxvNfUJ25UkmBiC2FPz",
+            "address_2": "8BdnM+MZ",
+            "address_3": "8SB2MtQd2oApVL4WB/VeNgiV4Q3W6WSfLqrXjA==",
+            "emergency_id": 2,
+            "user_code": "04022",
+            "emergency_time": "2023-03-24 07:00:35",
+            "emergency_web_check": "2023-03-30 10:33:08",
+            "emergency_check_contents": "119 연계"
+        }
+    ],
+    "rowLength": 3,
+    "state": true
+}
+[2023-04-07 10:58:28, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:58:28, info] "MySQL Query Params: "
+[2023-04-07 10:58:28, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:30, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:58:30, info] "MySQL Query Params: "
+[2023-04-07 10:58:30, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:58:30, info] "MySQL Query:                 SELECT ui.birth_year, ui.birth_month, ui.birth_date, ui.name, al.as_created_date, al.as_detail, al.user_code, al.as_num                FROM user_info ui JOIN as_list al                ON ui.user_code=al.user_code                WHERE al.as_num =?;"
+[2023-04-07 10:58:30, info] "MySQL Query Params: 2"
+[2023-04-07 10:58:30, debug] {
+    "row": {
+        "birth_year": "KqHJ6Q==",
+        "birth_month": "K6k=",
+        "birth_date": "K6k=",
+        "name": "9wVKNeQV3akt",
+        "as_created_date": "2023-04-06",
+        "as_detail": "아아아아아아",
+        "user_code": "04014",
+        "as_num": 2
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:59:57, info] "MySQL Query: SELECT key_string FROM encryption_key_info WHERE activate_yn = 'Y';"
+[2023-04-07 10:59:57, info] "MySQL Query Params: "
+[2023-04-07 10:59:57, debug] {
+    "row": {
+        "key_string": "_Cause_8-bit_life_is_so_simple__"
+    },
+    "rowLength": 1,
+    "state": true
+}
+[2023-04-07 10:59:57, info] "MySQL Query:                 SELECT ui.birth_year, ui.birth_month, ui.birth_date, ui.name, al.as_created_date, al.as_detail, al.user_code, al.as_num                FROM user_info ui JOIN as_list al                ON ui.user_code=al.user_code                WHERE al.as_num =?;"
+[2023-04-07 10:59:57, info] "MySQL Query Params: 1"
+[2023-04-07 10:59:57, debug] {
+    "row": {
+        "birth_year": "KqHK7A==",
+        "birth_month": "K6s=",
+        "birth_date": "K6A=",
+        "name": "8SF+NM09",
+        "as_created_date": "2023-04-06",
+        "as_detail": "라우터 전원 연결",
+        "user_code": "04022",
+        "as_num": 1
+    },
+    "rowLength": 1,
+    "state": true
+}

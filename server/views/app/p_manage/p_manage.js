@@ -442,7 +442,6 @@ function showInfo_AS(as_num) {
             $('#manageAS-detail').appendTo("body").modal('show');
             originalText = result.row.as_detail;
             usercode_AS = result.row.user_code;
-            // delete 버튼 value 값에 넣기
             $deleteButton.value = result.row.as_num;
             $modifyButton.value = result.row.as_num;
 
