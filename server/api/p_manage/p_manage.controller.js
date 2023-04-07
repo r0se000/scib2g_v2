@@ -48,8 +48,8 @@ class p_manageController {
 
     // 관리 대상자 상세정보
     async selectInfo_M(req, res, next) {
-        let usercode = req.body.userCode;
-        let result = await svInstance.selectInfo_M(usercode);
+        let emergency_id = req.body.emergency_id;
+        let result = await svInstance.selectInfo_M(emergency_id);
         return res.json(result);
     }
 

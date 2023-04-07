@@ -137,12 +137,12 @@ class p_manageService {
     // ===============================  모니터링 조회 ==================================
 
     // 클릭 시 모니터링 관리 상세정보
-    async selectInfo_M(user_code) {
+    async selectInfo_M(emergency_id) {
 
         // 개인 정보 복호화
         let cryptoKey = await mysqlDB('selectOne', queryList.select_key_string, []);
         cryptoKey = cryptoKey.row.key_string;
-        let result = await mysqlDB('selectOne', queryList.emList, [user_code]);
+        let result = await mysqlDB('selectOne', queryList.emList, [emergency_id]);
 
         if (result.rowLength == 0) {
             result.messageCode = "error";
