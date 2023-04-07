@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "552194916492",
+    "project_id": "sci-b2g-staff",
+    "storage_bucket": "sci-b2g-staff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:552194916492:android:36f3ad89a6d38908ddfba9",
+        "android_client_info": {
+          "package_name": "com.sci.edl_staff"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "552194916492-s8vkuomkq5uohkvoms7errivgagmpq03.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4KU-1-5_zVRZFcubCzG0Do-pBz3pHUDo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "552194916492-s8vkuomkq5uohkvoms7errivgagmpq03.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

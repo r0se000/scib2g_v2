@@ -1,0 +1,77 @@
+{
+  "_from": "git+https://github.com/apache/cordova-plugin-network-information.git",
+  "_id": "cordova-plugin-network-information@3.0.1-dev",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/cordova-plugin-network-information",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "https://github.com/apache/cordova-plugin-network-information.git",
+    "rawSpec": "https://github.com/apache/cordova-plugin-network-information.git",
+    "saveSpec": "git+https://github.com/apache/cordova-plugin-network-information.git",
+    "fetchSpec": "https://github.com/apache/cordova-plugin-network-information.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#DEV:/",
+    "#USER"
+  ],
+  "_resolved": "git+https://github.com/apache/cordova-plugin-network-information.git#fcec956c1fd055e3a586b81eb2137bd7cee6f620",
+  "_spec": "https://github.com/apache/cordova-plugin-network-information.git",
+  "_where": "C:\\Users\\SCI\\Desktop\\edlhybrid\\client(android2)\\EDL",
+  "author": {
+    "name": "Apache Software Foundation"
+  },
+  "bugs": {
+    "url": "https://github.com/apache/cordova-plugin-network-information/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-network-information",
+    "platforms": [
+      "android",
+      "ios",
+      "windows",
+      "browser"
+    ]
+  },
+  "deprecated": false,
+  "description": "Cordova Network Information Plugin",
+  "devDependencies": {
+    "@cordova/eslint-config": "^3.0.0"
+  },
+  "engines": {
+    "cordovaDependencies": {
+      "3.0.0": {
+        "cordova": ">=9"
+      },
+      "4.0.0": {
+        "cordova": ">100"
+      }
+    }
+  },
+  "homepage": "https://github.com/apache/cordova-plugin-network-information#readme",
+  "keywords": [
+    "cordova",
+    "network",
+    "information",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "cordova-windows",
+    "cordova-browser"
+  ],
+  "license": "Apache-2.0",
+  "name": "cordova-plugin-network-information",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apache/cordova-plugin-network-information.git"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "test": "npm run lint"
+  },
+  "types": "./types/index.d.ts",
+  "version": "3.0.1-dev"
+}

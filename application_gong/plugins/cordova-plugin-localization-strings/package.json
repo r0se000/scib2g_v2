@@ -1,0 +1,71 @@
+{
+  "_from": "cordova-plugin-localization-strings@3.2.1",
+  "_id": "cordova-plugin-localization-strings@3.2.1",
+  "_inBundle": false,
+  "_integrity": "sha512-A1wepTiOy616I5Z4bvigBoiKVg8av5hWVZAawnkLd14Rt8/FkfLnZJXEwTtE97QM67IzAf0byoO/JidkJuPc1g==",
+  "_location": "/cordova-plugin-localization-strings",
+  "_phantomChildren": {
+    "graceful-fs": "4.2.8"
+  },
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "cordova-plugin-localization-strings@3.2.1",
+    "name": "cordova-plugin-localization-strings",
+    "escapedName": "cordova-plugin-localization-strings",
+    "rawSpec": "3.2.1",
+    "saveSpec": null,
+    "fetchSpec": "3.2.1"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-localization-strings/-/cordova-plugin-localization-strings-3.2.1.tgz",
+  "_shasum": "f14cefa56dbb2f1216c376581095f4bf92f8b499",
+  "_spec": "cordova-plugin-localization-strings@3.2.1",
+  "_where": "C:\\Users\\SCI\\Desktop\\edlhybrid\\client(android2)\\EDL",
+  "bugs": {
+    "url": "https://github.com/kelvinhokk/cordova-plugin-localization-strings.git/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "fs-extra": "^1.0.0",
+    "glob": "^7.1.3",
+    "iconv-lite": "^0.4.15",
+    "lodash": "^4.17.2",
+    "path": "^0.12.7",
+    "xcode": "^0.9.0",
+    "xml-writer": "^1.6.0",
+    "xml2js": "^0.4.17",
+    "xmldom": "^0.1.27"
+  },
+  "deprecated": false,
+  "description": "Cordova Plugin for handling localization strings on InfoPlist.strings and Localizable.strings on iOS, strings.xml on Android",
+  "devDependencies": {},
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=6.0.0"
+    }
+  ],
+  "homepage": "https://github.com/kelvinhokk/cordova-plugin-localization-strings.git",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "i18n",
+    "internationalization",
+    "l10n",
+    "localization",
+    "strings.xml",
+    "InfoPlist.strings",
+    "Localizable.strings"
+  ],
+  "license": "MIT",
+  "name": "cordova-plugin-localization-strings",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kelvinhokk/cordova-plugin-localization-strings.git"
+  },
+  "version": "3.2.1"
+}

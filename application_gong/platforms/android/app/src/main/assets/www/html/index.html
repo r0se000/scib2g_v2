@@ -1,0 +1,75 @@
+<!--
+    앱 인트로 화면
+    @author JG, Jo
+    @since 2021.04.27
+    @history 2021.04.28 JG cordova.js 추가
+             2021.04.29 JG 불필요한 script, css 삭제           
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!-- <script src="../js/jquery-1.11.1.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/17.0.18/i18next.min.js"></script>
+
+
+
+    <title>App Intro</title>
+
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/style.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: white;
+        }
+        
+        #background-img-area {
+            background: url('../img/main_background_new.jpg') center center / cover no-repeat;
+            width: 100%;
+            height: 0;
+            padding-top: calc(1073 / 720 * 100%);
+        }
+        
+        a {
+            font-weight: 500;
+            font-size: 1.05rem;
+        }
+    </style>
+</head>
+
+<body class="skin-megna fixed-layout">
+    <div id="main-wrapper">
+        <div id="background-img-area"></div>
+        <div id="button-area" class="col-md-12">
+            <div class="d-flex no-block align-items-center mt-4">
+                <div class="ml-auto mr-auto">
+                    <a href="./user/login.html" id="go-signin" class="" style="color: #fa7953;"><i class="icon-lock mr-1"></i></a>
+                </div>
+                <!-- <div class="ml-auto mr-auto">
+                    <a href="./user/signup.html" id="go-signup" class="text-info"><i class="icon-user mr-1"></i></a>
+                </div> -->
+            </div>
+            <div style="margin: 10px;"></div>
+        </div>
+
+        <!-- End button-area -->
+    </div>
+    <!-- End main-wrapper -->
+
+    <!--client javascript -->
+    <script src="../cordova.js"></script>
+    <!-- cordova.js 추가 2021.04.28 JG -->
+    <script src="../assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
+    <script src="../javascripts/common/config.js"></script>
+    <script src="../javascripts/common/commonUtil.js"></script>
+    <script src="../javascripts/index.js"></script>
+    <script src="../javascripts/pageTrans/appMainTrans.js"></script>
+
+</body>
+
+</html>
