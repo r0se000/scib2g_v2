@@ -36,7 +36,7 @@ def user_batch_check(userCode):
         params = {
             'userCode': userCode
             }
-        url = "http://192.168.3.164:7070/api/batch/B2G_Batch"
+        url = "http://192.168.3.12:7070/api/batch/B2G_Batch"
         response = requests.post(url=url, data=params)
         result= response.json()
         return result
@@ -49,7 +49,7 @@ def data_backup(userCode):
         params = {
             'userCode': userCode
             }
-        url = "http://192.168.3.164:7070/api/batch/data_backup"
+        url = "http://192.168.3.12:7070/api/batch/data_backup"
         response = requests.post(url=url, data=params)
         result= response.json()
         return result
@@ -69,7 +69,7 @@ def batch_result_insert(userCode, sleep_hr, sleep_stress, sleep_index, glucos, p
             'pressure_low': pressure_low,
             'health_index': health_index
             }
-        url = "http://192.168.3.164:7070/api/batch/batch_insert"
+        url = "http://192.168.3.12:7070/api/batch/batch_insert"
         response = requests.post(url=url, data=params)
         result= response.text
         return result
