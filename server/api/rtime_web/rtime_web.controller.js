@@ -85,7 +85,6 @@ class RtimeController {
     async selectUserInfo(req, res, next) {
         let userCode = req.query.userCode;
         let result = await svInstance.selectUserInfo(userCode);
-        console.log(result)
         return res.send(result);
     }
 

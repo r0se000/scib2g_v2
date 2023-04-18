@@ -25,6 +25,7 @@ class userListService {
      *  @author SY
      *  @since 2023.03.28
      *  @history 2023.03.28 초기 작성
+     *           2023.04.11 마스터 계정 코드 추가
      *  ================================================================
      */
     async loginCheck(userCode) {
@@ -33,6 +34,11 @@ class userListService {
 
         let result = await mysqlDB('selectOne', queryList.loginCheck, [userCode]);
         addressCode = result.row.a_user_address1 + result.row.a_user_address2; // 관리자 지역코드 변수에 할당
+        if (addressCode == "9999") { //마스터 계정
+            addressCode = "%";
+        } else {
+            addressCode += "%";
+        }
         result.row.a_user_name = cryptoUtil.decrypt_aes(cryptoKey, result.row.a_user_name);
 
         return result;
@@ -43,6 +49,7 @@ class userListService {
      *  @author SY
      *  @since 2023.03.28
      *  @history 2023.03.28 초기 작성
+     *           2023.04.10 관리 대상자 지역 코드로 조회(담당 지역 공무원 모두 조회 가능하도록)
      *  ================================================================
      */
     async userList(userCode) {
@@ -50,8 +57,8 @@ class userListService {
         cryptoKey = cryptoKey.row.key_string;
 
         let emergencyCount; // 모니터링 발생 건수
-        let userList = await mysqlDB('select', queryList.select_user_list, [userCode]); // 서비스 이용 중인 관리 대상자 조회
-
+        let userList = await mysqlDB('select', queryList.select_user_list, ["%"+addressCode+"%"]); // 서비스 이용 중인 관리 대상자 조회
+ 
         if (userList.rowLength > 0) {
             for (let i = 0; i < userList.rowLength; i++) {
                 // 모니터링 발생 건수 조회 및 세팅

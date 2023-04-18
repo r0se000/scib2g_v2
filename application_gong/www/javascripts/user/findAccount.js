@@ -1,217 +1,91 @@
-/** =======================================================
- * 아이디 찾기 화면 관련 스크립트
- * 관련 파일: find-account.html
- * @author JG, Jo
- * @since 2021.05.26
- * @history 
- * ========================================================
- */
-
-/*===============================================*/
-/* client urls and variables                     */
-/*===============================================*/
-const introPage = '../index.html';
-const loginPage = 'login.html';
-const findPwPage = 'find-pw.html';
-
-const inputSuccClass = 'form-control-success';
-const inputFailClass = 'form-control-danger';
-/*===============================================*/
-/* node-server views urls                        */
-/*===============================================*/
-const accountApiUrl = baseUrl + 'users/find/account';
-
-/*===============================================*/
-/* jquery selector caching area                  */
-/*===============================================*/
-let $submitBtn = $('#submit-btn'),
-    $formInput = $('.form-control') // 모든 form 입력란
-    ,
-    $loginBtn = $('#modal-login-btn') // 로그인 화면 이동  버튼 
-    ,
-    $forgotPw = $('#modal-pw-btn') // 비밀번호 찾기 버튼
-    ,
-    $pageTitle = $('#page-title') // 화면명
-    ,
+let $formInput = $('.form-control'),
     $formNotice = $('.form-notice') // 모든 form notice
-    ,
-    $modal = $('#result-modal') // modal
+
+const inputFailClass = 'form-control-danger';
+const inputSuccClass = 'form-control-success';
+
+let $modal = $('#result-modal') // modal
     ,
     $modalInsideBtns = $('.modal-btn') // all modal buttons
     ,
-    $modalIdResult = $('#id-result') // 사용자 ID 출력 span    
+    $modalIdResult = $('#id-result') // 사용자 ID 출력 span  
     ,
     $backbtn = $('#findAccount-back');
 
+let authCheck; // 이메일 인증 여부
 
-/*===============================================*/
-// page initializing
-/*===============================================*/
-init();
+const accountApiUrl = baseUrl + 'users/find/account';
+const loginPage = 'login.html';
+const findPwPage = 'find-pw.html';
 
-/*===============================================*/
-/* event handler area                            */
-/*===============================================*/
-// submitBtn button event
-$submitBtn.on('click', function() {
-    let tempObj = {};
-    $formInput.each(function() {
-        let $this = $(this),
-            elemId = $this.attr('id'),
-            elemName = $this.attr('name'),
-            elemVal = $this.val(),
-            $notice = null,
-            bytesMax = '';
+//뒤로가기 버튼 2021.06.02 MY
+$backbtn.on('click', function() {
+    location.href = loginPage;
+});
 
-        switch (elemId) {
-            case 'name-input':
-                $notice = $formNotice.filter('#name-notice');
+/** ================================================================
+ *  ID 찾기 버튼 클릭 이벤트
+ *  @author SY
+ *  @since 2023.04.03
+ *  @history 2023.04.03 초기 작성
+ *  ================================================================
+ */
+$('#findId-btn').on('click', function() {
 
-                if (validator(elemVal, 'isEmpty')) {
-                    $notice.text(i18next.t('noticeNm'));
-                    $notice.addClass('active-notice');
-                    $notice.removeClass('deactive-notice');
+    // 사용자 이름 유효성 검사
+    if (validator($('#name-input').val(), 'isEmpty')) {
+        $('#name-notice').text('사용자 이름을 정확히 입력해 주세요.');
+        $('#name-notice').addClass('active-notice');
+        $('#name-notice').removeClass('deactive-notice');
+        $('#name-notice').addClass(inputFailClass);
+        $('#name-notice').removeClass(inputSuccClass);
+    } else {
+        $('#name-notice').addClass('deactive-notice');
+        $('#name-notice').removeClass('active-notice');
+        $('#name-notice').addClass(inputSuccClass);
+        $('#name-notice').removeClass(inputFailClass);
+    }
 
-                    $this.addClass(inputFailClass);
-                    $this.removeClass(inputSuccClass);
-                    $this.focus();
+    // 이메일 유효성 검사
+    if (validator($('#email-input').val(), 'isEmpty') | validator($('#email-input2').val(), 'isEmpty')) {
+        $('#email-notice').addClass('active-notice');
+        $('#email-notice').removeClass('deactive-notice');
+        $('#email-notice').addClass(inputFailClass);
+        $('#email-notice').removeClass(inputSuccClass);
+    } else {
+        $('#email-notice').addClass('deactive-notice');
+        $('#email-notice').removeClass('active-notice');
+        $('#email-notice').addClass(inputSuccClass);
+        $('#email-notice').removeClass(inputFailClass);
+    }
 
-                } else {
-                    $notice.text('');
-                    $notice.addClass('deactive-notice');
-                    $notice.removeClass('active-notice');
 
-                    $this.addClass(inputSuccClass);
-                    $this.removeClass(inputFailClass);
-
-                    tempObj[elemName] = elemVal;
-                }
-                break;
-            case 'phone1':
-                $notice = $formNotice.filter('#email-notice');
-
-                if (validator(elemVal, 'isEmpty')) {
-                    $notice.text(i18next.t('noticePhone'));
-                    $notice.addClass('active-notice');
-                    $notice.removeClass('deactive-notice');
-
-                    $this.addClass(inputFailClass);
-                    $this.removeClass(inputSuccClass);
-                    $this.focus();
-
-                } else {
-                    let bytesLen = validator(elemVal, 'bytesLength');
-                    bytesMax = 3;
-
-                    if (bytesLen == bytesMax) {
-                        $notice.text('');
-                        $notice.addClass('deactive-notice');
-                        $notice.removeClass('active-notice');
-
-                        $this.addClass(inputSuccClass);
-                        $this.removeClass(inputFailClass);
-
-                        tempObj[elemName] = elemVal;
-                    } else {
-                        alert('값을 정확히 입력해주세요')
-                        $notice.text(i18next.t('noticePhone'));
-                        $notice.addClass('active-notice');
-                        $notice.removeClass('deactive-notice');
-
-                        $this.addClass(inputFailClass);
-                        $this.removeClass(inputSuccClass);
-                        $this.focus();
-                    }
-                }
-                break;
-            case 'phone2':
-                $notice = $formNotice.filter('#email-notice');
-                bytesMax = 4;
-
-                if (validator(elemVal, 'isEmpty')) {
-                    $notice.text(i18next.t('noticePhone'));
-                    $notice.addClass('active-notice');
-                    $notice.removeClass('deactive-notice');
-
-                    $this.addClass(inputFailClass);
-                    $this.removeClass(inputSuccClass);
-                    $this.focus();
-
-                } else {
-                    let bytesLen = validator(elemVal, 'bytesLength');
-                    if (bytesLen == bytesMax) {
-                        $notice.text('');
-                        $notice.addClass('deactive-notice');
-                        $notice.removeClass('active-notice');
-
-                        $this.addClass(inputSuccClass);
-                        $this.removeClass(inputFailClass);
-
-                        tempObj[elemName] = elemVal;
-                    } else {
-                        alert('값을 정확히 입력해주세요')
-                        $notice.text(i18next.t('noticePhone'));
-                        $notice.addClass('active-notice');
-                        $notice.removeClass('deactive-notice');
-
-                        $this.addClass(inputFailClass);
-                        $this.removeClass(inputSuccClass);
-                        $this.focus();
-                    }
-                }
-                break;
-            case 'phone3':
-                $notice = $formNotice.filter('#email-notice');
-                bytesMax = 4;
-                if (validator(elemVal, 'bytesLenth')) {
-                    $notice.text(i18next.t('noticePhone'));
-                    $notice.addClass('active-notice');
-                    $notice.removeClass('deactive-notice');
-
-                    $this.addClass(inputFailClass);
-                    $this.removeClass(inputSuccClass);
-                    $this.focus();
-
-                } else {
-                    let bytesLen = validator(elemVal, 'bytesLength');
-                    if (bytesLen == bytesMax) {
-                        $notice.text('');
-                        $notice.removeClass('active-notice');
-                        $notice.addClass('deactive-notice');
-
-                        $this.addClass(inputSuccClass);
-                        $this.removeClass(inputFailClass);
-
-                        tempObj[elemName] = elemVal;
-                    } else {
-                        alert('값을 정확히 입력해주세요')
-                        $notice.text(i18next.t('noticePhone'));
-                        $notice.addClass('active-notice');
-                        $notice.removeClass('deactive-notice');
-
-                        $this.addClass(inputFailClass);
-                        $this.removeClass(inputSuccClass);
-                        $this.focus();
-                    }
-                }
-                break;
-        }
-    });
-
+    // 사용자 이름, 이메일 모두 입력한 경우
     if ($('.' + inputFailClass).length < 1) {
+        if (authCheck != 1) {
+            $("#email-notice").text('이메일 인증을 완료해 주세요.');
+            $("#email-notice").addClass('active-notice');
+            $("#email-notice").removeClass('deactive-notice');
+            $("#authnumber").focus();
+            return;
+        }
+
         let cmmContentType = 'application/json',
             cmmDataType = 'json',
             cmmType = 'get',
             cmmUrl = accountApiUrl,
-            cmmReqDataObj = tempObj,
+            cmmReqDataObj = {
+                name: $("#name-input").val(),
+                eId: $("#email-input").val(),
+                eDomain: $("#email-input2").val()
+            },
             cmmAsync = false,
             cmmSucc = function(result) {
-                console.log(result)
                 if (result.messageCode === 'foundId') {
                     $modal.modal();
                     $modalIdResult.text(result.id);
                 } else {
-                    alert(i18next.t('noticeNoUser'));
+                    alert('해당 정보와 일치하는 사용자가 없습니다.');
                 }
             },
             cmmErr = null;
@@ -221,69 +95,119 @@ $submitBtn.on('click', function() {
     return;
 });
 
+
+/** ================================================================
+ *  모달창 클릭 이벤트
+ *  @author SY
+ *  @since 2023.04.03
+ *  @history 2023.04.03 초기 작성
+ *  ================================================================
+ */
 $modalInsideBtns.on('click', function(evnt) {
     let targetId = evnt.target.id;
     switch (targetId) {
-        case 'modal-login-btn':
+        case 'modal-login-btn': // 로그인
             location.href = loginPage;
             break;
-        case 'modal-pw-btn':
+        case 'modal-pw-btn': // 비밀번호 찾기
             location.href = findPwPage;
             break;
     }
 });
 
-//뒤로가기 버튼 2021.06.02 MY
-$backbtn.on('click', function() {
-    location.href = loginPage;
+
+/** ================================================================
+ *  인증번호 전송 버튼 클릭 이벤트
+ *  @author SY
+ *  @since 2023.04.03
+ *  @history 2023.04.03 초기 작성
+ *  ================================================================
+ */
+$("#sendnumber").on('click', function() {
+
+    // 사용자 이름 입력 X인 경우
+    if (validator($('#name-input').val(), 'isEmpty')) {
+        $("#name-notice").addClass('active-notice');
+        $("#name-notice").removeClass('deactive-notice');
+        return;
+    } else {
+        $("#name-notice").addClass('deactive-notice');
+        $("#name-notice").removeClass('active-notice');
+    }
+    // 이메일 아이디, 도메인 입력 X인 경우
+    if (validator($('#email-input').val(), 'isEmpty') | validator($('#email-input2').val(), 'isEmpty')) {
+        $("#email-notice").removeClass('deactive-notice');
+        $("#email-notice").addClass('active-notice');
+        return;
+    } else {
+        $("#email-notice").addClass('deactive-notice');
+        $("#email-notice").removeClass('active-notice');
+
+        $("#email-notice").removeClass('active-notice');
+        $("#email-notice").addClass('deactive-notice');
+
+
+        // 이메일 유무 확인 ajax
+        let cmmContentType = 'application/json',
+            cmmDataType = 'json',
+            cmmType = 'post',
+            cmmUrl = baseUrl + 'users/authEmail',
+            cmmReqDataObj = {
+                name: $('#name-input').val(),
+                eId: $('#email-input').val(),
+                eDomain: $('#email-input2').val()
+            },
+            cmmAsync = false,
+            cmmSucc = function(result) {
+                if (result.success == 0) { // 메일 전송 실패시
+                    alert('인증번호 전송에 실패했습니다.');
+                    $('#sendnumber').addClass("active-notice");
+                    $('#sendnumber').removeClass("deactive-notice");
+                } else if (result.success == 2) { // 사용자 정보 존재하지 않을 시
+                    alert('일치하는 사용자가 존재하지 않습니다.');
+                    $('#sendnumber').addClass("active-notice");
+                    $('#sendnumber').removeClass("deactive-notice");
+                } else { // 메일 전송 성공 시
+                    $("#sendnumber").text('재전송');
+                    $('#input-authnumber').addClass("active-notice");
+                    $('#input-authnumber').removeClass("deactive-notice");
+                    authnumber = result.authNumber;
+                }
+            },
+            cmmErr = null;
+        commAjax(cmmContentType, cmmDataType, cmmType, cmmUrl, cmmReqDataObj, cmmAsync, cmmSucc, cmmErr);
+
+    }
 })
 
-/*===============================================*/
-/* function  area                                */
-/*===============================================*/
 
-/**
- * 화면 초기화 작업
- * @author JG, Jo
- * @since 2021.05.26 
- * @history 
+/** ================================================================
+ *  인증번호 확인 버튼 클릭 이벤트
+ *  @author SY
+ *  @since 2023.04.03
+ *  @history 2023.04.03 초기 작성
+ *  ================================================================
  */
-function init() {
-    let defaultLang = getSessionStorage('defaultLang') || 'en';
+$('#checknumber').on('click', function(evnt) {
+    if (authCheck == 1) {
+        alert('이미 인증된 번호입니다.\nID 찾기 버튼을 클릭해 주세요.');
+        return;
+    }
+    if (validator($('#authnumber').val(), 'isEmpty')) {
+        alert('인증번호를 입력해 주세요.');
+        authCheck = 0;
+    } else {
+        if ($('#authnumber').val() == authnumber) {
+            alert('이메일 인증에 성공하였습니다.');
+            $("#checknumber").text('인증 완료');
+            $("#checknumber").prop('disabled', false);
+            $("#email-input").prop('readonly', true);
+            $("#email-input2").prop('readonly', true);
 
-    i18next.init({
-            lng: defaultLang,
-            debug: true,
-            resources: transResource
-        },
-        function(err, t) {
-            if (err) {
-                console.error(err);
-            } else {
-                updateContent();
-            }
+            authCheck = 1;
+        } else {
+            alert('인증에 실패하였습니다. 다시 시도해 주세요.');
+            authCheck = 0;
         }
-    );
-
-    // back key 눌렀을 때 로그인 페이지로 이동 
-    document.addEventListener('deviceready', function() {
-        document.addEventListener('backbutton', function() {
-            location.href = loginPage;
-        }, false);
-    }, false);
-}
-
-/**
- * 메뉴 언어 변환하기(i18next)
- * @param 
- * @author JG, Jo
- * @since 2021.05.26 
- */
-function updateContent() {
-    // 페이지 언어 변환
-    $pageTitle.text(i18next.t('pageTitle'));
-    $loginBtn.text(i18next.t('loginBtn'));
-    $forgotPw.text(i18next.t('forgetPw'));
-    $submitBtn.text(i18next.t('submitBtn'));
-    $('#modal-result-title').text(i18next.t('foundId'));
-}
+    }
+})

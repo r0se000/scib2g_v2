@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.sci.edl_staff" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>독거노인 응급관리</name>
+    <name>독거노인 모니터링 관리</name>
     <!-- <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
@@ -9,7 +9,7 @@
     </author> -->
     <content src="html/index.html" />
     <access origin="*" />
-    <allow-intent href="http://192.168.3.12:7070/*" />
+    <allow-intent href="http://192.168.3.164:7070/*" />
     <allow-intent href="http://*"/>
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -25,7 +25,7 @@
         <allow-intent href="market:*" />
         
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
-            <application android:usesCleartextTraffic="true" />
+            <!-- <application android:usesCleartextTraffic="true" /> -->
         </edit-config> <!-- android 보안 문제로 외부 사이트 접근 안 되는 문제 방지 -->
     </platform>
     <preference name="AndroidXEnabled" value="true" />

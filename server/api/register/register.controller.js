@@ -57,10 +57,12 @@ class RegisterController {
      *  @author SY
      *  @since 2023.03.23
      *  @history 2023.03.23 초기 작성
+     *           2023.04.11 담당지역 별 조회 (addressCode 파라미터 추가)
      *  ================================================================
      */
     async userCodeSelect(req, res, next) {
-        let userCode = await svInstance.userCodeSelect();
+        let {addressCode} = req.body;
+        let userCode = await svInstance.userCodeSelect(addressCode);
         return res.send(userCode);
     }
 

@@ -52,6 +52,7 @@ class registerService {
     async userRegister(staff_code, regList, registerDate) {
         let cryptoKey = await mysqlDB('selectOne', queryList.select_key_string, []);
         cryptoKey = cryptoKey.row.key_string;
+
         let name = cryptoUtil.encrypt_aes(cryptoKey, regList.name),
             user_code = regList.address_id + regList.id,
             bYear = cryptoUtil.encrypt_aes(cryptoKey, regList.bYear),
@@ -95,8 +96,8 @@ class registerService {
      *  @history 2023.03.23 초기 작성
      *  ================================================================
      */
-    async userCodeSelect() {
-        let result = await mysqlDB('select', queryList.userCodeSelect);
+    async userCodeSelect(address_code) {
+        let result = await mysqlDB('select', queryList.userCodeSelect, ["%"+address_code+"%"]);
         if (result.rowLength != 0) {
             result.success = true;
         } else {

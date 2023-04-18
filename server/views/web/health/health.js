@@ -131,7 +131,7 @@ function setUserList(userList, select) {
     let health_index_content = '';
     if (userList.rowLength != 0) {
         for (let i = 0; i < userList.rowLength; i++) {
-            if (select != '전체' && userList.rows[i].health_index_range != select) {
+            if (select != '전체' && userList.rows[i].health_index_range != select) {    // 좋음, 보통, 나쁨으로 조회한 경우
                 continue;
             }
             /*

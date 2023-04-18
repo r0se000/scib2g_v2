@@ -1,40 +1,17 @@
--- --------------------------------------------------------
--- 호스트:                          127.0.0.1
--- 서버 버전:                        8.0.21 - MySQL Community Server - GPL
--- 서버 OS:                        Win64
--- HeidiSQL 버전:                  11.2.0.6213
--- --------------------------------------------------------
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
-
--- sci_b2g_v2 데이터베이스 구조 내보내기
-CREATE DATABASE IF NOT EXISTS `sci_b2g_v2` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE IF NOT EXISTS `sci_b2g_v2`;
 USE `sci_b2g_v2`;
 
--- 테이블 sci_b2g_v2.address1 구조 내보내기
 CREATE TABLE IF NOT EXISTS `address1` (
   `address1_code` int DEFAULT NULL,
-  `address1_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='주소 level 1(시/도)';
+  `address1_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='주소 level 1(시/도)';
 
--- 내보낼 데이터가 선택되어 있지 않습니다.
-
--- 테이블 sci_b2g_v2.address2 구조 내보내기
 CREATE TABLE IF NOT EXISTS `address2` (
   `address1_code` int DEFAULT NULL,
   `address2_code` int DEFAULT NULL,
-  `address2_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='주소 level 2(시/군/구)';
+  `address2_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='주소 level 2(시/군/구)';
 
--- 내보낼 데이터가 선택되어 있지 않습니다.
-
--- 테이블 sci_b2g_v2.as_list 구조 내보내기
 CREATE TABLE IF NOT EXISTS `as_list` (
   `as_num` int NOT NULL AUTO_INCREMENT COMMENT 'A/S 번호(PK)',
   `as_created_date` date NOT NULL COMMENT 'A/S 입력 날짜',
@@ -43,22 +20,15 @@ CREATE TABLE IF NOT EXISTS `as_list` (
   PRIMARY KEY (`as_num`),
   KEY `fk_as_list_user_info1_idx` (`user_code`),
   CONSTRAINT `fk_as_list_user_info1` FOREIGN KEY (`user_code`) REFERENCES `user_info` (`user_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='A/S 조치 목록 테이블';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='A/S 조치 목록 테이블';
 
--- 내보낼 데이터가 선택되어 있지 않습니다.
-
--- 테이블 sci_b2g_v2.batch_list 구조 내보내기
 CREATE TABLE IF NOT EXISTS `batch_list` (
   `DATE` datetime NOT NULL,
   `user_code` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 고유 번호',
-  `batch_check` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  KEY `fk_batch_list_user_info1_idx` (`user_code`),
-  CONSTRAINT `fk_batch_list_user_info1` FOREIGN KEY (`user_code`) REFERENCES `user_info` (`user_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='배치 수행 목록';
+  `batch_check` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  KEY `fk_batch_list_user_info1_idx` (`user_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='배치 수행 목록';
 
--- 내보낼 데이터가 선택되어 있지 않습니다.
-
--- 테이블 sci_b2g_v2.biometric_backup_data 구조 내보내기
 CREATE TABLE IF NOT EXISTS `biometric_backup_data` (
   `user_code` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 고유 번호',
   `hr` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '실시간 심박수',
@@ -75,9 +45,6 @@ CREATE TABLE IF NOT EXISTS `biometric_backup_data` (
   CONSTRAINT `fk_biometric_backup_data_user_info` FOREIGN KEY (`user_code`) REFERENCES `user_info` (`user_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='생체 정보 백업 테이블';
 
--- 내보낼 데이터가 선택되어 있지 않습니다.
-
--- 테이블 sci_b2g_v2.biometric_real_time 구조 내보내기
 CREATE TABLE IF NOT EXISTS `biometric_real_time` (
   `user_code` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 고유 번호',
   `hr` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '실시간 심박수',
@@ -94,27 +61,19 @@ CREATE TABLE IF NOT EXISTS `biometric_real_time` (
   CONSTRAINT `fk_biometric_real_time_user_info1` FOREIGN KEY (`user_code`) REFERENCES `user_info` (`user_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='실시간 생체 정보 테이블';
 
--- 내보낼 데이터가 선택되어 있지 않습니다.
-
--- 테이블 sci_b2g_v2.emergency_check_list 구조 내보내기
 CREATE TABLE IF NOT EXISTS `emergency_check_list` (
   `emergency_id` int NOT NULL COMMENT '응급 id',
   `a_user_code` int DEFAULT NULL COMMENT '앱에서 확인한 담당자 코드',
   `p_user_code` int DEFAULT NULL COMMENT '앱에서 확인한 보호자 코드',
   `emergency_check_time` datetime NOT NULL COMMENT '앱 확인 시간'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ;
 
--- 내보낼 데이터가 선택되어 있지 않습니다.
-
--- 테이블 sci_b2g_v2.emergency_list 구조 내보내기
 CREATE TABLE IF NOT EXISTS `emergency_list` (
   `emergency_id` int NOT NULL AUTO_INCREMENT,
   `user_code` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '응급발생한 사용자 코드',
   `a_user_code` int NOT NULL COMMENT '담당 공무원 코드',
   `emergency_time` datetime DEFAULT NULL COMMENT '응급 발생 시간',
   `emergency_web_check` datetime DEFAULT NULL COMMENT 'WEB) 응급 발생 확인 버튼 클릭한 시간',
-  `emergency_app_admin_check` datetime DEFAULT NULL COMMENT '관리자 APP) 응급 발생 확인 버튼 클릭한 시간',
-  `emergency_app_protect_check` datetime DEFAULT NULL COMMENT '보호자 APP) 응급 발생 확인 버튼 클릭한 시간',
   `emergency_check_contents` char(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '응급알림 조치 내용',
   `emergency_contents_time` datetime DEFAULT NULL COMMENT '응급알림 조치 입력시간',
   `emergency_check_state` varchar(1) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT 'N' COMMENT '응급 발생 최종 확인 여부(N:미확인, Y:확인)',
@@ -124,9 +83,6 @@ CREATE TABLE IF NOT EXISTS `emergency_list` (
   CONSTRAINT `fk_emergency_list_user_info1` FOREIGN KEY (`user_code`) REFERENCES `user_info` (`user_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='응급 발생 테이블';
 
--- 내보낼 데이터가 선택되어 있지 않습니다.
-
--- 테이블 sci_b2g_v2.encryption_key_info 구조 내보내기
 CREATE TABLE IF NOT EXISTS `encryption_key_info` (
   `key_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '키 고유 id',
   `key_string` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '암호화 키',
@@ -135,26 +91,20 @@ CREATE TABLE IF NOT EXISTS `encryption_key_info` (
   PRIMARY KEY (`key_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='암호화 키 관리 테이블';
 
--- 내보낼 데이터가 선택되어 있지 않습니다.
-
--- 테이블 sci_b2g_v2.predict_data 구조 내보내기
 CREATE TABLE IF NOT EXISTS `predict_data` (
   `user_code` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 고유 번호',
   `created_time` date DEFAULT NULL COMMENT '배치 날짜',
   `hr` varchar(50) DEFAULT NULL COMMENT '심박수',
   `stress` varchar(50) DEFAULT NULL COMMENT '스트레스',
-  `slepp_index` varchar(50) DEFAULT NULL,
+  `sleep_index` varchar(50) DEFAULT NULL,
   `predict_glucos` varchar(50) DEFAULT NULL,
   `predict_high_pressure` varchar(50) DEFAULT NULL,
   `predict_low_pressure` varchar(50) DEFAULT NULL,
   `health_index` varchar(50) DEFAULT NULL,
   KEY `fk_predict_data_user_info_idx` (`user_code`),
   CONSTRAINT `fk_predict_data_user_info` FOREIGN KEY (`user_code`) REFERENCES `user_info` (`user_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='예측 데이터 테이블';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='예측 데이터 테이블';
 
--- 내보낼 데이터가 선택되어 있지 않습니다.
-
--- 테이블 sci_b2g_v2.user_admin 구조 내보내기
 CREATE TABLE IF NOT EXISTS `user_admin` (
   `a_user_code` int NOT NULL AUTO_INCREMENT COMMENT '관리자 코드',
   `a_user_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
@@ -171,16 +121,13 @@ CREATE TABLE IF NOT EXISTS `user_admin` (
   `a_user_app_token` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '앱 알림 토큰',
   `a_user_refresh_token_app` varchar(220) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `a_user_access_token_app` varchar(220) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `a_user_address1` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '담당지역(시/도)',
-  `a_user_address2` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '담당지역(시/군/구)',
+  `a_user_address1` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '담당지역(시/도)',
+  `a_user_address2` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin  DEFAULT NULL COMMENT '담당지역(시/군/구)',
   `a_user_email_id` varchar(100) DEFAULT NULL COMMENT '이메일 앞주소(암호화)',
   `a_user_email_domain` varchar(45) DEFAULT NULL COMMENT '이메일 도메인주소',
   PRIMARY KEY (`a_user_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='담당자 계정 관리 테이블';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='담당자 계정 관리 테이블';
 
--- 내보낼 데이터가 선택되어 있지 않습니다.
-
--- 테이블 sci_b2g_v2.user_info 구조 내보내기
 CREATE TABLE IF NOT EXISTS `user_info` (
   `staff_code` int unsigned DEFAULT NULL COMMENT '담당자 code',
   `user_code` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '사용자 고유 번호',
@@ -188,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `user_info` (
   `birth_year` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 생년(암호화)',
   `birth_month` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 생월(암호화)',
   `birth_date` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 생일(암호화)',
-  `sex` char(1) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 성별(M: 남성, F: 여성)',
+  `gender` char(1) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 성별(M: 남성, W: 여성)',
   `address_1` varchar(30) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '시/도',
   `address_2` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '시/군/구',
   `address_3` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '상세주소(암호화)',
@@ -206,22 +153,15 @@ CREATE TABLE IF NOT EXISTS `user_info` (
   PRIMARY KEY (`user_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='독거노인 정보 테이블';
 
--- 내보낼 데이터가 선택되어 있지 않습니다.
-
--- 테이블 sci_b2g_v2.user_own_sensor 구조 내보내기
 CREATE TABLE IF NOT EXISTS `user_own_sensor` (
   `sensor_node_id` char(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '센서 고유 키',
   `user_code` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '사용자 고유 번호',
   `own_ssid` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '센서 연결 와이파이 이름',
   `own_ip` varchar(45) CHARACTER SET armscii8 COLLATE armscii8_general_ci DEFAULT NULL COMMENT '센서 내부 IP',
   UNIQUE KEY `sensor_node_id_UNIQUE` (`sensor_node_id`),
-  KEY `fk_user_own_sensor_user_info1_idx` (`user_code`),
-  CONSTRAINT `fk_user_own_sensor_user_info1` FOREIGN KEY (`user_code`) REFERENCES `user_info` (`user_code`)
+  KEY `fk_user_own_sensor_user_info1_idx` (`user_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='사용자 소유 센서 정보';
 
--- 내보낼 데이터가 선택되어 있지 않습니다.
-
--- 테이블 sci_b2g_v2.user_protector 구조 내보내기
 CREATE TABLE IF NOT EXISTS `user_protector` (
   `p_user_code` int unsigned NOT NULL AUTO_INCREMENT COMMENT '보호자 고유번호',
   `p_user_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '보호자 이름',
@@ -245,10 +185,6 @@ CREATE TABLE IF NOT EXISTS `user_protector` (
   CONSTRAINT `fk_user_protector_user_info1` FOREIGN KEY (`user_code`) REFERENCES `user_info` (`user_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='보호자 계정';
 
--- 내보낼 데이터가 선택되어 있지 않습니다.
-
--- 테이블 데이터 sci_b2g_v2.address1:~17 rows (대략적) 내보내기
-/*!40000 ALTER TABLE `address1` DISABLE KEYS */;
 INSERT INTO `address1` (`address1_code`, `address1_name`) VALUES
 	(1, '부산광역시'),
 	(2, '대구광역시'),
@@ -267,10 +203,7 @@ INSERT INTO `address1` (`address1_code`, `address1_name`) VALUES
 	(15, '경상남도'),
 	(16, '제주특별자치도'),
 	(0, '서울특별시');
-/*!40000 ALTER TABLE `address1` ENABLE KEYS */;
 
--- 테이블 데이터 sci_b2g_v2.address2:~229 rows (대략적) 내보내기
-/*!40000 ALTER TABLE `address2` DISABLE KEYS */;
 INSERT INTO `address2` (`address1_code`, `address2_code`, `address2_name`) VALUES
 	(0, 1, '강동구'),
 	(0, 2, '강북구'),
@@ -501,11 +434,7 @@ INSERT INTO `address2` (`address1_code`, `address2_code`, `address2_name`) VALUE
 	(15, 17, '합천군'),
 	(16, 0, '서귀포시'),
 	(16, 1, '제주시');
-/*!40000 ALTER TABLE `address2` ENABLE KEYS */;
 
-
--- 테이블 데이터 sci_b2g_v2.encryption_key_info:~0 rows (대략적) 내보내기
-/*!40000 ALTER TABLE `encryption_key_info` DISABLE KEYS */;
 INSERT INTO `encryption_key_info` (`key_id`, `key_string`, `created_date`, `activate_yn`) VALUES
 	(1, '_Cause_8-bit_life_is_so_simple__', '2023-03-20 15:51:57', 'Y');
 

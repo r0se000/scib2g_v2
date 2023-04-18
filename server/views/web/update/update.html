@@ -81,7 +81,7 @@
                                 <input type="text" id="address2-input" class="form-control" readonly>
                             </div>
                             <div class="col-md-5">
-                                <input type="text" id="address3-input" class="form-control" placeholder="상세 주소를 입력해 주세요.">
+                                <input type="text" id="address3-input" class="form-control" placeholder="상세 주소를 입력해 주세요." maxlength="100">
                                 <p id="address3-notice" class="deactive-notice text-danger col-sm-12 m-2">상세 주소를 입력해 주세요.</p>
                             </div>
                         </div>
@@ -113,7 +113,11 @@
                                 <input type="number" id="user-phone2-input" name="user2" class="form-control col-sm-31" placeholder="" maxlength="4" oninput="maxLengthCheck(this)"> -
                                 <input type="number" id="user-phone3-input" name="user3" class="form-control col-sm-31" placeholder="" maxlength="4" oninput="maxLengthCheck(this)">
                             </div>
-                            <p id="phone1-notice" class="deactive-notice text-danger col-sm-12 m-2">사용자 연락처를 입력해주세요.</p>
+                            <div style="text-align: right;">
+                                <span id="user2-notice" class="deactive-notice text-danger">두 번째</span>
+                                <span id="user3-notice" class="deactive-notice text-danger">세 번째</span>
+                                <span id="user1-notice" class="deactive-notice text-danger"> 연락처를 올바르게 입력해 주세요.</span>
+                            </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label class="col-md-12 h4" for="protect-phone-input">보호자 연락처</label>
@@ -139,7 +143,11 @@
                                 <input type="number" id="protect-phone2-input" name="protector2" class="form-control col-sm-31" placeholder="" maxlength="4" oninput="maxLengthCheck(this)"> -
                                 <input type="number" id="protect-phone3-input" name="protector3" class="form-control col-sm-31" placeholder="" maxlength="4" oninput="maxLengthCheck(this)">
                             </div>
-                            <p id="phone2-notice" class="deactive-notice text-danger col-sm-12 m-2">보호자 연락처를 입력해주세요.</p>
+                            <div style="text-align: right;">
+                                <span id="protector2-notice" class="deactive-notice text-danger">두 번째</span>
+                                <span id="protector3-notice" class="deactive-notice text-danger">세 번째</span>
+                                <span id="protector1-notice" class="deactive-notice text-danger"> 연락처를 올바르게 입력해 주세요.</span>
+                            </div>
                         </div>
                     </div>
                     <div class="float-right">

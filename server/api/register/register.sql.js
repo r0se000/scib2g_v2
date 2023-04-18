@@ -21,4 +21,4 @@ exports.selectAddress = `SELECT a1.address1_name, a2.address2_name FROM address1
 exports.userRegister = `INSERT INTO user_info VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,null,'Y', null, null);`;
 
 // 최근 등록된 관리 대상자 user_code 조회
-exports.userCodeSelect = `SELECT user_code FROM user_info ORDER BY user_code DESC LIMIT 1;`;
+exports.userCodeSelect = `SELECT user_code FROM user_info WHERE user_code LIKE ? ORDER BY user_code DESC LIMIT 1;`;

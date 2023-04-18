@@ -129,7 +129,7 @@ class p_apphomeService {
                     "address_2": userInfo.row.address_2 + " " + userInfo.row.address_3,
                     "user_phone": userInfo.row.phone_first + "-" + userInfo.row.phone_middle + "-" + userInfo.row.phone_last,
                     "protector_phone": userInfo.row.protector_phone_first + "-" + userInfo.row.protector_phone_middle + "-" + userInfo.row.protector_phone_last,
-                    "gender": userInfo.row.sex,
+                    "gender": userInfo.row.gender,
                     "emBioInfo": emUserBioInfo
                 }
                 emergencyid.push(emergencyCheck.rows[i]);
@@ -188,7 +188,7 @@ class p_apphomeService {
             birth_year = cryptoUtil.decrypt_aes(cryptoKey, userInfo.row.birth_year),
             birth_month = cryptoUtil.decrypt_aes(cryptoKey, userInfo.row.birth_month),
             birth_date = cryptoUtil.decrypt_aes(cryptoKey, userInfo.row.birth_date),
-            gender = userInfo.row.sex;
+            gender = userInfo.row.gender;
 
         if (userInfo.row.phone_first != null)
             userInfo.row.phone_first = cryptoUtil.decrypt_aes(cryptoKey, userInfo.row.phone_first);

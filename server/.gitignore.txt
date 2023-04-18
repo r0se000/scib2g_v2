@@ -1,3 +1,4 @@
-logs/
+/logs/
 node_module/
 .gitignore.txt
+sci_b2b.yaml

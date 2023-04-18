@@ -43,6 +43,7 @@ class updateService {
         return result
     }
 
+
     /** ================================================================
      *  관리 대상자 세부정보 조회
      *  @author SY
@@ -108,7 +109,7 @@ class updateService {
         let protector_phone_last = cryptoUtil.encrypt_aes(cryptoKey, inputList.protector_phone_last);
 
 
-        let inputData = [name, birth_year, birth_month, birth_date, inputList.sex, address_3, phone_first, phone_middle,
+        let inputData = [name, birth_year, birth_month, birth_date, inputList.gender, address_3, phone_first, phone_middle,
             phone_last, protector_phone_first, protector_phone_middle, protector_phone_last, userCode
         ];
 

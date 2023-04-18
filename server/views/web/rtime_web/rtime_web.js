@@ -146,6 +146,8 @@ $allBtn.on('click', function() {
  *  @author SY
  *  @since 2023.03.24
  *  @history 2023.03.24 초기 작성
+ *           2023.04.10 연결없음 관리 대상자 존재하지 않는 경우 alert
+ *                      hr <td> 추가
  *  ================================================================
  */
 $unconnectedBtn.on('click', function() {
@@ -160,7 +162,7 @@ $unconnectedBtn.on('click', function() {
         },
         cmmAsync = false,
         cmmSucc = function(result) {
-            if (result.legnth != 0) {
+            if (result.length > 0) {
                 $('#user-rtime > tbody').html('');
                 for (let i = 0; i < result.length; i++) {
                     let userInfo = selectUserInfo(result[i]);
@@ -168,17 +170,20 @@ $unconnectedBtn.on('click', function() {
                     let userListHtml = "<tr id=\"user" + userInfo.user_code + "\" onclick=\"userInfoModal('" + userInfo.user_code + "');\">" +
                         "<td id='user-name'>" + userInfo.name + "</td>" +
                         "<td id='user-code'>" + userInfo.user_code + "</td>" +
+                        "<td id='hr'>0</td>" +
                         "<td id='state'>연결없음</td>" +
                         "<td class='note' onclick='userNoteModal(event, \"" + userInfo.user_code + "\");' style='cursor:pointer; white-space:nowrap; text-overflow:ellipsis;'>" + userInfo.user_note + "</td>" +
                         "<td><button class='btn btn-info' name='" + userInfo.user_code + "' onclick='userASModal(event,\"" + userInfo.user_code + "\");'' style='width:80px;'>입력</button></td>"
                     "</tr>";
                     $('#user-rtime > tbody:last').append(userListHtml);
 
-
                     $('#user' + result[i] + '>#user-code').css("color", "red");
                     $('#user' + result[i] + '>#user-name').css("color", "red");
+                    $('#user' + result[i] + '>#hr').css("color", "red");
                     $('#user' + result[i] + '>#state').css("color", "red");
                 }
+            }else{
+                alert('(연결 없음) 관리 대상자가 존재하지 않습니다.');
             }
 
         },
@@ -298,7 +303,7 @@ function userASModal(event, userCode) {
  */
 $noteUploadBtn.on('click', function() {
 
-    if ($("#note-detail").val() == '') {
+    if ($("#note-detail").val() == '' | $("#note-detail").val() == '-') {
         alert('특이사항을 입력해 주세요.');
         $("#note-detail").focus();
         return;
@@ -320,12 +325,13 @@ $noteUploadBtn.on('click', function() {
         },
         cmmAsync = false,
         cmmSucc = function(result) {
-            if (result.succ == 1) {
+            if (result.state) {
+                alert('특이사항이 등록되었습니다.');
                 $("#user-note-modal").hide();
                 location.reload();
 
             } else {
-                console.log("에러");
+                alert('특이사항 등록 실패하였습니다.');
             }
         },
         cmmErr = null;
@@ -353,6 +359,9 @@ $asUploadBtn.on('click', function() {
     }
     if (asDate == '') {
         alert('조치 날짜를 선택해 주세요.');
+        return;
+    }
+    if(!confirm('A/S 조치 내용을 등록하시겠습니까?')){
         return;
     }
 

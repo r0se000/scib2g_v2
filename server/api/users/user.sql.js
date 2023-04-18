@@ -23,7 +23,7 @@ exports.insert_adminuser_account = `INSERT INTO user_admin(a_user_name, a_user_a
 exports.insert_user_account = `INSERT INTO user_info(account_id, account_password, email_id, email_domain, registered_date)
                                 VALUES(?, SHA2(?, 256), ?, ?, CURDATE());`;
 // 사용자 상세 정보 등록/수정
-exports.replace_user_info = `REPLACE INTO user_info(user_code, name, birth_year, birth_month, birth_date, sex, provide_private_info_yn, phone_first, phone_middle, phone_last, address_1, address_2, address_3) 
+exports.replace_user_info = `REPLACE INTO user_info(user_code, name, birth_year, birth_month, birth_date, gender, provide_private_info_yn, phone_first, phone_middle, phone_last, address_1, address_2, address_3) 
                               VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
 
 // 사용자 가입 여부 조회(로그인)
@@ -53,10 +53,9 @@ exports.update_admin_user_login =
 
 // 로그아웃: 강제 로그아웃 될 때 accesstoken 강제 삭제되어 다른 기기에서도 로그아웃되어 access_token=NULL 주석
 exports.update_user_logout =
-    `UPDATE user_info
-        SET login_check = 'N'/*,
-            access_token = NULL*/
-      WHERE user_code = ?;`
+    `UPDATE user_admin
+        SET a_user_login_check = 'N'
+      WHERE a_user_code = ?;`
 
 // 관리자 로그아웃
 exports.update_adminuser_logout =
@@ -99,7 +98,7 @@ exports.select_user_detail_info =
             birth_year, 
             birth_month, 
             birth_date, 
-            sex
+            gender
      FROM user_info ua
      JOIN user_info ui
        ON ua.user_code = ui.user_code
@@ -119,7 +118,7 @@ exports.update_user_info =
             birth_year = ?, 
             birth_month = ?, 
             birth_date = ?, 
-            sex = ?
+            gender = ?
     WHERE   user_code = ?;`;
 
 // ID 찾기 2023.04.03

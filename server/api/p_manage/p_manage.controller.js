@@ -112,6 +112,11 @@ class p_manageController {
         let result = await svInstance.asRegist(date, text, usercode);
         return res.json(result);
 
+    };
+    // 등록 시 이름 조회
+    async searchName_As(req, res, next) {
+        let result = await svInstance.selectName_As(req.body.name, req.body.userCode);
+        return res.json(result);
     }
 
 }

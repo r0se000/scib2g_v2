@@ -24,7 +24,7 @@ class AsListController {
     async loadAsListPage(req, res, next) {
         let { userCode } = req.params // url에 data 포함하여 전송한 경우 값 가져오기
         let result = await svInstance.loginCheck(userCode);
-        let asList = await svInstance.selectASList(userCode);
+        let asList = await svInstance.selectASList();
         if (result.row.a_user_login_check == 'Y') {
             return res.render('web/asList/asList', {
                 'title': 'A/S 조회',
@@ -60,8 +60,7 @@ class AsListController {
      *  ================================================================
      */
     async selectUser(req, res, next) {
-        let { userCode } = req.body;
-        let userList = await svInstance.selectUser(userCode);
+        let userList = await svInstance.selectUser();
         return res.json(userList);
     };
 
@@ -74,8 +73,8 @@ class AsListController {
      *  ================================================================
      */
     async searchName(req, res, next) {
-        let { userCode, searchStr, serviceCheck } = req.body;
-        let userList = await svInstance.searchName(userCode, searchStr, serviceCheck);
+        let {searchStr, serviceCheck } = req.body;
+        let userList = await svInstance.searchName(searchStr, serviceCheck);
         return res.json(userList);
     };
 
@@ -88,8 +87,7 @@ class AsListController {
      *  ================================================================
      */
     async endService(req, res, next) {
-        let { userCode } = req.body;
-        let asList = await svInstance.endService(userCode);
+        let asList = await svInstance.endService();
         return res.json(asList);
     };
 
@@ -115,10 +113,9 @@ class AsListController {
      *  ================================================================
      */
     async searchUser(req, res, next) {
-        let userCode = req.body.userCode,
-            searchStr = req.body.searchStr;
+        let searchStr = req.body.searchStr;
 
-        let result = await svInstance.searchUser(userCode, searchStr);
+        let result = await svInstance.searchUser(searchStr);
         return res.json(result);
     };
 

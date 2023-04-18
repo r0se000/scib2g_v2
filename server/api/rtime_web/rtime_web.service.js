@@ -148,7 +148,7 @@ class RtimeService {
      */
     async selectRtimeData(selectUserList) {
         let sendData = {};
-        if(selectUserList != undefined){
+        if (selectUserList != undefined) {
             for (let i = 0; i < selectUserList.length; i++) {
                 let bioData = new Array();
                 let rtFlag = await getAsync(selectUserList[i]); //userCode List
@@ -191,23 +191,27 @@ class RtimeService {
      *  @author SY
      *  @since 2023.03.24
      *  @history 2023.03.24 최초 작성
+     *           2023.04.10 userList undefined 조건문 추가
      *  ================================================================
      */
     async selectUnconnectedData(userList) {
         let cnt = 0;
         let sendData = [];
-        for (let i = 0; i < userList.length; i++) {
-            let bioData = new Array();
-            let rtFlag = await getAsync(userList[i]); //userCode List
-            if (rtFlag != 0 && rtFlag != null) { // Redis DB에 usercode 존재하는 경우
-                bioData = await stringToNumberInArray(await lrangeAsync(userList[i] + "state", 0, 0));
-            } else { //// Redis DB에 usercode 존재하지 않는 경우 : 연결 없음
-                bioData = -1;
-            }
-            if (bioData == -1) {
-                sendData[cnt++] = userList[i];
+        if (userList != undefined) {
+            for (let i = 0; i < userList.length; i++) {
+                let bioData = new Array();
+                let rtFlag = await getAsync(userList[i]); //userCode List
+                if (rtFlag != 0 && rtFlag != null) { // Redis DB에 usercode 존재하는 경우
+                    bioData = await stringToNumberInArray(await lrangeAsync(userList[i] + "state", 0, 0));
+                } else { //// Redis DB에 usercode 존재하지 않는 경우 : 연결 없음
+                    bioData = -1;
+                }
+                if (bioData == -1) {
+                    sendData[cnt++] = userList[i];
+                }
             }
         }
+
         return sendData;
     };
 
@@ -240,10 +244,10 @@ class RtimeService {
             selectResult.rows[0].protector_phone_middle = cryptoUtil.decrypt_aes(cryptoKey, selectResult.rows[0].protector_phone_middle);
             selectResult.rows[0].protector_phone_last = cryptoUtil.decrypt_aes(cryptoKey, selectResult.rows[0].protector_phone_last);
 
-            if (selectResult.rows[0].sex == 'M') {
-                selectResult.rows[0].sex = '남성';
+            if (selectResult.rows[0].gender == 'M') {
+                selectResult.rows[0].gender = '남성';
             } else {
-                selectResult.rows[0].sex = '여성';
+                selectResult.rows[0].gender = '여성';
             }
             if (selectResult.rows[0].note_created_date == null) { // 관리 대상자 특이사항 작성날짜 null일 때
                 selectResult.rows[0].note_created_date = '-'

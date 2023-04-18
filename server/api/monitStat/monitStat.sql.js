@@ -42,7 +42,7 @@ exports.emergencyToday = `
                     FROM emergency_list AS em
                     LEFT JOIN user_info AS ui
                     ON em.user_code = ui.user_code
-                    WHERE em.emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.sex LIKE ? AND ui.user_code LIKE ? AND em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" GROUP BY ui.birth_year;
+                    WHERE em.emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.gender LIKE ? AND ui.user_code LIKE ? AND em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" GROUP BY ui.birth_year;
                     `;
 // 응급 조회 통계(금주, 금월, 금년)
 exports.emergencyTodayRange = `
@@ -50,7 +50,7 @@ exports.emergencyTodayRange = `
                     FROM emergency_list AS em
                     LEFT JOIN user_info AS ui
                     ON em.user_code = ui.user_code
-                    WHERE em.emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.sex LIKE ? AND ui.user_code LIKE ? AND em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음"  AND ui.user_status='Y' GROUP BY ui.birth_year;
+                    WHERE em.emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.gender LIKE ? AND ui.user_code LIKE ? AND em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음"  AND ui.user_status='Y' GROUP BY ui.birth_year;
                     `;
 // 응급 조회 통계(전체)
 exports.emergencyAllCnt = `
@@ -58,7 +58,7 @@ exports.emergencyAllCnt = `
                     FROM emergency_list AS em
                     LEFT JOIN user_info AS ui
                     ON em.user_code = ui.user_code
-                    WHERE ui.sex LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음"  AND ui.user_status='Y'
+                    WHERE ui.gender LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음"  AND ui.user_status='Y'
                     GROUP BY ui.birth_year;`;
 
 // 응급 조회 통계(요일)
@@ -74,7 +74,7 @@ exports.emergencyDayOfWeek = `
                     FROM emergency_list AS em
                     LEFT JOIN user_info AS ui
                     ON em.user_code = ui.user_code
-                    WHERE em.emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.sex LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
+                    WHERE em.emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.gender LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
                     GROUP BY dweek, ui.birth_year
                     ORDER BY WEEKDAY(emergency_time) ASC;
 `;
@@ -86,7 +86,7 @@ exports.graphData_HtoH = `
                     FROM emergency_list AS em
                     LEFT JOIN user_info AS ui
                     ON em.user_code = ui.user_code
-                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.sex LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
+                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.gender LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
                     GROUP BY DATE_FORMAT(emergency_time, '%Y-%m-%d %H'), ui.birth_year
                     ORDER BY dh ASC;
 `;
@@ -95,7 +95,7 @@ exports.graphData_DtoD = `
                     FROM emergency_list AS em
                     LEFT JOIN user_info AS ui
                     ON em.user_code = ui.user_code
-                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.sex LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
+                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.gender LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
                     GROUP BY DATE_FORMAT(emergency_time, '%Y-%m-%d'), ui.birth_year
                     ORDER BY dd ASC;
                     `;
@@ -104,7 +104,7 @@ exports.graphData_MtoM = `
                     FROM emergency_list AS em
                     LEFT JOIN user_info AS ui
                     ON em.user_code = ui.user_code
-                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.sex LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
+                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.gender LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
                     GROUP BY DATE_FORMAT(emergency_time, '%Y-%m'), ui.birth_year
                     ORDER BY dm ASC;
 `;
@@ -113,7 +113,7 @@ exports.graphData_YtoY = `
                     FROM emergency_list AS em
                     LEFT JOIN user_info AS ui
                     ON em.user_code = ui.user_code
-                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.sex LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
+                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.gender LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
                     GROUP BY DATE_FORMAT(emergency_time, '%Y'), ui.birth_year
                     ORDER BY dy ASC;
 `;
@@ -123,7 +123,7 @@ exports.graphDataGender_HtoH = `
                     FROM emergency_list AS em
                     LEFT JOIN user_info AS ui
                     ON em.user_code = ui.user_code
-                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.sex LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
+                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.gender LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
                     GROUP BY DATE_FORMAT(emergency_time, '%Y-%m-%d %H'), ui.birth_year
                     ORDER BY dh ASC;
 `;
@@ -132,7 +132,7 @@ exports.graphDataGender_DtoD = `
                     FROM emergency_list AS em
                     LEFT JOIN user_info AS ui
                     ON em.user_code = ui.user_code
-                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.sex LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
+                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.gender LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
                     GROUP BY DATE_FORMAT(emergency_time, '%Y-%m-%d'), ui.birth_year
                     ORDER BY dd ASC;
                     `;
@@ -141,7 +141,7 @@ exports.graphDataGender_MtoM = `
                     FROM emergency_list AS em
                     LEFT JOIN user_info AS ui
                     ON em.user_code = ui.user_code
-                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.sex LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
+                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.gender LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
                     GROUP BY DATE_FORMAT(emergency_time, '%Y-%m'), ui.birth_year
                     ORDER BY dm ASC;
 `;
@@ -150,7 +150,7 @@ exports.graphDataGender_YtoY = `
                     FROM emergency_list AS em
                     LEFT JOIN user_info AS ui
                     ON em.user_code = ui.user_code
-                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.sex LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
+                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.gender LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
                     GROUP BY DATE_FORMAT(emergency_time, '%Y'), ui.birth_year
                     ORDER BY dy ASC;
 `;
@@ -160,7 +160,7 @@ exports.graphDataAge_HtoH = `
                     FROM emergency_list AS em
                     LEFT JOIN user_info AS ui
                     ON em.user_code = ui.user_code
-                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.sex LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
+                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.gender LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
                     GROUP BY DATE_FORMAT(emergency_time, '%Y-%m-%d %H'), ui.birth_year
                     ORDER BY dh ASC;
 `;
@@ -169,7 +169,7 @@ exports.graphDataAge_DtoD = `
                     FROM emergency_list AS em
                     LEFT JOIN user_info AS ui
                     ON em.user_code = ui.user_code
-                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.sex LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
+                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.gender LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
                     GROUP BY DATE_FORMAT(emergency_time, '%Y-%m-%d'), ui.birth_year
                     ORDER BY dd ASC;
                     `;
@@ -178,7 +178,7 @@ exports.graphDataAge_MtoM = `
                     FROM emergency_list AS em
                     LEFT JOIN user_info AS ui
                     ON em.user_code = ui.user_code
-                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.sex LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
+                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.gender LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
                     GROUP BY DATE_FORMAT(emergency_time, '%Y-%m'), ui.birth_year
                     ORDER BY dm ASC;
 `;
@@ -187,7 +187,7 @@ exports.graphDataAge_YtoY = `
                     FROM emergency_list AS em
                     LEFT JOIN user_info AS ui
                     ON em.user_code = ui.user_code
-                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.sex LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
+                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.gender LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
                     GROUP BY DATE_FORMAT(emergency_time, '%Y'), ui.birth_year
                     ORDER BY dy ASC;
 `;
@@ -205,7 +205,7 @@ exports.graphDataDayOfWeek_HtoH = `
                     FROM emergency_list AS em
                     LEFT JOIN user_info AS ui
                     ON em.user_code = ui.user_code
-                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.sex LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
+                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.gender LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
                     GROUP BY dweek, ui.birth_year
                     ORDER BY WEEKDAY(emergency_time) ASC;
 `;
@@ -222,7 +222,7 @@ exports.graphDataDayOfWeek_DtoD = `
                     FROM emergency_list AS em
                     LEFT JOIN user_info AS ui
                     ON em.user_code = ui.user_code
-                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.sex LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
+                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.gender LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
                     GROUP BY dweek, ui.birth_year
                     ORDER BY WEEKDAY(emergency_time) ASC;
 `;
@@ -239,7 +239,7 @@ exports.graphDataDayOfWeek_MtoM = `
                     FROM emergency_list AS em
                     LEFT JOIN user_info AS ui
                     ON em.user_code = ui.user_code
-                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.sex LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
+                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.gender LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
                     GROUP BY dweek, ui.birth_year
                     ORDER BY WEEKDAY(emergency_time) ASC;
 `;
@@ -256,7 +256,7 @@ exports.graphDataDayOfWeek_YtoY = `
                     FROM emergency_list AS em
                     LEFT JOIN user_info AS ui
                     ON em.user_code = ui.user_code
-                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.sex LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
+                    WHERE emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59') AND ui.gender LIKE ? AND ui.user_code LIKE ? and em.emergency_web_check is not NULL AND emergency_check_contents != "이상없음" AND ui.user_status='Y'
                     GROUP BY dweek, ui.birth_year
                     ORDER BY WEEKDAY(emergency_time) ASC;
 `;

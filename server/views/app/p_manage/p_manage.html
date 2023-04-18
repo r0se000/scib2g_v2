@@ -3,440 +3,298 @@
 {% block head %}
 <!-- CSS -->
 <!-- datepicker CSS -->
-<link
-href="/assets/node_modules/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
-rel="stylesheet"
-/>
-<link
-href="/assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.css"
-rel="stylesheet"
-type="text/css"
-/>
-<link
-rel="stylesheet"
-href="/assets/icons/material-design-iconic-font/css/material-design-iconic-font.css"
-/>
+<link href="/assets/node_modules/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+<link href="/assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/assets/icons/material-design-iconic-font/css/material-design-iconic-font.css" />
 
-<link
-   rel="stylesheet"
-   href="/app/p_manage/p_manage.css"
-   type="text/css"
- />
-{%endblock%}
+<link rel="stylesheet" href="/app/p_manage/p_manage.css" type="text/css" /> {%endblock%}
 <!-- ------------------------------------------------------------- -->
 
 <!-- ------------------------------------------------------------- -->
 <!-- Content 시작 -->
 {% block contents%}
-    
+
 <body>
-    
-
-<div class="box skin-megna page-wrapper" style="padding: 0; overflow-y: scroll">
-    <nav class="tabset--nav">
-        
-        <div class="nav--item tab1 -is--active" data-tab-target="tab-1">
-            사용자 조회
-        </div>
-
-        <div class="nav--item tab2" data-tab-target="tab-2">
-            모니터링 관리
-        </div>
-
-        <div class="nav--item tab3" data-tab-target="tab-3">
-            A/S 관리
-        </div>
-        
-        <div class="active--tab__marker"></div>
-    </nav>
-    
-
-    <section class="tabset--content" data-active-tab="tab-1">
-
-        <!-- 사용자 조회 페이지 -->
-        <div class="tabset--section">
-            
-            <div>
-                <ul class="p_managelist" id ="user_inquiry">
-                <div class = "tab_title">
-                <li>성명</li>
-                <li>번호</li>
-                <li>가입일</li>
-                <li>누적 횟수</li>
+    <div class="box skin-megna page-wrapper" style="padding: 0; overflow-y: scroll">
+        <nav class="tabset--nav">
+            <div class="nav--item tab1 -is--active" data-tab-target="tab-1">사용자 조회</div>
+            <div class="nav--item tab2" data-tab-target="tab-2">모니터링 관리</div>
+            <div class="nav--item tab3" data-tab-target="tab-3">A/S 관리</div>
+            <div class="active--tab__marker"></div>
+        </nav>
+        <section class="tabset--content" data-active-tab="tab-1">
+            <!-- 사용자 조회 페이지 -->
+            <div class="tabset--section">
+                <div>
+                    <ul class="p_managelist" id="user_inquiry">
+                        <div class="tab_title">
+                            <li>성명</li>
+                            <li>번호</li>
+                            <li>가입일</li>
+                            <li>누적 횟수</li>
+                        </div>
+                    </ul>
                 </div>
-                </ul>
-            </div>
-            
-        </div>
-        <!-- 모니터링 관리 페이지 -->
-        <div class="tabset--section">
-            <div class="row buttonbar">
-                <button id="allBtn" class="btn btn-outline-secondary">
-                전체 조회
-                </button>
-                &nbsp;
-                <button id="dateBtn" class="btn btn-outline-secondary">
-                날짜 조회
-                </button>
-                &nbsp;
-                <button id="nameBtn" class="btn btn-outline-secondary">
-                이름 조회
-                </button>
-            </div>
-            <div><form method="post" action="/searchDate" id="searchDateFrm">
-                <input
-                  type="hidden"
-                  name="userCode"
-                  id="userCode"
-                  value="{{userCode}}"
-                />
-                <input
-                  type="text"
-                  class="form-control"
-                  name="date1"
-                  id="state-datepicker1"
-                  placeholder="시작날짜"
-                />
-                -
-                <input
-                  type="text"
-                  class="form-control"
-                  name="date2"
-                  id="state-datepicker2"
-                  placeholder="마지막 날짜"
-                  readonly
-                />
-                <input type="submit" class ="btn btn-secondary" value="조회" />
-              </form></div>
-              <div class="namebar">
-                <form method="get" action="/searchName" id="searchNameFrm">
-                  <input type="hidden" name="userCode" value="{{userCode}}" />
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="name"
-                    id="search_name"
-                    placeholder="이름을 입력하세요"
-                  />
-                  <input type="submit" value="조회" />
-                </form>
-            </div>
 
-            <div>
-                <ul class="p_managelist" id ="monitoring_inquiry">
-                <div class = "tab_title">
-                <li>성명</li>
-                <li>번호</li>
-                <li>발생 시간</li>
-                <li>비고</li>
+            </div>
+            <!-- 모니터링 관리 페이지 -->
+            <div class="tabset--section">
+                <div class="row buttonbar">
+                    <button id="allBtn" class="btn btn-outline-secondary">전체 조회</button>
+                    <button id="dateBtn" class="btn btn-outline-secondary">날짜 조회</button>
+                    <button id="nameBtn" class="btn btn-outline-secondary">이름 조회</button>
                 </div>
-                </ul>
-            </div>
-        </div>
-        <!-- A/S 관리 페이지 -->
-        <div class="tabset--section">
-            <div>
-                <button id="asRegister" class="btn btn-success">A / S 등록</button>
-            </div>
-            
-            <div>
-                <ul class="p_managelist_AS" id = "as_inquiry">
-                <div class = "tab_title">   
-                <li>성명</li>
-                <li>번호</li>
-                <li>A/S 날짜</li>
+                <div>
+                    <form method="post" action="/searchDate" id="searchDateFrm">
+                        <input type="hidden" name="userCode" id="userCode" value="{{userCode}}" />
+                        <input type="text" class="form-control" name="date1" id="state-datepicker1" placeholder="시작날짜" /> -
+                        <input type="text" class="form-control" name="date2" id="state-datepicker2" placeholder="마지막 날짜" readonly />
+                        <input type="submit" class="btn btn-secondary" value="조회" />
+                    </form>
                 </div>
-                </ul>
-            </div>
-        </div>
-    </section>
+                <div class="namebar">
+                    <form method="get" action="/searchName" id="searchNameFrm">
+                        <input type="hidden" name="userCode" value="{{userCode}}" />
+                        <input type="text" class="form-control" name="name" id="search_name" placeholder="이름을 입력하세요" />
+                        <input type="submit" value="조회" />
+                    </form>
+                </div>
 
-</div>
+                <div>
+                    <ul class="p_managelist" id="monitoring_inquiry">
+                        <div class="tab_title">
+                            <li>성명</li>
+                            <li>번호</li>
+                            <li>발생 시간</li>
+                            <li>비고</li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            <!-- A/S 관리 페이지 -->
+            <div class="tabset--section">
+                <div>
+                    <button id="asRegister" class="btn btn-success">A / S 등록</button>
+                </div>
+
+                <div>
+                    <ul class="p_managelist_AS" id="as_inquiry">
+                        <div class="tab_title">
+                            <li>성명</li>
+                            <li>번호</li>
+                            <li>A/S 날짜</li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </div>
 
     <!-- 관리 대상자 사용자 조회 세부정보 모달 -->
-    <div
-        id="manageUser-detail"
-        class="modal bs-example-modal-lg"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="longmodal"
-        aria-hidden="true"
-    >
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-    <div class="modal-content">
-        <div class="modal-header">
-        <h4 class="modal-title" id="longmodal">
-            
-        </h4>
-        <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-hidden="true"
-        >
-            ×
-        </button>
-        </div>
-        <div class="modal-body h4">
-        <table class="table table-hover" class="user-detail-table">
-            <tbody class="userlist">
-            <tr>
-                <td>성명</td>
-                <td id="userName"></td>
-            </tr>
-            <tr>
-                <td>생년월일</td>
-                <td id="userBirth"></td>
-            </tr>
-            <tr>
-                <td>성별</td>
-                <td id="sex"></td>
-            </tr>
-            <tr>
-                <td>주소</td>
-                <td id="userAddress"></td>
-            </tr>
-            <tr>
-                <td>관리 대상자 연락처</td>
-                <td id="userPhone"></td>
-            </tr>
-            <tr>
-                <td>보호자 연락처</td>
-                <td id="protectorPhone"></td>
-            </tr>
-            </tbody>
-        </table>
-        </div>
-    </div>
-</div>
-
-        <!-- 관리 대상자 모니터링 관리 세부정보 모달 -->
-    <div
-    id="manageMonitoring-detail"
-    class="modal bs-example-modal-lg"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="longmodal"
-    aria-hidden="true"
-    >
+    <div id="manageUser-detail" class="modal bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="longmodal" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                <h4 class="modal-title" id="longmodal">
-                    
-                </h4>
-                    <button
-                        type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-hidden="true"
-                    >
-                        ×
-                    </button>
+                    <h4 class="modal-title" id="longmodal"></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body h4">
                     <table class="table table-hover" class="user-detail-table">
                         <tbody class="userlist">
-                        <tr>
-                            <td>관리자 성명</td>
-                            <td id="adminName"></td>
-                        </tr>
-                        <tr>
-                            <td>모니터링 발생 시간</td>
-                            <td id="monitoringOccur"></td>
-                        </tr>
-                        <tr>
-                            <td>모니터링 확인 시간</td>
-                            <td id="monitoringCheck"></td>
-                        </tr>
-                        <tr>
-                            <td>모니터링 조치 완료</td>
-                            <td id="contentsTime"></td>
-                        </tr>
+                            <tr>
+                                <td>성명</td>
+                                <td id="userName"></td>
+                            </tr>
+                            <tr>
+                                <td>생년월일</td>
+                                <td id="userBirth"></td>
+                            </tr>
+                            <tr>
+                                <td>성별</td>
+                                <td id="sex"></td>
+                            </tr>
+                            <tr>
+                                <td>주소</td>
+                                <td id="userAddress"></td>
+                            </tr>
+                            <tr>
+                                <td>관리 대상자 연락처</td>
+                                <td id="userPhone"></td>
+                            </tr>
+                            <tr>
+                                <td>보호자 연락처</td>
+                                <td id="protectorPhone"></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
 
+        <!-- 관리 대상자 모니터링 관리 세부정보 모달 -->
+        <div id="manageMonitoring-detail" class="modal bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="longmodal" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="longmodal">
 
-    <!-- 관리 대상자 A/S 관리 세부정보 모달 -->
-    <div
-        id="manageAS-detail"
-        class="modal bs-example-modal-lg"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="longmodal"
-        aria-hidden="true"
-    >
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h4 class="modal-title" id="longmodal">
-                
-            </h4>
-            <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-hidden="true"
-            >
-                ×
-            </button>
-            </div>
-            <div class="modal-body h4">
-                <table class="table table-hover" class="user-detail-table">
-                    <tbody class="userlist">
-                        <tr>
-                            <td>성명</td>
-                            <td id="userNameAs"></td>
-                        </tr>
-                        <tr>
-                            <td>생년월일</td>
-                            <td id="userBirthAs"></td>
-                        </tr>
-                        <tr>
-                            <td>A/S 조치 날짜</td>
-                            <td id="asDate"></td>
-                        </tr>
-                        <tr>
-                            <td>A/S 내용</td>
-                            <td>
-                                <textarea id="asContents"></textarea>
-
-                                <div class="buttonContainer">
-                                    <button id="deleteButton" class="btn btn-danger" value="0">삭제</button>
-                                    <button id="cancelButton" class="btn btn-secondary">취소</button>
-                                    <button id="modifyButton" class="btn btn-info" value="0">수정</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-<!-- 관리 대상자 A/S 관리 세부정보 모달 -->
-    <div
-        id="manageAS-register"
-        class="modal bs-example-modal-lg"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="longmodal"
-        aria-hidden="true"
-    >
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h4 class="modal-title" id="longmodal">
-                
-            </h4>
-            <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-hidden="true"
-            >
-                ×
-            </button>
-            </div>
-            <div class="modal-body h4">
-                <table class="table table-hover" class="user-detail-table">
-                    <tbody class="userlist">
-                        <tr>
-                            <div>
-                                <form class = "form_regi" method="get" action="/searchName" id="searchNameFrm_regi">
-                                    <input type="hidden" name="userCode" value="{{userCode}}" />
-                                    <input
-                                      type="text"
-                                      class="form-control"
-                                      name="name"
-                                      id="searchName_regi"
-                                      placeholder="이름을 입력하세요"
-                                    />
-                                    <input type="submit"  id="search_name_input" class="btn btn-secondary" value="조회" />
-                                </form>
-                            </div>
-                        </tr>
-                        <tr>
-                            <div>
-                                
-                                <form method="post" action="/searchDate" id="searchDateFrm_regi">
-                                <input
-                                  type="hidden"
-                                  name="userCode"
-                                  id="userCode"
-                                  value="{{userCode}}"
-                                />
-                                <span style="font-size: 12pt;">날짜 입력:</span>
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  name="date"
-                                  id="state-datepicker3"
-                                  placeholder="날짜 선택"
-                                  readonly
-                                />
-                              </form>
-                            </div>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label for="asContents_regi" id="asTitle_regi">A/S 등록</label>
-                                <textarea id="asContents_regi"></textarea>
-
-                                <div class="buttonContainer">
-                                    <button id="cancelButton_regi" class="btn btn-secondary">취소</button>
-                                    <button id="registButton_regi" class="btn btn-info">등록</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- 관리 대상자 A/S 등록 이름 조회 모달 -->
-    <div
-        id="manageAS-name"
-        class="modal bs-example-modal-lg"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="longmodal"
-        aria-hidden="true"
-    >
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h4 class="modal-title" id="longmodal">
-                
-            </h4>
-            <button
-                type="button"
-                id="close_regi"
-                class="close"
-                data-dismiss="modal"
-                aria-hidden="true"
-            >
-                ×
-            </button>
-            </div>
-            <div class="modal-body h4">
-                <div>
-                    <ul class="p_managelist" id ="as_name_select">
-                    <div>
-                        <li>성명</li>
-                        <li>번호</li>
-                        <li>생년월일</li>
-                        <li>성별</li>
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
-                    </ul>
+                    <div class="modal-body h4">
+                        <table class="table table-hover" class="user-detail-table">
+                            <tbody class="userlist">
+                                <tr>
+                                    <td>관리자 성명</td>
+                                    <td id="adminName"></td>
+                                </tr>
+                                <tr>
+                                    <td>모니터링 발생 시간</td>
+                                    <td id="monitoringOccur"></td>
+                                </tr>
+                                <tr>
+                                    <td>모니터링 확인 시간</td>
+                                    <td id="monitoringCheck"></td>
+                                </tr>
+                                <tr>
+                                    <td>모니터링 조치 완료</td>
+                                    <td id="contentsTime"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+
+
+            <!-- 관리 대상자 A/S 관리 세부정보 모달 -->
+            <div id="manageAS-detail" class="modal bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="longmodal" aria-hidden="true">
+                <div class="modal-dialog modal-xl modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="longmodal"></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body h4">
+                            <table class="table table-hover" class="user-detail-table">
+                                <tbody class="userlist">
+                                    <tr>
+                                        <td>성명</td>
+                                        <td id="userNameAs"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>생년월일</td>
+                                        <td id="userBirthAs"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>A/S 조치 날짜</td>
+                                        <td id="asDate"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>A/S 내용</td>
+                                        <td>
+                                            <textarea id="asContents"></textarea>
+
+                                            <div class="buttonContainer">
+                                                <button id="deleteButton" class="btn btn-danger" value="0">삭제</button>
+                                                <button id="cancelButton" class="btn btn-secondary">취소</button>
+                                                <button id="modifyButton" class="btn btn-info" value="0">수정</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 관리 대상자 A/S 관리 세부정보 모달 -->
+                <div id="manageAS-register" class="modal bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="longmodal" aria-hidden="true">
+                    <div class="modal-dialog modal-xl modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="longmodal"></h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div class="modal-body h4">
+                                <table class="table table-hover" class="user-detail-table">
+                                    <tbody class="userlist">
+                                        <tr>
+                                            <div>
+                                                <form class="form_regi" method="get" action="/searchName" id="searchNameFrm_regi">
+                                                    <input type="hidden" name="userCode" value="{{userCode}}" />
+                                                    <input type="text" class="form-control" name="name" id="searchName_regi" placeholder="이름을 입력하세요" />
+                                                    <input type="submit" id="search_name_input" class="btn btn-secondary" value="조회" />
+                                                </form>
+                                            </div>
+                                        </tr>
+                                        <tr>
+                                            <div>
+
+                                                <form method="post" action="/searchDate" id="searchDateFrm_regi">
+                                                    <input type="hidden" name="userCode" id="userCode" value="{{userCode}}" />
+                                                    <span style="font-size: 12pt;">날짜 입력:</span>
+                                                    <input type="text" class="form-control" name="date" id="state-datepicker3" placeholder="날짜 선택" readonly />
+                                                </form>
+                                            </div>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label for="asContents_regi" id="asTitle_regi">A/S 등록</label>
+                                                <textarea id="asContents_regi"></textarea>
+
+                                                <div class="buttonContainer">
+                                                    <button id="cancelButton_regi" class="btn btn-secondary">취소</button>
+                                                    <button id="registButton_regi" class="btn btn-info">등록</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 관리 대상자 A/S 등록 이름 조회 모달 -->
+                    <div id="manageAS-name" class="modal bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="longmodal" aria-hidden="true">
+                        <div class="modal-dialog modal-xl modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="longmodal"></h4>
+                                    <button type="button" id="close_regi" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                </div>
+                                <div class="modal-body h4">
+                                    <div>
+                                        <ul class="p_managelist" id="as_name_select">
+                                            <div>
+                                                <li>성명</li>
+                                                <li>번호</li>
+                                                <li>생년월일</li>
+                                                <li>성별</li>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 관리 대상자 A/S 삭제 묻기 알림 모달 -->
+                        <div id="manageAS-delete" class="modal bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="longmodal" aria-hidden="true">
+                            <div class="modal-dialog modal-xl modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="longmodal"></h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    </div>
+                                    <div class="modal-body h4" style="text-align: center;">
+                                        정말 삭제 하시겠습니까?
+                                        <br>
+                                        <br>
+                                        <button id="yes" class="btn btn-danger">삭제</button>
+                                        <button id="no" class="btn btn-info">취소</button>
+                                    </div>
+                                </div>
+                            </div>
 
 </body>
 <!-- html -->
@@ -447,19 +305,19 @@ href="/assets/icons/material-design-iconic-font/css/material-design-iconic-font.
 <!-- ------------------------------------------------------------- -->
 {% block script %}
 
- <!--jquery knob -->
+<!--jquery knob -->
 <script src="/assets/node_modules/moment/moment.js"></script>
- <!-- Date Picker Plugin JavaScript -->
- <script src="/assets/node_modules/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
- <script src="/assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
- <script src="/assets/node_modules/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- Date Picker Plugin JavaScript -->
+<script src="/assets/node_modules/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+<script src="/assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="/assets/node_modules/bootstrap-daterangepicker/daterangepicker.js"></script>
 
- <script src="/javascripts/config.js"></script>
- <script src="/javascripts/commonUtil.js"></script>
- <script type="text/javascript" src="/app/p_manage/p_manage.js"></script>
+<script src="/javascripts/config.js"></script>
+<script src="/javascripts/commonUtil.js"></script>
+<script type="text/javascript" src="/app/p_manage/p_manage.js"></script>
 
 <script>
-    let userCode="{{userCode}}"
+    let userCode = "{{userCode}}"
     let userList = '{{userList | safe}}';
     userList = JSON.parse(userList);
     let userCount = Object.keys(userList).length;
@@ -467,7 +325,6 @@ href="/assets/icons/material-design-iconic-font/css/material-design-iconic-font.
         userCodeList.push(userList['user' + j].user_code)
     };
     init();
-
 </script>
 
 {% endblock %}

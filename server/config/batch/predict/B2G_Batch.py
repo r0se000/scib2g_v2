@@ -14,18 +14,22 @@ import sys
 import tensorflow as tf
 import pandas as pd
 import traceback
-from sklearn.externals.joblib import load
+# import joblib
+# from sklearn.externals.joblib import load
+import joblib
+sys.modules['sklearn.externals.joblib'] = joblib
 
 
-conn = pymysql.connect(host='localhost', db ='sci_b2g_v2', user='edlmanager', password='Sci2019qa!')
-               
+# conn = pymysql.connect(host='localhost', db ='sci_b2g_v2', user='edlmanager', password='Sci2019qa!')
+conn = pymysql.connect(host='localhost', db ='sci_b2g_v2', user='root', password='sci2020qa!')      
+
 # 유저 목록 불러오기
 def select_user_list():
     cursor = conn.cursor()    
     query = '''
             SELECT user_code
-            FROM user_account
-            WHERE activate_yn = "Y"
+            FROM user_info
+            WHERE user_status = "Y"
             ORDER BY user_code ASC;
             '''.format()
     cursor.execute(query)
@@ -36,7 +40,7 @@ def user_batch_check(userCode):
         params = {
             'userCode': userCode
             }
-        url = "http://192.168.3.12:7070/api/batch/B2G_Batch"
+        url = "http://192.168.3.164:7070/api/batch/B2G_Batch"
         response = requests.post(url=url, data=params)
         result= response.json()
         return result
@@ -49,7 +53,7 @@ def data_backup(userCode):
         params = {
             'userCode': userCode
             }
-        url = "http://192.168.3.12:7070/api/batch/data_backup"
+        url = "http://192.168.3.164:7070/api/batch/data_backup"
         response = requests.post(url=url, data=params)
         result= response.json()
         return result
@@ -69,7 +73,7 @@ def batch_result_insert(userCode, sleep_hr, sleep_stress, sleep_index, glucos, p
             'pressure_low': pressure_low,
             'health_index': health_index
             }
-        url = "http://192.168.3.12:7070/api/batch/batch_insert"
+        url = "http://192.168.3.164:7070/api/batch/batch_insert"
         response = requests.post(url=url, data=params)
         result= response.text
         return result
@@ -150,29 +154,29 @@ class predictDisease:
     def __init__(self):
         # 배포 전 경로수정
         #############################################################################################################################################################
-        # # 혈당 예측 모델
-        # self.diabetespredmodel = tf.keras.models.load_model('C:\\Users\\SCI\\Desktop\\B2G(2.0)\\server\\config\\batch\\predict\\B2G_Model\\bloodsugar_pre_0125.h5')  
-        # self.diabetespredsc=load('C:\\Users\\SCI\\Desktop\\B2G(2.0)\\server\\config\\batch\\predict\\B2G_Model\\bloodsugar_pre_0125.bin')  
-
-        # # 최고 혈압 예측 모델
-        # self.highbppredict=tf.keras.models.load_model('C:\\Users\\SCI\\Desktop\\B2G(2.0)\\server\\config\\batch\\predict\\B2G_Model\\BP_HIGH_0112.h5')  
-        # self.highbppredictsc=load('C:\\Users\\SCI\\Desktop\\B2G(2.0)\\server\\config\\batch\\predict\\B2G_Model\\BP_HIGH_0112.bin')  
-
-        # # 최저 혈압 예측 모델
-        # self.lowbppredict=tf.keras.models.load_model('C:\\Users\\SCI\\Desktop\\B2G(2.0)\\server\\config\\batch\\predict\\B2G_Model\\BP_LOW_0113.h5')  
-        # self.lowbppredictsc=load('C:\\Users\\SCI\\Desktop\\B2G(2.0)\\server\\config\\batch\\predict\\B2G_Model\\BP_LOW_0113.bin')  
-
         # 혈당 예측 모델
-        self.diabetespredmodel = tf.keras.models.load_model('/home/server/B2G_server/config/batch/predict/B2G_Model/glucose/blood_sugar_20230308_300_gen_del_6.h5')  
-        self.diabetespredsc=load('/home/server/B2G_server/config/batch/predict/B2G_Model/glucose/blood_sugar_20230315_350_gen_del.bin')  
+        self.diabetespredmodel = tf.keras.models.load_model('C:\\Users\\SCI\\Desktop\\b2gv2\\server\\config\\batch\\predict\\B2G_Model\\glucose\\blood_sugar_20230308_300_gen_del_6.h5')  
+        self.diabetespredsc=joblib.load('C:\\Users\\SCI\\Desktop\\b2gv2\\server\\config\\batch\\predict\\B2G_Model\\glucose\\blood_sugar_20230315_350_gen_del.bin')  
 
         # 최고 혈압 예측 모델
-        self.highbppredict=tf.keras.models.load_model('/home/server/B2G_server/config/batch/predict/B2G_Model/bp_high/BP_HIGH_230314_gen_del_1.h5')  
-        self.highbppredictsc=load('/home/server/B2G_server/config/batch/predict/B2G_Model/bp_high/BP_HIGH_230314_gen_del_2.bin')  
+        self.highbppredict=tf.keras.models.load_model('C:\\Users\\SCI\\Desktop\\b2gv2\\server\\config\\batch\\predict\\B2G_Model\\bp_high\\BP_HIGH_230314_gen_del_1.h5')  
+        self.highbppredictsc=joblib.load('C:\\Users\\SCI\\Desktop\\b2gv2\\server\\config\\batch\\predict\\B2G_Model\\bp_high\\BP_HIGH_230314_gen_del_2.bin')  
 
         # 최저 혈압 예측 모델
-        self.lowbppredict=tf.keras.models.load_model('/home/server/B2G_server/config/batch/predict/B2G_Model/bp_low/blood_pressure_20230315_350_gen_del_3.h5')  
-        self.lowbppredictsc=load('/home/server/B2G_server/config/batch/predict/B2G_Model/bp_low/blood_pressure_20230315_350_gen_del_2.bin')
+        self.lowbppredict=tf.keras.models.load_model('C:\\Users\\SCI\\Desktop\\b2gv2\\server\\config\\batch\\predict\\B2G_Model\\bp_low\\blood_pressure_20230315_350_gen_del_3.h5')  
+        self.lowbppredictsc=joblib.load('C:\\Users\\SCI\\Desktop\\b2gv2\\server\\config\\batch\\predict\\B2G_Model\\bp_low\\blood_pressure_20230315_350_gen_del_2.bin')  
+
+        # # 혈당 예측 모델
+        # self.diabetespredmodel = tf.keras.models.load_model('/home/server/B2G_server/config/batch/predict/B2G_Model/glucose/blood_sugar_20230308_300_gen_del_6.h5')  
+        # self.diabetespredsc=load('/home/server/B2G_server/config/batch/predict/B2G_Model/glucose/blood_sugar_20230315_350_gen_del.bin')  
+
+        # # 최고 혈압 예측 모델
+        # self.highbppredict=tf.keras.models.load_model('/home/server/B2G_server/config/batch/predict/B2G_Model/bp_high/BP_HIGH_230314_gen_del_1.h5')  
+        # self.highbppredictsc=load('/home/server/B2G_server/config/batch/predict/B2G_Model/bp_high/BP_HIGH_230314_gen_del_2.bin')  
+
+        # # 최저 혈압 예측 모델
+        # self.lowbppredict=tf.keras.models.load_model('/home/server/B2G_server/config/batch/predict/B2G_Model/bp_low/blood_pressure_20230315_350_gen_del_3.h5')  
+        # self.lowbppredictsc=load('/home/server/B2G_server/config/batch/predict/B2G_Model/bp_low/blood_pressure_20230315_350_gen_del_2.bin')
         #############################################################################################################################################################
     def set_inputdata(self,hr, rr, hrv,sdnn,rmssd,pnn50,gender, age):
         try:

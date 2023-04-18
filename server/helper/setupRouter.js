@@ -36,6 +36,7 @@ const emergencyRouter = require('../api/emergency/emergency.router'); //응급 �
 const user_pRouter = require('../api/user_p/user_p.router'); //보호자 계정 관련 기능 수행 라우터
 const user_dRouter = require('../api/user_d/user_d.router'); //본인 건강관리 계정 관련 기능 수행 라우터
 const monitoringRouter = require('../api/monitoring/monitoring.router'); //이상 모니터링
+const batchRouter = require('../api/batch/batch.router') // 배치 라우터
 
 //공무원용 알림앱
 const p_apphomeRouter = require('../api/p_apphome/p_apphome.router'); //공무원 알림앱 홈
@@ -68,7 +69,8 @@ const setupRouter = (app) => {
         app.use('/api/userList', userListRouter);
         app.use('/api/health', healthRouter);
         app.use('/api/monitoring', monitoringRouter);
-        app.use('/api/rtime_web', rTimeWebRouter)
+        app.use('/api/rtime_web', rTimeWebRouter);
+        app.use('/api/batch', batchRouter);
 
 
         //공무원용 알림앱

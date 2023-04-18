@@ -101,11 +101,11 @@ class statisticsService {
      *  @history 2023.03.30 초기 작성
      *  ================================================================
      */
-    async selectUser(userCode) {
+    async selectUser() {
         let cryptoKey = await mysqlDB('selectOne', queryList.select_key_string, []);
         cryptoKey = cryptoKey.row.key_string;
 
-        let userList = await mysqlDB('select', queryList.select_user, [userCode]);
+        let userList = await mysqlDB('select', queryList.select_user, [addressCode]);
         if (userList.rowLength > 0) {
             for (let i = 0; i < userList.rowLength; i++) {
                 userList.rows[i].name = cryptoUtil.decrypt_aes(cryptoKey, userList.rows[i].name);
@@ -122,12 +122,12 @@ class statisticsService {
      *  @history 2023.03.30 초기 작성
      *  ================================================================
      */
-    async searchName(userCode, searchStr, serviceCheck) {
+    async searchName(searchStr, serviceCheck) {
         let cryptoKey = await mysqlDB('selectOne', queryList.select_key_string, []);
         cryptoKey = cryptoKey.row.key_string;
 
         searchStr = "%" + cryptoUtil.encrypt_aes(cryptoKey, searchStr) + "%"; // 검색한 이름 암호화 및 세팅
-        let userList = await mysqlDB('select', queryList.searchName, [userCode, serviceCheck, searchStr]); // 관리 대상자 이름 검색
+        let userList = await mysqlDB('select', queryList.searchName, [addressCode, serviceCheck, searchStr]); // 관리 대상자 이름 검색
 
         if (userList.rowLength > 0) {
             for (let i = 0; i < userList.rowLength; i++) {
@@ -147,11 +147,11 @@ class statisticsService {
      *  @history 2023.03.30 초기 작성
      *  ================================================================
      */
-    async endService(userCode) {
+    async endService() {
         let cryptoKey = await mysqlDB('selectOne', queryList.select_key_string, []);
         cryptoKey = cryptoKey.row.key_string;
 
-        let asList = await mysqlDB('select', queryList.select_end_service, [userCode]); // 서비스 이용 중인 관리 대상자 조회
+        let asList = await mysqlDB('select', queryList.select_end_service, [addressCode]); // 서비스 이용 중인 관리 대상자 조회
 
         if (asList.rowLength > 0) {
             for (let i = 0; i < asList.rowLength; i++) {
@@ -184,12 +184,12 @@ class statisticsService {
      *  @history 2023.04.04 초기 작성
      *  ================================================================
      */
-    async searchUser(userCode, searchStr) {
+    async searchUser(searchStr) {
         let cryptoKey = await mysqlDB('selectOne', queryList.select_key_string, []);
         cryptoKey = cryptoKey.row.key_string;
 
         searchStr = "%" + cryptoUtil.encrypt_aes(cryptoKey, searchStr) + "%"; // 검색한 이름 암호화 및 세팅
-        let userList = await mysqlDB('select', queryList.searchUser, [userCode, searchStr]); // 관리 대상자 이름 검색
+        let userList = await mysqlDB('select', queryList.searchUser, [addressCode, searchStr]); // 관리 대상자 이름 검색
 
         if (userList.rowLength > 0) {
             for (let i = 0; i < userList.rowLength; i++) {
@@ -199,10 +199,10 @@ class statisticsService {
                 userList.rows[i].birth_month = cryptoUtil.decrypt_aes(cryptoKey, userList.rows[i].birth_month);
                 userList.rows[i].birth_date = cryptoUtil.decrypt_aes(cryptoKey, userList.rows[i].birth_date);
 
-                if (userList.rows[i].sex == 'M') {
-                    userList.rows[i].sex = '남성';
+                if (userList.rows[i].gender == 'M') {
+                    userList.rows[i].gender = '남성';
                 } else {
-                    userList.rows[i].sex = '여성';
+                    userList.rows[i].gender = '여성';
                 }
             }
         }
@@ -218,8 +218,8 @@ class statisticsService {
      *  @history 2023.03.29 초기 작성
      *  ================================================================
      */
-    async updateAS(userCode, asDetail) {
-        let result = await mysqlDB('update', queryList.update_as, [asDetail, userCode]);
+    async updateAS(asNum, asDetail) {
+        let result = await mysqlDB('update', queryList.update_as, [asDetail, asNum]);
         return result;
     }
 

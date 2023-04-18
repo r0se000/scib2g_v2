@@ -32,7 +32,7 @@ exports.select_user_name =
 
 // 관리 대상자 상세정보 조회
 exports.select_user_info = `
-        SELECT user_code, name, birth_year, birth_month, birth_date, sex, address_1, address_2, address_3, phone_first, phone_middle, phone_last,
+        SELECT user_code, name, birth_year, birth_month, birth_date, gender, address_1, address_2, address_3, phone_first, phone_middle, phone_last,
         protector_phone_first, protector_phone_middle, protector_phone_last, user_note, note_created_date
         FROM user_info WHERE user_code = ?;
     `;

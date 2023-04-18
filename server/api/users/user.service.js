@@ -389,7 +389,7 @@ class userService {
         let accountArray, userInfoArray;
 
         accountArray = [modifyData.eId, modifyData.eDomain, modifyData.userCode];
-        userInfoArray = [modifyData.name, modifyData.bYear, modifyData.bMonth, modifyData.bDay, modifyData.sex, modifyData.userCode];
+        userInfoArray = [modifyData.name, modifyData.bYear, modifyData.bMonth, modifyData.bDay, modifyData.gender, modifyData.userCode];
 
         logger.info(accountArray);
         logger.info(userInfoArray);
@@ -557,8 +557,6 @@ class userService {
             for (let i = 0; i < 6; i++) {
                 authNumber += Math.floor(Math.random() * 10);
             }
-
-            console.log(authNumber);
             let sendResult = await authEmailSend(username, userEId, params.eDomain, authNumber, context);
             if (sendResult.status == 'Success') { // 이메일 전송 성공
                 result['userCode'] = checkUser.row.a_user_code;

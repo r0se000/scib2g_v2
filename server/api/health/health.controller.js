@@ -18,7 +18,7 @@ class HealthController {
     async loadHealthPage(req, res, next) {
         let { userCode } = req.params // url에 data 포함하여 전송한 경우 값 가져오기
         let result = await svInstance.loginCheck(userCode);
-        let userList = await svInstance.userList(userCode);
+        let userList = await svInstance.userList();
         let emCount = await svInstance.emCount();
         if (result.loginCheck == 'Y') {
             return res.render('web/health/health', {
@@ -34,7 +34,13 @@ class HealthController {
         }
     };
 
-    // 날짜 범위 조회
+    /** ================================================================
+     *  날짜 조회
+     *  @author SY
+     *  @since 2023.03.28
+     *  @history 2023.03.28 초안 작성
+     *  ================================================================
+     */
     async dateSearch(req, res, next) {
         let { userCode, trip_start } = req.body // url에 data 포함하여 전송한 경우 값 가져오기
         let userList = await svInstance.dateSearch(userCode, trip_start);

@@ -102,7 +102,7 @@ class boapphomeService {
                     "address_2": userInfo.row.address_2 + " " + userInfo.row.address_3,
                     "user_phone": userInfo.row.phone_first + "-" + userInfo.row.phone_middle + "-" + userInfo.row.phone_last,
                     "protector_phone": userInfo.row.protector_phone_first + "-" + userInfo.row.protector_phone_middle + "-" + userInfo.row.protector_phone_last,
-                    "gender": userInfo.row.sex,
+                    "gender": userInfo.row.gender,
                     "emBioInfo": emUserBioInfo
                 }
                 emergencyid.push(emergencyCheck.rows[i]);
@@ -162,7 +162,7 @@ class boapphomeService {
             birth_year = cryptoUtil.decrypt_aes(cryptoKey, userInfo.row.birth_year),
             birth_month = cryptoUtil.decrypt_aes(cryptoKey, userInfo.row.birth_month),
             birth_date = cryptoUtil.decrypt_aes(cryptoKey, userInfo.row.birth_date),
-            gender = userInfo.row.sex,
+            gender = userInfo.row.gender,
             protector_first = cryptoUtil.decrypt_aes(cryptoKey, userInfo.row.protector_phone_first),
             protector_middle = cryptoUtil.decrypt_aes(cryptoKey, userInfo.row.protector_phone_middle),
             protector_last = cryptoUtil.decrypt_aes(cryptoKey, userInfo.row.protector_phone_last);

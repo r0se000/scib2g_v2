@@ -29,14 +29,13 @@
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title">관리 대상자 등록</h3>
-                <p id="notice" class="deactive-notice text-danger col-sm-12 m-2">입력 값을 확인해주세요</p>
                 <form class="form-material form-horizontal">
                     <div class="row">
                         <!-- User Name Input-->
                         <div class="form-group col-md-6">
                             <label class="col-md-12 h4" for="name-input">이름</label>
                             <div class="col-md-12 ml-2">
-                                <input type="text" id="name-input" name="name" class="form-control" placeholder="이름을 입력하세요">
+                                <input type="text" id="name-input" name="name" class="form-control" placeholder="이름을 입력하세요" maxlength="8">
                             </div>
                             <p id="name-notice" class="deactive-notice text-danger col-sm-12 m-2">이름을 2~8자 이내로 입력해 주세요.</p>
                         </div>
@@ -45,7 +44,7 @@
                             <label class="col-md-12 h4" for="id-input">대상자 ID</label>
                             <div class="col-md-12 ml-2">
                                 <input type="text" id="id-input1" name="address_id" class="form-control col-md-4" placeholder="지역코드" disabled>
-                                <input type="text" id="id-input" name="id" class="form-control col-md-6" readonly>
+                                <input type="hidden" id="id-input" name="id" class="form-control col-md-6" readonly>
                             </div>
                         </div>
                     </div>
@@ -81,7 +80,7 @@
                     <!-- User Address Input-->
                     <div class="form-group" id="address-area">
                         <label class="h4 col-md-12" id="label-birthday">주소</label>
-                        <p id="address-notice" class="active-notice text-info col-sm-12 m-2">도로명주소와 상세주소를 입력해 주세요. <span> (상세주소 예시)금남로 193-22 4층 405호</span></p>
+                        <p id="address-notice" class="active-notice text-info col-sm-12 m-2">(상세주소 예시) 금남로 193-22 4층 405호</p>
                         <div class="col-md-12 row ml-2">
                             <div class="col-md-3">
                                 <select id="address1-input" name="address1" class="form-control notval" placeholder="시/도 선택" onchange=addressSet(this)>
@@ -113,7 +112,7 @@
                             </div>
                             <p id="address2-notice" class="deactive-notice text-danger col-sm-12 m-2">시/군/구 를 선택해 주세요.</p>
                             <div class="col-md-5">
-                                <input type="text" id="address3-input" name="address3" class="form-control notval" placeholder="상세주소">
+                                <input type="text" id="address3-input" name="address3" class="form-control notval" placeholder="상세주소" maxlength="100">
                                 <p id="address3-notice" class="deactive-notice text-danger col-sm-12 m-2">상세 주소를 입력해 주세요.</p>
                             </div>
                         </div>
@@ -122,7 +121,7 @@
                     <div class="row">
                         <!-- User PhonNumber Input-->
                         <div class="form-group col-md-6">
-                            <label class="h4 col-md-12" for="user-phone-input">사용자 연락처</label>
+                            <label class="h4 col-md-12" for="user-phone-input">대상자 연락처</label>
                             <div class="col-md-12 ml-2">
                                 <select id="user-phone1-input" name="user1" class="form-control col-sm-31">
                                     <option value="010">010</option>
@@ -145,9 +144,12 @@
                                 <input type="number" id="user-phone2-input" name="user2" class="form-control col-sm-31" placeholder="" maxlength="4" oninput="maxLengthCheck(this)"> -
                                 <input type="number" id="user-phone3-input" name="user3" class="form-control col-sm-31" placeholder="" maxlength="4" oninput="maxLengthCheck(this)">
                             </div>
-                            <p id="user1-notice" class="deactive-notice text-danger col-sm-12 m-2">사용자 연락처를 입력해 주세요.</p>
-                            <p id="user2-notice" class="deactive-notice text-danger col-sm-12 m-2">사용자 연락처를 입력해 주세요.</p>
-                            <p id="user3-notice" class="deactive-notice text-danger col-sm-12 m-2">사용자 연락처를 입력해 주세요.</p>
+                            <div style="text-align: right;">
+                                <span id="user2-notice" class="deactive-notice text-danger">두 번째</span>
+                                <span id="user3-notice" class="deactive-notice text-danger">세 번째</span>
+                                <span id="user1-notice" class="deactive-notice text-danger"> 연락처를 올바르게 입력해 주세요.</span>
+                            </div>
+                           
                         </div>
                         <div class="form-group col-md-6">
                             <label class="col-md-12 h4" for="protect-phone-input">보호자 연락처</label>
@@ -173,9 +175,12 @@
                                 <input type="number" id="protect-phone2-input" name="protector2" class="form-control col-sm-31" placeholder="" maxlength="4" oninput="maxLengthCheck(this)"> -
                                 <input type="number" id="protect-phone3-input" name="protector3" class="form-control col-sm-31" placeholder="" maxlength="4" oninput="maxLengthCheck(this)">
                             </div>
-                            <p id="protector1-notice" class="deactive-notice text-danger col-sm-12 m-2">보호자 연락처를 입력해 주세요.</p>
-                            <p id="protector2-notice" class="deactive-notice text-danger col-sm-12 m-2">보호자 연락처를 입력해 주세요.</p>
-                            <p id="protector3-notice" class="deactive-notice text-danger col-sm-12 m-2">보호자 연락처를 입력해 주세요.</p>
+
+                            <div style="text-align: right;">
+                                <span id="protector2-notice" class="deactive-notice text-danger">두 번째</span>
+                                <span id="protector3-notice" class="deactive-notice text-danger">세 번째</span>
+                                <span id="protector1-notice" class="deactive-notice text-danger"> 연락처를 올바르게 입력해 주세요.</span>
+                            </div>
                         </div>
                     </div>
                     <div class="float-right">
@@ -194,7 +199,8 @@
         $bDay = $('#birth-day-input'), // 생일 select
         result = '{{result|safe}}'
     result = JSON.parse(result);
-    let addressCode = result.address1_code + result.address2_code
+    let addressCode = result.address1_code + result.address2_code;
+
     init()
 
     function init() {
@@ -206,9 +212,10 @@
             let address1 = $('#address1-input option:selected').text()
             addressSet(address1, addressCode)
             $('#address2-input').val(result.address2_code).prop('selected', true)
-            $('#address1-input').prop('disabled', true);
-            $('#address2-input').prop('disabled', true);
-
+            if(addressCode!='9999'){
+                $('#address1-input').prop('disabled', true);
+                $('#address2-input').prop('disabled', true);
+            }
             $('input[name=address_id]').val(result.address1_code + result.address2_code);
             $('input[name=address_id]').prop('disabled', true);
         }
