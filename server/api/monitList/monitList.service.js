@@ -83,21 +83,22 @@ class MonitListService {
         cryptoKey = cryptoKey.row.key_string;
 
         let userList = await mysqlDB('select', queryList.dateSearch, [trip_start, trip_end, addressCode]);
+        if (userList.rowLength != 0) {
+            for (let i = 0; i < userList.rowLength; i++) {
+                userList.rows[i].user_name = cryptoUtil.decrypt_aes(cryptoKey, userList.rows[i].user_name);
+                userList.rows[i].a_user_name = cryptoUtil.decrypt_aes(cryptoKey, userList.rows[i].a_user_name);
+            }
 
-        for (let i = 0; i < userList.rowLength; i++) {
-            userList.rows[i].user_name = cryptoUtil.decrypt_aes(cryptoKey, userList.rows[i].user_name);
-            userList.rows[i].a_user_name = cryptoUtil.decrypt_aes(cryptoKey, userList.rows[i].a_user_name);
+            userList.rows.forEach(function(item, index) {
+                if (item.emergency_check_time == null) {
+                    item.emergency_check_time = "--"
+                }
+                if (item.emergency_check_contents == null) {
+                    item.emergency_check_contents = "--"
+                }
+                result['user' + [index]] = item;
+            });
         }
-
-        userList.rows.forEach(function(item, index) {
-            if (item.emergency_check_time == null) {
-                item.emergency_check_time = "--"
-            }
-            if (item.emergency_check_contents == null) {
-                item.emergency_check_contents = "--"
-            }
-            result['user' + [index]] = item;
-        });
 
         return result
     }

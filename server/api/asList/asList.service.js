@@ -152,8 +152,7 @@ class statisticsService {
         cryptoKey = cryptoKey.row.key_string;
 
         let asList = await mysqlDB('select', queryList.select_end_service, [addressCode]); // 서비스 이용 중인 관리 대상자 조회
-
-        if (asList.rowLength > 0) {
+        if (asList.rowLength > 0 & asList.rows[0].as_num != NULL) {
             for (let i = 0; i < asList.rowLength; i++) {
                 // 관리 대상자 이름 복호화
                 asList.rows[i].name = cryptoUtil.decrypt_aes(cryptoKey, asList.rows[i].name);

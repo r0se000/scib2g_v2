@@ -21,7 +21,7 @@ class RtimeController {
         let { userCode, pUserCode } = req.params
         if (typeof pUserCode == 'undefined') { //관리자 앱일 경우 실시간 페이지 로드
             let userList = await svInstance.userListApp(userCode);
-            return res.render('web/rtime/rtime', {
+            return res.render('app/rtime/rtime', {
                 'userCode': userCode,
                 "accessToken": req.query.accessToken,
                 'userList': JSON.stringify(userList)
@@ -29,7 +29,7 @@ class RtimeController {
         } else { //보호자 앱일 경우 실시간 페이지 로드
             let userName = await svInstance.getUserName_P(userCode);
             let result = await svInstance.selectRtimeDataApp(userCode);
-            return res.render('web/rtime/rtime_p', {
+            return res.render('app/rtime/rtime_p', {
                 "rtimePage": req.__('rtimePage'),
                 "userCode": userCode,
                 "pUserCode": pUserCode,

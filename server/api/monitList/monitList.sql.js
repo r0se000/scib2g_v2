@@ -22,8 +22,7 @@ exports.userList = `
     ON em.user_code = ui.user_code
     LEFT JOIN user_admin AS ua
     ON ui.staff_code = ua.a_user_code 
-    WHERE em.user_code LIKE ? AND em.emergency_check_contents IS NOT NULL AND ui.user_status='Y'
-    ORDER BY em.emergency_time DESC
+    WHERE em.user_code LIKE ? AND em.emergency_check_contents IS NOT NULL AND ui.user_status='Y' ORDER BY em.emergency_time DESC
     ;
                     `;
 
@@ -35,7 +34,7 @@ SELECT em.emergency_id "emergency_id", em.user_code, em.a_user_code, em.emergenc
                     ON em.user_code = ui.user_code
                     LEFT JOIN user_admin AS ua
                     ON ui.staff_code = ua.a_user_code
-                    WHERE em.emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59')  AND em.user_code LIKE ? AND em.emergency_check_contents IS NOT NULL and emergency_check_contents != "이상없음" AND ui.user_status='Y';
+                    WHERE em.emergency_time BETWEEN ? AND CONCAT(?, ' 23:59:59')  AND em.user_code LIKE ? AND em.emergency_check_contents IS NOT NULL AND ui.user_status='Y'
                     ORDER BY em.emergency_time DESC;
                     `;
 

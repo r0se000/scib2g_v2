@@ -22,7 +22,7 @@ class boappHomeController {
         let selectCheckList = await svInstance.selectCheckList(userCode);
         let selectEmDetail = await svInstance.selectEmDetail(userCode);
 
-        return res.render('web/boapphome/boapphome', {
+        return res.render('app/boapphome/boapphome', {
             "pUserCode": pUserCode,
             "userCode": userCode,
             "emergencyList": JSON.stringify(selectEmergency),
