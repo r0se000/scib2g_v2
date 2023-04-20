@@ -43,19 +43,20 @@ function getAddressId() {
 function getInput() {
     let inputList = {};
     let inputCheck = 0;
-    let phoneCheck1 = 0, phoneCheck2 = 0;
+    let phoneCheck1 = 0,
+        phoneCheck2 = 0;
     let noticeId;
 
     $('.form-control').each(function(index, item) {
         noticeId = "#" + $(item).attr('name') + "-notice"
         itemId = $(item).attr('id');
 
-        switch ($(item).attr('id')){
+        switch ($(item).attr('id')) {
             case 'name-input':
-                if(validator($(item).val(), 'isEmpty') || $(item).val().length<2){
+                if (validator($(item).val(), 'isEmpty') || $(item).val().length < 2) {
                     $(noticeId).removeClass('deactive-notice')
                     $(noticeId).addClass('active-notice')
-                }else{
+                } else {
                     $(noticeId).removeClass('active-notice')
                     $(noticeId).addClass('deactive-notice')
                     inputCheck++
@@ -63,10 +64,10 @@ function getInput() {
                 }
                 break
             case 'gen-input':
-                if($(item).val()=="선택"){
+                if ($(item).val() == "선택") {
                     $(noticeId).removeClass('deactive-notice')
                     $(noticeId).addClass('active-notice')
-                }else{
+                } else {
                     $(noticeId).removeClass('active-notice')
                     $(noticeId).addClass('deactive-notice')
                     inputCheck++
@@ -74,27 +75,27 @@ function getInput() {
                 }
                 break
             case 'address1-input':
-                if($(item).val()=="시/도"){
+                if ($(item).val() == "시/도") {
                     $("#address1-notice").removeClass('deactive-notice')
                     $("#address1-notice").addClass('active-notice')
-                }else{
+                } else {
                     $("#address1-notice").removeClass('active-notice')
                     $("#address1-notice").addClass('deactive-notice')
                     inputCheck++
-                    inputList.address1 = $(item).val()
+                    inputList.address1 = $("#" + $(item).attr('id') + " option:selected").text()
                 }
                 break
             case 'address2-input':
-                if($(item).val()=="시/도"){
+                if ($(item).val() == "시/도") {
                     $("#address2-notice").removeClass('deactive-notice')
                     $("#address2-notice").addClass('active-notice')
-                }else{
+                } else {
                     $("#address2-notice").removeClass('active-notice')
                     $("#address2-notice").addClass('deactive-notice')
                     inputCheck++
-                    inputList.address2 = $(item).val()
+                    inputList.address2 = $("#" + $(item).attr('id') + " option:selected").text()
                 }
-                break     
+                break
             case 'address3-input':
                 if ($(item).val() == "") {
                     $("#address3-notice").removeClass('deactive-notice')
@@ -117,7 +118,7 @@ function getInput() {
                     inputCheck++
                     inputList.user2 = $(item).val()
                 }
-                break        
+                break
             case 'user-phone3-input':
                 if ($(item).val() == "" | $(item).val().length < 4) {
                     $("#user3-notice").removeClass('deactive-notice')
@@ -129,7 +130,7 @@ function getInput() {
                     inputCheck++
                     inputList.user3 = $(item).val()
                 }
-                break       
+                break
             case 'protect-phone2-input':
                 if ($(item).val() == "" | $(item).val().length < 4) {
                     $("#protector2-notice").removeClass('deactive-notice')
@@ -153,17 +154,17 @@ function getInput() {
                     inputCheck++
                     inputList.protector3 = $(item).val()
                 }
-                break              
+                break
         }
-        if(phoneCheck1>0){
+        if (phoneCheck1 > 0) {
             $("#user1-notice").removeClass('deactive-notice')
             $("#user1-notice").addClass('active-notice')
         }
-        if(phoneCheck2>0){
+        if (phoneCheck2 > 0) {
             $("#protector1-notice").removeClass('deactive-notice')
             $("#protector1-notice").addClass('active-notice')
         }
-        if(inputCheck==9){
+        if (inputCheck == 9) {
             userCodeSetting($("#id-input1").val())
             inputList.bYear = $("#birth-year-input").val()
             inputList.bMonth = $("#birth-month-input").val()
@@ -190,7 +191,7 @@ function userCodeSetting(addressCode) {
     let cmmContentType = 'application/json',
         cmmType = 'post',
         cmmUrl = '/api/register/userCodeSelect',
-        cmmReqDataObj = {"addressCode":addressCode},
+        cmmReqDataObj = { "addressCode": addressCode },
         cmmAsync = false,
         cmmSucc = function(result) {
             if (!result.success) { //userCode 조회되지 않은 경우
@@ -220,7 +221,7 @@ function userCodeSetting(addressCode) {
 $('#register').on('click', function() {
     let input = getInput();
 
-    if(!regOk){ // input 체크 false인 경우 중단
+    if (!regOk) { // input 체크 false인 경우 중단
         return;
     }
 
@@ -245,7 +246,7 @@ $('#register').on('click', function() {
             alert('관리 대상자 등록 실패하였습니다. 다시 시도해 주세요.');
         };
 
-        commAjax(cmmContentType, cmmType, cmmUrl, cmmReqDataObj, cmmAsync, cmmSucc, cmmErr);
+    commAjax(cmmContentType, cmmType, cmmUrl, cmmReqDataObj, cmmAsync, cmmSucc, cmmErr);
 })
 
 

@@ -160,7 +160,7 @@ function getInput() {
                     $("#address1-notice").removeClass('active-notice')
                     $("#address1-notice").addClass('deactive-notice')
                     inputCheck++
-                    inputList.address1 = $(item).val()
+                    inputList.address1 = $("#" + $(item).attr('id') + " option:selected").text()
                 }
                 break
             case 'address2-input':
@@ -171,7 +171,7 @@ function getInput() {
                     $("#address2-notice").removeClass('active-notice')
                     $("#address2-notice").addClass('deactive-notice')
                     inputCheck++
-                    inputList.address2 = $(item).val()
+                    inputList.address2 = $("#" + $(item).attr('id') + " option:selected").text()
                 }
                 break
             case 'address3-input':
