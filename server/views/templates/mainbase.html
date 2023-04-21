@@ -85,6 +85,9 @@
                         <li class="sd-list" id="side-menu-health"><a class="waves-effect waves-dark" href="javascript:void(0)"><i class="icons-Calendar-3"></i><span class="hide-menu">건강상태</span></a></li>
                         <li><a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icons-Cursor"></i><span class="hide-menu">정보 조회</span></a>
                             <ul aria-expanded="false" class="collapse">
+                                <li class="sd-list" id="side-menu-admin-list">
+                                    <a class="waves-effect waves-dark" href="javascript:void(0)"><span class="hide-menu">관리자 조회</span></a>
+                                </li>
                                 <li class="sd-list" id="side-menu-user-list">
                                     <a class="waves-effect waves-dark" href="javascript:void(0)"></i><span class="hide-menu">관리대상자 조회</span></a>
                                 </li>
@@ -316,8 +319,8 @@
     $('#admin-name').text(userName)
     init()
     selectUserList()
-
     selectNotInsert();
+    checkMaster();
 
     $('#manual-download').on('click', function() {
         location.href = baseUrl + '/monitList/download';

@@ -107,7 +107,7 @@ function selectUserList() {
 
 //응급상황 확인 후 응급테이블에 저장
 function emergencyCheck(userList) {
-    console.log(userList)
+
     let cmmContentType = 'application/json', // 콘텐츠 타입 
         cmmType = 'get', // 전송 방식
         cmmUrl = '/api/emergency/emergencyYN',
