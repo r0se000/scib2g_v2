@@ -9,7 +9,7 @@
     </author> -->
     <content src="html/index.html" />
     <access origin="*" />
-    <allow-intent href="http://192.168.3.164:7070/*" />
+    <allow-intent href="http://192.168.3.154:3000/*" />
     <allow-intent href="http://*"/>
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />

@@ -303,7 +303,7 @@ function searchSensorInterval() {
 
         $.ajax({
             // url: "http://211.62.105.193:9000/api/rtime/rtime/alive/" + sensorNodeid,
-            url: "http://192.168.3.164:7070/api/rtime/rtime/alive/" + sensorNodeid,
+            url: "http://192.168.3.154:3000/api/rtime/rtime/alive/" + sensorNodeid,
             type: "get",
             dataType: "json",
             success: function(data) {
@@ -582,7 +582,7 @@ function getSetupPage(event) {
                                     url: "http://192.168.253.1/sys/comm",
                                     type: "post",
                                     // 데이터 받아들이는 시간이 필요해서 공백 입력.
-                                    data: '                                                                                                                                                    {"mode" : 1 , "https_enable" : 0 , "url" : "192.168.3.164:7070" , "username" : "user" , "network_id" : "user" , "new_password" : "12345678" , "report_interval" : 5}"',
+                                    data: '                                                                                                                                                    {"mode" : 1 , "https_enable" : 0 , "url" : "192.168.3.154:3000" , "username" : "user" , "network_id" : "user" , "new_password" : "12345678" , "report_interval" : 5}"',
                                     timeout: 1000,
 
                                     beforeSend: function(xhr) {

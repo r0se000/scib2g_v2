@@ -5,3 +5,15 @@ application_gong/.DS_Store
 application_gong/node_modules/
 
 server_backup/
+application_gong/www/javascripts/appMain.js
+application_gong/config.xml
+application_gong/platforms/android/app/src/main/assets/www/javascripts/appMain.js
+application_gong/platforms/android/app/src/main/assets/www/javascripts/common/config.js
+application_gong/platforms/android/app/src/main/res/xml/config.xml
+application_gong/www/javascripts/common/config.js
+server/config/env/.env.local
+server/logs/debug/.23f19af04286446003f09f75419d27132dc0bad5-audit.json
+server/logs/error/.24f72a11c13c128d8b62090fe1be6083a80b77eb-audit.json
+server/logs/info/.4109e2826a35f1adf571b71453df89b6ca42472d-audit.json
+server/logs/warn/.1bcfd028463418a4e8d1d0d4096fe49d897d964f-audit.json
+server/public/javascripts/config.js
