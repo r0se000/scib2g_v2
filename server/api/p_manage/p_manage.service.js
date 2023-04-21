@@ -72,10 +72,10 @@ class p_manageService {
         } else {
             result.messageCode = "success";
             try {
-                if (result.row.sex == 'W') {
-                    result.row.sex = '여성'
-                } else if (result.row.sex == 'M') {
-                    result.row.sex = '남성'
+                if (result.row.gender == 'W') {
+                    result.row.gender = '여성'
+                } else if (result.row.gender == 'M') {
+                    result.row.gender = '남성'
                 }
                 result.row.name = cryptoUtil.decrypt_aes(cryptoKey, result.row.name);
                 result.row.birth_year = cryptoUtil.decrypt_aes(cryptoKey, result.row.birth_year);
@@ -178,7 +178,9 @@ class p_manageService {
 
             for (var i = 0; i < result.rowLength; i++) {
                 try {
-                    // result.rows[i].emergency_time = result.rows[i].emergency_time.substr(2,14);
+                    if (result.rows[i].emergency_check_contents === null) {
+                        result.rows[i].emergency_check_contents = "-";
+                    }
                     result.rows[i].name = cryptoUtil.decrypt_aes(cryptoKey, result.rows[i].name);
                     result.rows[i].address_1 = cryptoUtil.decrypt_aes(cryptoKey, result.rows[i].address_1);
                     result.rows[i].address_2 = cryptoUtil.decrypt_aes(cryptoKey, result.rows[i].address_2);
@@ -217,10 +219,13 @@ class p_manageService {
 
             for (var i = 0; i < result.rowLength; i++) {
                 try {
-                    if (result.rows[i].sex == 'W') {
-                        result.rows[i].sex = '여성'
-                    } else if (result.rows[i].sex == 'M') {
-                        result.rows[i].sex = '남성'
+                    if (result.rows[i].gender == 'W') {
+                        result.rows[i].gender = '여성'
+                    } else if (result.rows[i].gender == 'M') {
+                        result.rows[i].gender = '남성'
+                    }
+                    if (result.rows[i].emergency_check_contents === null) {
+                        result.rows[i].emergency_check_contents = "-";
                     }
                     result.rows[i].name = cryptoUtil.decrypt_aes(cryptoKey, result.rows[i].name);
                     // result.rows[i].emergency_time = result.rows[i].emergency_time.substr(2,14);
@@ -292,7 +297,52 @@ class p_manageService {
         return result;
     }
 
+    // AS 등록버튼 클릭 후 이름으로 관리 대상자 조회
+    async selectName_As(name, staff_code) {
+        let select_addressCode = await mysqlDB('selectOne', queryList.select_addressCode, [staff_code])
+        let addressCode = select_addressCode.row.a_user_address1 + select_addressCode.row.a_user_address2;
+        if (addressCode == "9999") {
+            addressCode = "%";
+        } else {
+            addressCode += "%";
+        }
+        // 개인 정보 복호화
+        let cryptoKey = await mysqlDB('selectOne', queryList.select_key_string, []);
+        cryptoKey = cryptoKey.row.key_string;
+        name = cryptoUtil.encrypt_aes(cryptoKey, name); // 사용자명
 
+        let result = await mysqlDB('select', queryList.selectName_As, [name, addressCode]);
+
+        if (result.rowLength == 0) {
+            result.messageCode = "error";
+        } else {
+            result.messageCode = "success";
+
+            for (var i = 0; i < result.rowLength; i++) {
+                try {
+                    if (result.rows[i].gender == 'W') {
+                        result.rows[i].gender = '여성'
+                    } else if (result.rows[i].gender == 'M') {
+                        result.rows[i].gender = '남성'
+                    }
+                    result.rows[i].name = cryptoUtil.decrypt_aes(cryptoKey, result.rows[i].name);
+                    // result.rows[i].emergency_time = result.rows[i].emergency_time.substr(2,14);
+                    result.rows[i].address_1 = cryptoUtil.decrypt_aes(cryptoKey, result.rows[i].address_1);
+                    result.rows[i].address_2 = cryptoUtil.decrypt_aes(cryptoKey, result.rows[i].address_2);
+                    result.rows[i].address_3 = cryptoUtil.decrypt_aes(cryptoKey, result.rows[i].address_3);
+                    result.rows[i].birth_year = cryptoUtil.decrypt_aes(cryptoKey, result.rows[i].birth_year);
+                    result.rows[i].birth_month = cryptoUtil.decrypt_aes(cryptoKey, result.rows[i].birth_month);
+                    result.rows[i].birth_date = cryptoUtil.decrypt_aes(cryptoKey, result.rows[i].birth_date);
+                } catch (error) {
+                    result.rows[i].name = null;
+                    result.rows[i].address_1 = null;
+                    result.rows[i].address_2 = null;
+                    result.rows[i].address_3 = null;
+                }
+            }
+        }
+        return result;
+    }
 
     // as등록 버튼 클릭 후 이름 조회 사용자 클릭
     async selectInfo_As_regi(user_code) {
@@ -324,8 +374,12 @@ class p_manageService {
 
     // as내용 수정하기
     async asModify(text, as_num) {
-        let result = await mysqlDB('update', queryList.asModify, [text, as_num]);
-
+        let result = "결과";
+        if (text.trim() === "") {
+            result = "내용없음";
+        } else {
+            result = await mysqlDB('update', queryList.asModify, [text, as_num]);
+        }
         return result;
 
     }

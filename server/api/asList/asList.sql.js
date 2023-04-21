@@ -21,7 +21,7 @@ exports.select_asList =
     FROM user_info AS ui
     LEFT JOIN as_list AS al
     ON al.user_code = ui.user_code
-    WHERE ui.user_code like ? AND ui.user_status='Y' AND as_num is not null
+    WHERE ui.user_code LIKE ? AND ui.user_status='Y' AND as_num is not null
 	ORDER BY al.as_num DESC;
 `;
 
@@ -39,7 +39,7 @@ exports.select_as_info =
 // 관리 대상자 조회
 exports.select_user =
     `
-    SELECT user_code, name FROM user_info WHERE staff_code=?;
+    SELECT user_code, name FROM user_info WHERE user_code LIKE ?;
 `;
 
 // 관리 대상자 이름 검색
@@ -49,7 +49,7 @@ exports.searchName =
     FROM user_info AS ui
     LEFT JOIN as_list AS al
     ON al.user_code = ui.user_code
-    WHERE ui.staff_code=? AND ui.user_status=? AND ui.name LIKE ?
+    WHERE ui.user_code LIKE ? AND ui.user_status=? AND ui.name LIKE ?
     ORDER BY al.as_num DESC;
 `;
 
@@ -61,7 +61,7 @@ exports.select_end_service =
     FROM user_info AS ui
     LEFT JOIN as_list AS al
     ON al.user_code = ui.user_code
-    WHERE ui.staff_code=? AND ui.user_status='N'
+    WHERE ui.user_code LIKE ? AND ui.user_status='N'
     ORDER BY al.as_num DESC;
 `;
 
@@ -74,9 +74,9 @@ exports.insert_as =
 // A/S 관리 대상자 검색
 exports.searchUser =
     `
-    SELECT name, user_code, birth_year, birth_month, birth_date, sex
+    SELECT name, user_code, birth_year, birth_month, birth_date, gender
     FROM user_info
-    WHERE staff_code=? AND name LIKE ? AND user_status='Y';
+    WHERE user_code LIKE ? AND name LIKE ? AND user_status='Y';
 
 `;
 

@@ -26,7 +26,15 @@ function getToday(getDate) {
     let nowtime = getDate.getFullYear() + "-" + nowMonth + "-" + nowDay;
     return nowtime
 }
-let addressCode
+let addressCode;
+
+// 어제 날짜 구하기 2023.04.11
+let now = new Date();
+let yesterday = new Date(now.setDate(now.getDate() - 1));
+let yesterdayMonth = (yesterday.getMonth() + 1) >= 10 ? (yesterday.getMonth() + 1) : '0' + (yesterday.getMonth() + 1);
+let yesterdayDay = (yesterday.getDate()) >= 10 ? (yesterday.getDate()) : '0' + (yesterday.getDate());
+
+yesterday = yesterday.getFullYear() + '-' + yesterdayMonth + '-' + yesterdayDay;
 
 class healthService {
 
@@ -49,14 +57,11 @@ class healthService {
         return result;
     }
 
-    async userList(userCode) {
+    async userList() {
         let cryptoKey = await mysqlDB('selectOne', queryList.select_key_string, []);
         cryptoKey = cryptoKey.row.key_string;
-
-        let userList = await mysqlDB('select', queryList.userList, [getToday(new Date()), userCode]);
-
+        let userList = await mysqlDB('select', queryList.userList, [yesterday, addressCode]);
         for (let i = 0; i < userList.rowLength; i++) {
-
             if (userList.rows[i].hr == null) {
                 userList.rows[i].hr = '-'; // 배치 결과 없는 경우 -로 초기화
             } else {
@@ -81,12 +86,19 @@ class healthService {
         return result
     }
 
-    // 날짜 조회
+
+    /** ================================================================
+     *  날짜 조회
+     *  @author SY
+     *  @since 2023.03.28
+     *  @history 2023.03.28 초안 작성
+     *  ================================================================
+     */
     async dateSearch(userCode, trip_start) {
         let cryptoKey = await mysqlDB('selectOne', queryList.select_key_string, []);
         cryptoKey = cryptoKey.row.key_string;
 
-        let userList = await mysqlDB('select', queryList.userList, [trip_start, userCode]);
+        let userList = await mysqlDB('select', queryList.userList, [trip_start, addressCode]);
 
         if (userList.rowLength != 0 && userList.state) {
             for (let i = 0; i < userList.rowLength; i++) {

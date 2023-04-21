@@ -12,6 +12,7 @@ const mysqlDB = require('../../config/db/database_mysql');
 const queryList = require('./bcgdata.sql');
 
 const logger = require('../../config/loggerSettings');
+const cryptoUtil = require('../../public/javascripts/cryptoUtil');
 
 // 날짜 구하기 라이브러리
 const moment = require('moment');
@@ -33,6 +34,8 @@ class BcgService {
 
     async insertBcgData(BcgData) {
 
+        let cryptoKey = await mysqlDB('selectOne', queryList.select_key_string, []);
+        cryptoKey = cryptoKey.row.key_string;
 
 
         // 센서 노드 아이디
@@ -79,6 +82,11 @@ class BcgService {
                 client.lpush(usercode + "state", BcgDataArrayTemp[6]);
 
                 BcgDataArrayTemp.push(moment().subtract(BcgDataRaw.length - idx, 's').format("YYYY-MM-DD HH:mm:ss"));
+                // 생체정보 암호화 시 사용
+                BcgDataArrayTemp[1] = cryptoUtil.encrypt_aes(cryptoKey, BcgDataArrayTemp[1])
+                BcgDataArrayTemp[2] = cryptoUtil.encrypt_aes(cryptoKey, BcgDataArrayTemp[2])
+                BcgDataArrayTemp[3] = cryptoUtil.encrypt_aes(cryptoKey, BcgDataArrayTemp[3])
+                BcgDataArrayTemp[4] = cryptoUtil.encrypt_aes(cryptoKey, BcgDataArrayTemp[4])
                 BcgDataArray.push(BcgDataArrayTemp);
                 queryArray = queryArray.concat(BcgDataArrayTemp);
             }

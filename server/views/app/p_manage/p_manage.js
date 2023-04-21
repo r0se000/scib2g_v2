@@ -23,6 +23,10 @@ let $close_regi = $('#close_regi');
 let $cancelButton_regi = $('#cancelButton_regi');
 let $registButton_regi = $('#registButton_regi');
 
+// as 삭제 버튼
+let $yes = $('#yes');
+let $no = $('#no');
+
 const myTextarea = document.querySelector('#asContents');
 const asContents_regi = document.querySelector('#asContents_regi');
 
@@ -67,6 +71,7 @@ $(function() {
 
 
             if (result.userList.rowLength == 0) {
+
             } else {
                 for (let i = 0; i < result.userList.rowLength; i++) {
                     console.log(result.countEmergency[result.userList.rows[i].user_code].cnt)
@@ -103,7 +108,7 @@ function showInfo(user_code) {
         cmmSucc = function showInfo(result) {
             $('#manageUser-detail').appendTo("body").modal('show');
             $("#userName").text(result.row.name);
-            $("#sex").text(result.row.sex);
+            $("#sex").text(result.row.gender);
             $("#userBirth").text(result.row.birth_year + '년 ' + result.row.birth_month + '월 ' + result.row.birth_date + '일');
             $("#userAddress").text(result.row.address_1 + " " + result.row.address_2 + " " + result.row.address_3);
             $("#userPhone").text(result.row.phone_first + "-" + result.row.phone_middle + "-" + result.row.phone_last);
@@ -301,10 +306,10 @@ $searchDateFrm.submit(function() {
 
                     const temp = document.createElement("div")
                     temp.innerHTML = `
-                <li class ="MList_date" onclick = "showInfo_M('${result.rows[i].user_code}')">${result.rows[i].name}</li>
-                <li class ="MList_date" onclick = "showInfo_M('${result.rows[i].user_code}')">${result.rows[i].user_code}</li>
-                <li class ="MList_date" onclick = "showInfo_M('${result.rows[i].user_code}')">${result.rows[i].emergency_time}</li>
-                <li class ="MList_date" onclick = "showInfo_M('${result.rows[i].user_code}')">${result.rows[i].emergency_check_contents}</li>
+                <li class ="MList_date" onclick = "showInfo_M('${result.rows[i].emergency_id}')">${result.rows[i].name}</li>
+                <li class ="MList_date" onclick = "showInfo_M('${result.rows[i].emergency_id}')">${result.rows[i].user_code}</li>
+                <li class ="MList_date" onclick = "showInfo_M('${result.rows[i].emergency_id}')">${result.rows[i].emergency_time}</li>
+                <li class ="MList_date" onclick = "showInfo_M('${result.rows[i].emergency_id}')">${result.rows[i].emergency_check_contents}</li>
                 `;
                     document.querySelector("#monitoring_inquiry").append(temp);
                 }
@@ -348,11 +353,11 @@ $searchNameFrm.submit(function() {
 
                     const temp = document.createElement("div")
                     temp.innerHTML = `
-                <li class ="MList_name" onclick = "showInfo_M('${result.rows[i].user_code}')">${result.rows[i].name}</li>
-                <li class ="MList_name" onclick = "showInfo_M('${result.rows[i].user_code}')">${result.rows[i].user_code}</li>
-                <li class ="MList_name" onclick = "showInfo_M('${result.rows[i].user_code}')">${result.rows[i].emergency_time}</li>
-                <li class ="MList_name" onclick = "showInfo_M('${result.rows[i].user_code}')">${result.rows[i].emergency_check_contents}</li>
-                `;
+                <li class ="MList_name" onclick = "showInfo_M('${result.rows[i].emergency_id}')">${result.rows[i].name}</li>
+                <li class ="MList_name" onclick = "showInfo_M('${result.rows[i].emergency_id}')">${result.rows[i].user_code}</li>
+                <li class ="MList_name" onclick = "showInfo_M('${result.rows[i].emergency_id}')">${result.rows[i].emergency_time}</li>
+                <li class ="MList_name" onclick = "showInfo_M('${result.rows[i].emergency_id}')">${result.rows[i].emergency_check_contents}</li>
+                 `;
                     document.querySelector("#monitoring_inquiry").append(temp);
                 }
 
@@ -375,7 +380,7 @@ function showInfo_M(emergency_id) {
     let cmmContentType = 'application/json',
         cmmType = 'post',
         cmmUrl = '/api/p_manage/monitoring_detail',
-        cmmReqDataObj = { 
+        cmmReqDataObj = {
             emergency_id: emergency_id
         },
         cmmAsync = false,
@@ -404,6 +409,7 @@ function showList_AS() {
             $('#as_inquiry>div>li').remove(".asList");
 
             if (result.userList.rowLength == 0) {
+
             } else {
                 for (let i = 0; i < result.userList.rowLength; i++) {
                     const temp = document.createElement("div")
@@ -434,7 +440,6 @@ function showInfo_AS(as_num) {
         cmmAsync = false,
 
         cmmSucc = function showInfo_AS(result) {
-            alert(result);
             $("#userNameAs").text(result.row.name);
             $("#userBirthAs").text(result.row.birth_year + '년 ' + result.row.birth_month + '월 ' + result.row.birth_date + '일');
             $("#asDate").text(result.row.as_created_date);
@@ -466,8 +471,10 @@ function modify_as(as_num) {
                 alert("수정되었습니다.")
                 showList_AS();
                 $('#manageAS-detail').appendTo("body").modal('hide');
+            } else if (result == "내용없음") {
+                alert("A/S 내용을 입력해주세요.")
             } else {
-                alert("실패!")
+                alert("A/S 내용을 변경 후 수정해주세요.")
             }
 
         },
@@ -489,11 +496,13 @@ function delete_as(as_num) {
         cmmSucc = function delete_as(result) {
 
             if (result.succ == 1) {
-                alert("삭제하였습니다..")
+                alert("삭제하였습니다.")
                 showList_AS();
+                $('#manageAS-delete').appendTo("body").modal('hide');
                 $('#manageAS-detail').appendTo("body").modal('hide');
             } else {
                 alert("삭제 실패!")
+                $('#manageAS-delete').appendTo("body").modal('hide');
             }
 
         },
@@ -502,10 +511,17 @@ function delete_as(as_num) {
 };
 
 
+// as 삭제 알람창 띄우기
 $deleteButton.click(function() {
-
+    $('#manageAS-delete').appendTo("body").modal('show');
+});
+// 삭제 알람창 삭제 버튼
+$yes.click(function() {
     delete_as($deleteButton.value);
-
+});
+// 삭제 알람창 취소 버튼
+$no.click(function() {
+    $('#manageAS-delete').appendTo("body").modal('hide');
 });
 
 $cancelButton.click(function() {
@@ -560,14 +576,13 @@ $searchNameFrm_regi.submit(function() {
     let name = $searchName_regi.val();
     let cmmContentType = 'application/json',
         cmmType = 'post',
-        cmmUrl = '/api/p_manage/emergencyList/searchName',
+        cmmUrl = '/api/p_manage/AsList/searchName',
         cmmReqDataObj = {
             name: name,
             userCode: userCode
         },
         cmmAsync = false,
         cmmSucc = function(result) {
-            alert("search name: " + result)
             if (result.messageCode == "success") {
                 $('#manageAS-name').appendTo("body").modal('show');
                 $('#manageAS-register').appendTo("body").modal('hide');
@@ -578,7 +593,7 @@ $searchNameFrm_regi.submit(function() {
                 <li class ="MList_regi" onclick = "showInfo_R('${result.rows[i].user_code}')">${result.rows[i].name}</li>
                 <li class ="MList_regi" onclick = "showInfo_R('${result.rows[i].user_code}')">${result.rows[i].user_code}</li>
                 <li class ="MList_regi" onclick = "showInfo_R('${result.rows[i].user_code}')">${result.rows[i].birth_year+'년 ' + result.rows[i].birth_month+'월 ' + result.rows[i].birth_date+'일'}</li>
-                <li class ="MList_regi" onclick = "showInfo_R('${result.rows[i].user_code}')">${result.rows[i].sex}</li>
+                <li class ="MList_regi" onclick = "showInfo_R('${result.rows[i].user_code}')">${result.rows[i].gender}</li>
 
                 `;
                     document.querySelector("#as_name_select").append(temp);

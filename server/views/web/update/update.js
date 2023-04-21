@@ -21,7 +21,7 @@ function init() {
     $("#birth-date-input").val(userInfo.birth_date).prop('selected', true);
 
     // 성별 세팅
-    $("#gen-input").val(userInfo.sex).prop('selected', true);
+    $("#gen-input").val(userInfo.gender).prop('selected', true);
 
     // 주소 세팅
     $("#address1-input").val(userInfo.address_1);
@@ -62,12 +62,18 @@ $("#back-btn").on('click', function() {
  */
 $("#user-edit-btn").on('click', function() {
 
-    // 수정 확인창 로드
-    if (!confirm('수정하시겠습니까?')) {
-        return;
-    }
     // 입력한 데이터 검사 및 가져오기
     let inputList = getInput();
+
+    if (!regOk) {
+        return;
+    }
+
+    if (!confirm('관리 대상자 정보를 수정하시겠습니까?')) {
+        console.log("dddd");
+        return;
+    }
+
     // ajax
     let cmmContentType = 'application/json',
         cmmType = 'post',
@@ -78,7 +84,7 @@ $("#user-edit-btn").on('click', function() {
         },
         cmmAsync = false,
         cmmSucc = function(result) {
-            if (result.succ == 1) {
+            if (result.state) {
                 alert('수정 완료되었습니다.');
                 changeView(baseUrl + "/userList/" + userCode); // commonUtil.js 참고_관리 대상자 조회 페이지로 이동
             }
@@ -110,65 +116,142 @@ function maxLengthCheck(object) {
  *  @history 2023.03.28 초기 작성
  *  ================================================================
  */
+let regOk = false;
+
 function getInput() {
-
     let inputList = {};
+    let inputCheck = 0;
+    let phoneCheck1 = 0,
+        phoneCheck2 = 0;
+    let noticeId;
 
-    if ($("#name-input").val() == '') {
-        $("#name-notice").removeClass('deactive-notice');
-        $("#name-notice").addClass('active-notice');
-        $("#name-input").focus();
-        return;
-    }
-    if ($("#address3-input").val() == '') {
-        $("#address3-notice").removeClass('deactive-notice');
-        $("#address3-notice").addClass('active-notice');
-        $("#address3-input").focus();
-        return;
-    }
-    if ($("#user-phone2-input").val() == '') {
-        $("#phone1-notice").removeClass('deactive-notice');
-        $("#phone1-notice").addClass('active-notice');
-        $("#user-phone2-input").focus();
-        return;
-    }
-    if ($("#user-phone3-input").val() == '') {
-        $("#phone1-notice").removeClass('deactive-notice');
-        $("#phone1-notice").addClass('active-notice');
-        $("#user-phone3-input").focus();
-        return;
-    }
-    if ($("#protect-phone1-input").val() == '') {
-        $("#phone2-notice").removeClass('deactive-notice');
-        $("#phone2-notice").addClass('active-notice');
-        $("#protect-phone1-input").focus();
-        return;
-    }
-    if ($("#protect-phone2-input").val() == '') {
-        $("#phone2-notice").removeClass('deactive-notice');
-        $("#phone2-notice").addClass('active-notice');
-        $("#protect-phone2-input").focus();
-        return;
-    }
-    if ($("#protect-phone3-input").val() == '') {
-        $("#phone2-notice").removeClass('deactive-notice');
-        $("#phone2-notice").addClass('active-notice');
-        $("#protect-phone3-input").focus();
-        return;
-    }
+    $('.form-control').each(function(index, item) {
+        noticeId = "#" + $(item).attr('name') + "-notice"
+        itemId = $(item).attr('id');
 
-    inputList.name = $("#name-input").val();
-    inputList.birth_year = $("#birth-year-input").val();
-    inputList.birth_month = $("#birth-month-input").val();
-    inputList.birth_date = $("#birth-date-input").val();
-    inputList.sex = $("#gen-input").val();
-    inputList.address_3 = $("#address3-input").val();
-    inputList.phone_first = $("#user-phone1-input").val();
-    inputList.phone_middle = $("#user-phone2-input").val();
-    inputList.phone_last = $("#user-phone3-input").val();
-    inputList.protector_phone_first = $("#protect-phone1-input").val();
-    inputList.protector_phone_middle = $("#protect-phone2-input").val();
-    inputList.protector_phone_last = $("#protect-phone3-input").val();
-
+        switch ($(item).attr('id')) {
+            case 'name-input':
+                if (validator($(item).val(), 'isEmpty') || $(item).val().length < 2) {
+                    $(noticeId).removeClass('deactive-notice')
+                    $(noticeId).addClass('active-notice')
+                } else {
+                    $(noticeId).removeClass('active-notice')
+                    $(noticeId).addClass('deactive-notice')
+                    inputCheck++
+                    inputList.name = $(item).val()
+                }
+                break
+            case 'gen-input':
+                if ($(item).val() == "선택") {
+                    $(noticeId).removeClass('deactive-notice')
+                    $(noticeId).addClass('active-notice')
+                } else {
+                    $(noticeId).removeClass('active-notice')
+                    $(noticeId).addClass('deactive-notice')
+                    inputCheck++
+                    inputList.gender = $(item).val()
+                }
+                break
+            case 'address1-input':
+                if ($(item).val() == "시/도") {
+                    $("#address1-notice").removeClass('deactive-notice')
+                    $("#address1-notice").addClass('active-notice')
+                } else {
+                    $("#address1-notice").removeClass('active-notice')
+                    $("#address1-notice").addClass('deactive-notice')
+                    inputCheck++
+                    inputList.address1 = $("#" + $(item).attr('id') + " option:selected").text()
+                }
+                break
+            case 'address2-input':
+                if ($(item).val() == "시/도") {
+                    $("#address2-notice").removeClass('deactive-notice')
+                    $("#address2-notice").addClass('active-notice')
+                } else {
+                    $("#address2-notice").removeClass('active-notice')
+                    $("#address2-notice").addClass('deactive-notice')
+                    inputCheck++
+                    inputList.address2 = $("#" + $(item).attr('id') + " option:selected").text()
+                }
+                break
+            case 'address3-input':
+                if ($(item).val() == "") {
+                    $("#address3-notice").removeClass('deactive-notice')
+                    $("#address3-notice").addClass('active-notice')
+                } else {
+                    $("#address3-notice").removeClass('active-notice')
+                    $("#address3-notice").addClass('deactive-notice')
+                    inputCheck++
+                    inputList.address_3 = $(item).val()
+                }
+                break
+            case 'user-phone2-input':
+                if ($(item).val() == "" | $(item).val().length < 4) {
+                    $("#user2-notice").removeClass('deactive-notice')
+                    $("#user2-notice").addClass('active-notice')
+                    phoneCheck1++;
+                } else {
+                    $("#user2-notice").removeClass('active-notice')
+                    $("#user2-notice").addClass('deactive-notice')
+                    inputCheck++
+                    inputList.phone_middle = $(item).val()
+                }
+                break
+            case 'user-phone3-input':
+                if ($(item).val() == "" | $(item).val().length < 4) {
+                    $("#user3-notice").removeClass('deactive-notice')
+                    $("#user3-notice").addClass('active-notice')
+                    phoneCheck1++;
+                } else {
+                    $("#user3-notice").removeClass('active-notice')
+                    $("#user3-notice").addClass('deactive-notice')
+                    inputCheck++
+                    inputList.phone_last = $(item).val()
+                }
+                break
+            case 'protect-phone2-input':
+                if ($(item).val() == "" | $(item).val().length < 4) {
+                    $("#protector2-notice").removeClass('deactive-notice')
+                    $("#protector2-notice").addClass('active-notice')
+                    phoneCheck2++;
+                } else {
+                    $("#protector2-notice").removeClass('active-notice')
+                    $("#protector2-notice").addClass('deactive-notice')
+                    inputCheck++
+                    inputList.protector_phone_middle = $(item).val()
+                }
+                break
+            case 'protect-phone3-input':
+                if ($(item).val() == "" | $(item).val().length < 4) {
+                    $("#protector3-notice").removeClass('deactive-notice')
+                    $("#protector3-notice").addClass('active-notice')
+                    phoneCheck2++;
+                } else {
+                    $("#protector3-notice").removeClass('active-notice')
+                    $("#protector3-notice").addClass('deactive-notice')
+                    inputCheck++
+                    inputList.protector_phone_last = $(item).val()
+                }
+                break
+        }
+        if (phoneCheck1 > 0) {
+            $("#user1-notice").removeClass('deactive-notice')
+            $("#user1-notice").addClass('active-notice')
+        }
+        if (phoneCheck2 > 0) {
+            $("#protector1-notice").removeClass('deactive-notice')
+            $("#protector1-notice").addClass('active-notice')
+        }
+        if (inputCheck == 9) {
+            inputList.name = $("#name-input").val();
+            inputList.birth_year = $("#birth-year-input").val();
+            inputList.birth_month = $("#birth-month-input").val();
+            inputList.birth_date = $("#birth-date-input").val();
+            inputList.gender = $("#gen-input").val();
+            inputList.phone_first = $("#user-phone1-input").val();
+            inputList.protector_phone_first = $("#protect-phone1-input").val();
+            regOk = true;
+        }
+    });
     return inputList;
 }

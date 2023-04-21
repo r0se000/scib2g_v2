@@ -1,271 +1,111 @@
-/** =======================================================
- * 비밀번호 찾기 화면 관련 스크립트
- * 관련 파일: find-account.html, find-pw.html
- * @author JG, Jo
- * @since 2021.05.26
- * @history 
- * ========================================================
- */
+let $formInput = $('.form-control'),
+    $formNotice = $('.form-notice') // 모든 form notice
 
-/*===============================================*/
-/* client urls and variables                     */
-/*===============================================*/
-const introPage = '../index.html';
-const loginPage = 'login.html';
-const findPwPage = 'find-pw.html';
-
+const inputFailClass = 'form-control-danger';
+const inputSuccClass = 'form-control-success';
 const successClass = 'has-success';
 const failClass = 'has-danger';
 const dangerTxtClass = 'text-danger';
-const inputSuccClass = 'form-control-success';
-const inputFailClass = 'form-control-danger';
 
 const pwBytesMin = 9;
-const pwBytesMax = 16;
-/*===============================================*/
-/* node-server views urls                        */
-/*===============================================*/
-const accountApiUrl = baseUrl + 'users/find/account/code';
+const pwBytesMax = 16
+const loginPage = 'login.html';
 
-/*===============================================*/
-/* jquery selector caching area                  */
-/*===============================================*/
-let $submitBtn = $('#submit-btn'),
-    $formInput = $('.form-control') // 모든 form 입력란
-    ,
-    $loginBtn = $('#modal-login-btn') // 로그인 화면 이동  버튼 
-    ,
-    $pageTitle = $('#page-title') // 화면명
-    ,
-    $formNotice = $('.form-notice') // 모든 form notice
-    ,
-    $pwdLabel = $('#label-new-pwd') // 비밀번호 라벨
-    ,
-    $pwdConfirmLabel = $('#label-confirm-pwd') // 비밀번호 확인 라벨
-    ,
-    $pwdNotice = $('#new-pwd-notice') // pwd 입력 조건 알림
-    ,
-    $pwdConfirmNotice = $('#confirm-pwd-notice') // pwd confirm 입력 조건 알림
-    ,
-    $modal = $('#modify-modal') // modal
+let $modal = $('#modify-modal') // modal
     ,
     $modalTitle = $('#modify-title') // modal popup title
     ,
     $newPwdNotice = $('#new-pwd-notice') // modal popup 새 비밀번호 입력 조건 알림
     ,
-    $confimPwdNotice = $('#confirm-pwd-notice') // modal popup 새 비밀번호 입력 조건 알림
-    ,
     $modalSubmitBtn = $('#modal-submit-btn') // modal submit button  
     ,
     $formInputs = $('.form-control', $modal) // 전체 modal form 입력란  
     ,
+    $pwdNotice = $('#new-pwd-notice') // pwd 입력 조건 알림
+    ,
+    $pwdConfirmNotice = $('#confirm-pwd-notice') // pwd confirm 입력 조건 알림
+    ,
     $backbtn = $('#findPw-back') //뒤로가기 버튼;
+;
 
 
-/*===============================================*/
-// page initializing
-/*===============================================*/
-init();
+let authCheck; // 이메일 인증 여부
 
-/*===============================================*/
-/* event handler area                            */
-/*===============================================*/
-// submitBtn button event
-$submitBtn.on('click', function() {
-    let tempObj = {};
-    $formInput.each(function() {
-        let $this = $(this),
-            elemId = $this.attr('id'),
-            elemName = $this.attr('name'),
-            elemVal = $this.val(),
-            $notice = null;
+/** ================================================================
+ *  계정정보 확인 버튼 클릭
+ *  @author SY
+ *  @since 2023.04.03
+ *  @history 2023.04.03 초기 작성
+ *  ================================================================
+ */
+$('#findPw-btn').on('click', function() {
 
-        switch (elemId) {
-            case 'id-input':
-                $notice = $formNotice.filter('#id-notice');
+    // ID 유효성 검사
+    if (validator($('#id-input').val(), 'isEmpty')) {
+        $('#id-notice').text('ID를 입력해 주세요.');
+        $('#id-notice').addClass('active-notice');
+        $('#id-notice').removeClass('deactive-notice');
+        $('#id-notice').addClass(inputFailClass);
+        $('#id-notice').removeClass(inputSuccClass);
+    } else {
+        $('#id-notice').addClass('deactive-notice');
+        $('#id-notice').removeClass('active-notice');
+        $('#id-notice').addClass(inputSuccClass);
+        $('#id-notice').removeClass(inputFailClass);
+    }
 
-                if (validator(elemVal, 'isEmpty')) {
-                    $notice.text(i18next.t('noticeId'));
-                    $notice.addClass('active-notice');
-                    $notice.removeClass('deactive-notice');
 
-                    $this.addClass(inputFailClass);
-                    $this.removeClass(inputSuccClass);
-                    $this.focus();
+    // 사용자 이름 유효성 검사
+    if (validator($('#name-input').val(), 'isEmpty')) {
+        $('#name-notice').text('사용자 이름을 입력해 주세요.');
+        $('#name-notice').addClass('active-notice');
+        $('#name-notice').removeClass('deactive-notice');
+        $('#name-notice').addClass(inputFailClass);
+        $('#name-notice').removeClass(inputSuccClass);
+    } else {
+        $('#name-notice').addClass('deactive-notice');
+        $('#name-notice').removeClass('active-notice');
+        $('#name-notice').addClass(inputSuccClass);
+        $('#name-notice').removeClass(inputFailClass);
+    }
 
-                } else {
-                    $notice.text('');
-                    $notice.addClass('deactive-notice');
-                    $notice.removeClass('active-notice');
+    // 이메일 유효성 검사
+    if (validator($('#email-input').val(), 'isEmpty') | validator($('#email-input2').val(), 'isEmpty')) {
+        $('#email-notice').addClass('active-notice');
+        $('#email-notice').removeClass('deactive-notice');
+        $('#email-notice').addClass(inputFailClass);
+        $('#email-notice').removeClass(inputSuccClass);
+    } else {
+        $('#email-notice').addClass('deactive-notice');
+        $('#email-notice').removeClass('active-notice');
+        $('#email-notice').addClass(inputSuccClass);
+        $('#email-notice').removeClass(inputFailClass);
+    }
 
-                    $this.addClass(inputSuccClass);
-                    $this.removeClass(inputFailClass);
 
-                    tempObj[elemName] = elemVal;
-                }
-                break;
-            case 'name-input':
-                $notice = $formNotice.filter('#name-notice');
-
-                if (validator(elemVal, 'isEmpty')) {
-                    $notice.text(i18next.t('noticeNm'));
-                    $notice.addClass('active-notice');
-                    $notice.removeClass('deactive-notice');
-
-                    $this.addClass(inputFailClass);
-                    $this.removeClass(inputSuccClass);
-                    $this.focus();
-
-                } else {
-                    $notice.text('');
-                    $notice.addClass('deactive-notice');
-                    $notice.removeClass('active-notice');
-
-                    $this.addClass(inputSuccClass);
-                    $this.removeClass(inputFailClass);
-
-                    tempObj[elemName] = elemVal;
-                }
-                break;
-            case 'phone1':
-                $notice = $formNotice.filter('#email-notice');
-
-                if (validator(elemVal, 'isEmpty')) {
-                    $notice.text(i18next.t('noticePhone'));
-                    $notice.addClass('active-notice');
-                    $notice.removeClass('deactive-notice');
-
-                    $this.addClass(inputFailClass);
-                    $this.removeClass(inputSuccClass);
-                    $this.focus();
-
-                } else {
-                    let bytesLen = validator(elemVal, 'bytesLength');
-                    bytesMax = 3;
-
-                    if (bytesLen == bytesMax) {
-                        $notice.text('');
-                        $notice.addClass('deactive-notice');
-                        $notice.removeClass('active-notice');
-
-                        $this.addClass(inputSuccClass);
-                        $this.removeClass(inputFailClass);
-
-                        tempObj[elemName] = elemVal;
-                    } else {
-                        alert('값을 정확히 입력해주세요')
-                        $notice.text(i18next.t('noticePhone'));
-                        $notice.addClass('active-notice');
-                        $notice.removeClass('deactive-notice');
-
-                        $this.addClass(inputFailClass);
-                        $this.removeClass(inputSuccClass);
-                        $this.focus();
-                    }
-                }
-                break;
-            case 'phone2':
-                $notice = $formNotice.filter('#email-notice');
-                bytesMax = 4;
-
-                if (validator(elemVal, 'isEmpty')) {
-                    $notice.text(i18next.t('noticePhone'));
-                    $notice.addClass('active-notice');
-                    $notice.removeClass('deactive-notice');
-
-                    $this.addClass(inputFailClass);
-                    $this.removeClass(inputSuccClass);
-                    $this.focus();
-
-                } else {
-                    let bytesLen = validator(elemVal, 'bytesLength');
-                    if (bytesLen == bytesMax) {
-                        $notice.text('');
-                        $notice.addClass('deactive-notice');
-                        $notice.removeClass('active-notice');
-
-                        $this.addClass(inputSuccClass);
-                        $this.removeClass(inputFailClass);
-
-                        tempObj[elemName] = elemVal;
-                    } else {
-                        alert('값을 정확히 입력해주세요')
-                        $notice.text(i18next.t('noticePhone'));
-                        $notice.addClass('active-notice');
-                        $notice.removeClass('deactive-notice');
-
-                        $this.addClass(inputFailClass);
-                        $this.removeClass(inputSuccClass);
-                        $this.focus();
-                    }
-                }
-                break;
-            case 'phone3':
-                $notice = $formNotice.filter('#email-notice');
-                bytesMax = 4;
-                if (validator(elemVal, 'bytesLenth')) {
-                    $notice.text(i18next.t('noticePhone'));
-                    $notice.addClass('active-notice');
-                    $notice.removeClass('deactive-notice');
-
-                    $this.addClass(inputFailClass);
-                    $this.removeClass(inputSuccClass);
-                    $this.focus();
-
-                } else {
-                    let bytesLen = validator(elemVal, 'bytesLength');
-                    if (bytesLen == bytesMax) {
-                        $notice.text('');
-                        $notice.removeClass('active-notice');
-                        $notice.addClass('deactive-notice');
-
-                        $this.addClass(inputSuccClass);
-                        $this.removeClass(inputFailClass);
-
-                        tempObj[elemName] = elemVal;
-                    } else {
-                        alert('값을 정확히 입력해주세요')
-                        $notice.text(i18next.t('noticePhone'));
-                        $notice.addClass('active-notice');
-                        $notice.removeClass('deactive-notice');
-
-                        $this.addClass(inputFailClass);
-                        $this.removeClass(inputSuccClass);
-                        $this.focus();
-                    }
-                }
-                break;
-        }
-    });
-
+    // ID, 사용자 이름, 이메일 모두 입력한 경우
     if ($('.' + inputFailClass).length < 1) {
-        let cmmContentType = 'application/json',
-            cmmDataType = 'json',
-            cmmType = 'get',
-            cmmUrl = accountApiUrl,
-            cmmReqDataObj = tempObj,
-            cmmAsync = false,
-            cmmSucc = function(result) {
-                if (result.messageCode === 'foundUserCode') {
-                    $modal.modal();
-                    $modal.data('userCode', result.userCode);
-                } else {
-                    alert(i18next.t('noticeNoUser'));
-                }
-            },
-            cmmErr = null;
+        if (authCheck != 1) {
+            $("#email-notice").text('이메일 인증을 완료해 주세요.');
+            $("#email-notice").addClass('active-notice');
+            $("#email-notice").removeClass('deactive-notice');
+            $("#authnumber").focus();
+            return;
+        }
 
-        commAjax(cmmContentType, cmmDataType, cmmType, cmmUrl, cmmReqDataObj, cmmAsync, cmmSucc, cmmErr);
+        $modal.modal(); // 비밀번호 변경 모달창 로드
     }
     return;
 });
 
-// form 입력 값 검증
-$formInputs.not('select').on('propertychange change keyup paste input', function(evnt) {
-    realTimeformControl(evnt, '');
-});
 
-// 비밀번호 변경 실행
+/** ================================================================
+ *  비밀번호 변경 버튼 클릭 이벤트
+ *  @author SY
+ *  @since 2023.04.03
+ *  @history 2023.04.03 초기 작성
+ *  ================================================================
+ */
 $modalSubmitBtn.on('click', function() {
     changePassword();
 });
@@ -274,62 +114,13 @@ $modalSubmitBtn.on('click', function() {
 $backbtn.on('click', function() {
     location.href = loginPage;
 });
-/*===============================================*/
-/* function  area                                */
-/*===============================================*/
 
-/**
- * 화면 초기화 작업
- * @author JG, Jo
- * @since 2021.05.26 
- * @history 
- */
-function init() {
-    let defaultLang = getSessionStorage('defaultLang') || 'en';
-
-    i18next.init({
-            lng: defaultLang,
-            debug: true,
-            resources: transResource
-        },
-        function(err, t) {
-            if (err) {
-                console.error(err);
-            } else {
-                updateContent();
-            }
-        }
-    );
-
-    // back key 눌렀을 때 로그인 페이지로 이동 
-    document.addEventListener('deviceready', function() {
-        document.addEventListener('backbutton', function() {
-            location.href = loginPage;
-        }, false);
-    }, false);
-}
-
-/**
- * 메뉴 언어 변환하기(i18next)
- * @param 
- * @author JG, Jo
- * @since 2021.05.26 
- */
-function updateContent() {
-    // 페이지 언어 변환
-    $pageTitle.text(i18next.t('pageTitle'));
-    $loginBtn.text(i18next.t('loginBtn'));
-    $submitBtn.text(i18next.t('submitBtn'));
-    $modalTitle.text(i18next.t('pwChange'));
-    $pwdLabel.text(i18next.t('pwdLabel'));
-    $pwdConfirmLabel.text(i18next.t('confirmPwdLabel'));
-    $modalSubmitBtn.text(i18next.t('pwChange'));
-}
-
-/**
- * 비밀번호 변경
- * @author JG, Jo
- * @since 2021.05.26
+/** ================================================================
+ *  비밀번호 변경
+ *  @author SY
+ *  @since 2023.04.03
+ *  @history 2023.04.03 초기 작성
+ *  ================================================================
  */
 function changePassword() {
     let $newPwd = $formInputs.filter('#new-pwd-input'),
@@ -339,7 +130,7 @@ function changePassword() {
 
     if ($newPwd.hasClass(inputFailClass) || $pwdConfirm.hasClass(inputFailClass) ||
         newPwd == '' || confirmPw == '') {
-        alert(i18next.t('noticeConfirmForm'));
+        alert('입력 양식을 다시 확인해주세요.');
         return;
     }
 
@@ -347,38 +138,50 @@ function changePassword() {
         cmmDataType = 'json',
         cmmType = 'post',
         cmmUrl = baseUrl + 'users/modify/password',
-        cmmReqDataObj = {},
+        cmmReqDataObj = {
+            userCode: $("#modal-user-code").val(),
+            pwd: newPwd
+        },
         cmmAsync = false,
         cmmSucc = function(result) {
             if (result.state) {
-                alert(i18next.t('modifySuccessMsg'));
+                alert('변경되었습니다.');
 
                 location.href = loginPage;
                 return;
             } else {
-                alert(i18next.t('modifyErrorMsg'));
+                alert('수정 실패! 잠시후 다시 실행해주세요.');
                 return;
             }
             //location.href = mainPage;
         },
         cmmErr = function() {
-            alert(i18next.t('modifyErrorMsg'));
+            alert(i18next.t('수정 실패! 잠시후 다시 실행해주세요.'));
             //location.href = indexPage;
         };
-
-    cmmReqDataObj.userCode = $modal.data('userCode');
-    cmmReqDataObj.pwd = newPwd;
-
     commAjax(cmmContentType, cmmDataType, cmmType, cmmUrl, cmmReqDataObj, cmmAsync, cmmSucc, cmmErr);
     return;
 }
 
-/**
- * 입력 양식 실시간 검사
- * @params evnt - event
- * @params triggerInputId - 검사가 필요한 입력 필드 ID(stirng)
- * @author JG, Jo
- * @since 2021.05.26 
+
+/** ================================================================
+ *  form-control 입력값 유효성 검사
+ *  @author SY
+ *  @since 2023.04.03
+ *  @history 2023.04.03 초기 작성
+ *  ================================================================
+ */
+$formInputs.not('select').on('propertychange change keyup paste input', function(evnt) {
+    realTimeformControl(evnt, '');
+});
+
+
+/** ================================================================
+ *  form-control 입력값 유효성 검사
+ *  @author SY
+ *  @since 2023.04.03
+ *  @history 2023.04.03 초기 작성
+ *  ================================================================
  */
 function realTimeformControl(evnt, triggerInputId) {
     let targetId = '',
@@ -506,5 +309,113 @@ function realTimeformControl(evnt, triggerInputId) {
         $notice.removeClass('active-notice');
         $notice.addClass('deactive-notice');
     }
-
 }
+
+
+/** ================================================================
+ *  인증번호 전송 버튼 클릭 이벤트
+ *  @author SY
+ *  @since 2023.04.03
+ *  @history 2023.04.03 초기 작성
+ *  ================================================================
+ */
+$("#sendnumber").on('click', function() {
+
+    // ID 입력 X인 경우
+    if (validator($('#id-input').val(), 'isEmpty')) {
+        $("#id-notice").addClass('active-notice');
+        $("#id-notice").removeClass('deactive-notice');
+        return;
+    } else {
+        $("#id-notice").addClass('deactive-notice');
+        $("#id-notice").removeClass('active-notice');
+    }
+
+    // 사용자 이름 입력 X인 경우
+    if (validator($('#name-input').val(), 'isEmpty')) {
+        $("#name-notice").addClass('active-notice');
+        $("#name-notice").removeClass('deactive-notice');
+        return;
+    } else {
+        $("#name-notice").addClass('deactive-notice');
+        $("#name-notice").removeClass('active-notice');
+    }
+    // 이메일 아이디, 도메인 입력 X인 경우
+    if (validator($('#email-input').val(), 'isEmpty') | validator($('#email-input2').val(), 'isEmpty')) {
+        $("#email-notice").removeClass('deactive-notice');
+        $("#email-notice").addClass('active-notice');
+        return;
+    } else {
+        $("#email-notice").removeClass('active-notice');
+        $("#email-notice").addClass('deactive-notice');
+
+
+        // 이메일 유무 확인 ajax
+        let cmmContentType = 'application/json',
+            cmmDataType = 'json',
+            cmmType = 'post',
+            cmmUrl = baseUrl + 'users/authEmail',
+            cmmReqDataObj = {
+                id: $("#id-input").val(),
+                name: $('#name-input').val(),
+                eId: $('#email-input').val(),
+                eDomain: $('#email-input2').val()
+            },
+            cmmAsync = false,
+            cmmSucc = function(result) {
+                if (result.success == 0) { // 메일 전송 실패시
+                    alert('인증번호 전송에 실패했습니다.');
+                    $('#sendnumber').addClass("active-notice");
+                    $('#sendnumber').removeClass("deactive-notice");
+                } else if (result.success == 2) { // 사용자 정보 존재하지 않을 시
+                    alert('일치하는 사용자가 존재하지 않습니다.');
+                    $('#sendnumber').addClass("active-notice");
+                    $('#sendnumber').removeClass("deactive-notice");
+                } else { // 메일 전송 성공 시
+                    $("#sendnumber").text('재전송');
+                    $('#input-authnumber').addClass("active-notice");
+                    $('#input-authnumber').removeClass("deactive-notice");
+                    $("#modal-user-code").attr('value', result.userCode);
+                    authnumber = result.authNumber;
+                }
+            },
+            cmmErr = null;
+        commAjax(cmmContentType, cmmDataType, cmmType, cmmUrl, cmmReqDataObj, cmmAsync, cmmSucc, cmmErr);
+
+    }
+})
+
+/** ================================================================
+ *  인증번호 확인 버튼 클릭 이벤트
+ *  @author SY
+ *  @since 2023.04.03
+ *  @history 2023.04.03 초기 작성
+ *  ================================================================
+ */
+$('#checknumber').on('click', function(evnt) {
+    if (authCheck == 1) {
+        alert('이미 인증된 번호입니다.\nID 찾기 버튼을 클릭해 주세요.');
+        return;
+    }
+    if (validator($('#authnumber').val(), 'isEmpty')) {
+        alert('인증번호를 입력해 주세요.');
+        authCheck = 0;
+    } else {
+        if ($('#authnumber').val() == authnumber) {
+            alert('이메일 인증에 성공하였습니다.');
+            $("#checknumber").text('인증 완료');
+
+            $("#e-auth-notice").removeClass('active-notice');
+            $("#e-auth-notice").addClass('deactive-notice');
+
+            $("#checknumber").prop('disabled', false);
+            $("#email-input").prop('readonly', true);
+            $("#email-input2").prop('readonly', true);
+
+            authCheck = 1;
+        } else {
+            alert('인증에 실패하였습니다. 다시 시도해 주세요.');
+            authCheck = 0;
+        }
+    }
+})

@@ -30,11 +30,11 @@
     <feature name="MobileAccessibility">
         <param name="android-package" value="com.phonegap.plugin.mobileaccessibility.MobileAccessibility" />
     </feature>
-    <name>독거노인 응급관리</name>
+    <name>독거노인 모니터링 관리</name>
     <content src="html/index.html" />
     <access origin="*" />
-    <allow-intent href="http://*" />
     <allow-intent href="http://192.168.3.164:7070/*" />
+    <allow-intent href="http://*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
     <allow-intent href="sms:*" />

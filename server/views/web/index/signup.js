@@ -282,10 +282,6 @@ function realTimeformControl(evnt, triggerInputId) {
                         let strArray = Array.from(targetVal);
 
                         for (let [idx, char] of strArray.entries()) {
-                            /*한글입력 시 자음만, 모음만 입력되는 것 방지*/
-                            // if (validator(char, 'isKorConsonantOrVowel')) {
-                            //     strArray[idx] = '';
-                            // }
                             if (validator(char, 'isSpChar') || validator(char, 'isNumber') ||
                                 char === '.' || char === '[' || char === ']') {
                                 strArray[idx] = '';
@@ -367,12 +363,15 @@ function realTimeformControl(evnt, triggerInputId) {
 
                             }
                         }
+                        $notice.removeClass('deactive-notice');
+                        $notice.addClass('active-notice');
                         $bytesNotice.removeClass(dangerTxtClass);
                     } else {
                         activeClass = failClass;
                         deactiveClass = successClass;
                         showNotice = true;
                         $bytesNotice.addClass(dangerTxtClass);
+
                     }
                 }
                 break;
@@ -530,12 +529,13 @@ function realTimeformControl(evnt, triggerInputId) {
                 $bytesNotice = $bytesNotice.filter('[id="email-bytes1"]');
                 $notice = $emailNotice2;
                 bytesMax = emailIdBytesMax;
-                noticeMsg = 'emailNotice2';
+                noticeMsg = $emailNotice2;
 
                 if (validator(targetVal, 'isEmpty')) {
                     activeClass = failClass;
                     deactiveClass = successClass;
                     showNotice = true;
+                    $notice.text('이메일 아이디를 정확하게 입력해 주세요.');
                 } else {
                     let bytesLen = validator(targetVal, 'bytesLength');
                     if (bytesLen > 0 && bytesLen <= bytesMax) {
@@ -561,6 +561,7 @@ function realTimeformControl(evnt, triggerInputId) {
                             deactiveClass = successClass;
                             showNotice = true;
                             noticeMsg = 'emailDuplicate';
+                            $notice.text('중복된 이메일입니다. 다시 입력해 주세요.');
                         }
                         $bytesNotice.removeClass(dangerTxtClass);
                     } else {
@@ -583,6 +584,7 @@ function realTimeformControl(evnt, triggerInputId) {
                     activeClass = failClass;
                     deactiveClass = successClass;
                     showNotice = true;
+                    $notice.text('이메일 도메인을 정확하게 입력해 주세요.');
                 } else {
                     let bytesLen = validator(targetVal, 'bytesLength');
                     if (bytesLen > 0 && bytesLen <= bytesMax) {
@@ -601,6 +603,7 @@ function realTimeformControl(evnt, triggerInputId) {
                                 deactiveClass = successClass;
                                 showNotice = true;
                                 noticeMsg = 'emailDuplicate';
+                                $notice.text('중복된 이메일입니다. 다시 입력해 주세요.');
                             }
                         } else {
                             activeClass = failClass;

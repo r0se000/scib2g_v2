@@ -12,7 +12,7 @@ exports.userlist = `
 
 // 관리 대상자 정보 조회
 exports.userinfo = `
-    SELECT name, birth_year, birth_month, birth_date, sex, address_1, address_2, address_3, phone_first, phone_middle, phone_last, protector_phone_first, protector_phone_middle, protector_phone_last
+    SELECT name, birth_year, birth_month, birth_date, gender, address_1, address_2, address_3, phone_first, phone_middle, phone_last, protector_phone_first, protector_phone_middle, protector_phone_last
     FROM user_info
     WHERE user_code = ? and user_status='Y';
 `;
@@ -44,10 +44,17 @@ exports.selectDate = `
 `;
 
 // 관리 대상자 모니터링 기록 이름으로 조회
-exports.selectName = `
-                    SELECT ui.staff_code, ui.user_code, ui.name, ui.address_1, ui.address_2, ui.address_3,ui.birth_year, ui.birth_month, ui.birth_date, ui.sex
-                    FROM user_info ui where ui.name=? and ui.user_code like ? and ui.user_status='Y';
+exports.selectName_As = `
+                    SELECT ui.staff_code, ui.user_code, ui.name, ui.address_1, ui.address_2, ui.address_3,ui.birth_year, ui.birth_month, ui.birth_date, ui.gender
+                    FROM user_info ui
+                    where ui.name=? and ui.user_code like ? and ui.user_status='Y';
 `;
+exports.selectName = `
+                    SELECT ui.staff_code, ui.name, ui.address_1, ui.address_2, ui.address_3, em.emergency_id, em.user_code, em.emergency_time, em.emergency_web_check, em.emergency_check_contents, ui.birth_year, ui.birth_month, ui.birth_date, ui.gender
+                    FROM user_info ui JOIN emergency_list em
+                    ON ui.user_code=em.user_code where ui.name=? and ui.user_code like ? and ui.user_status='Y' ORDER BY em.emergency_time DESC;
+`;
+
 
 // 관리 대상자 모니터링 리스트 조회
 exports.emList = `
@@ -76,7 +83,7 @@ exports.asDetail = `
                 WHERE al.as_num =?;
 `;
 exports.asDetail_regi = `
-                SELECT birth_year, birth_month, birth_date, name, user_code, sex
+                SELECT birth_year, birth_month, birth_date, name, user_code, gender
                 FROM user_info
                 WHERE user_code =?;
 `

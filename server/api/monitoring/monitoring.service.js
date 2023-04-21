@@ -267,7 +267,6 @@ class MonitoringService {
             emer_userList.rows[i].user_name = cryptoUtil.decrypt_aes(cryptoKey, emer_userList.rows[i].user_name);
             emer_userList.rows[i].a_user_name = cryptoUtil.decrypt_aes(cryptoKey, emer_userList.rows[i].a_user_name);
         }
-
         emer_userList.rows.forEach(function(item, index) {
             if (item.emergency_check_contents == null) {
                 item.emergency_check_contents = "--"

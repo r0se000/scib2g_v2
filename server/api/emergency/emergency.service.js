@@ -107,7 +107,7 @@ class emergencyService {
                     "user_phone": userInfo.row.phone_first + "-" + userInfo.row.phone_middle + "-" + userInfo.row.phone_last,
                     "protector_phone": userInfo.row.protector_phone_first + "-" + userInfo.row.protector_phone_middle + "-" + userInfo.row.protector_phone_last,
                     "staff_name": staffInfo.row.a_user_name,
-                    "gender": userInfo.row.sex,
+                    "gender": userInfo.row.gender,
                     "emBioInfo": emUserBioInfo
                 }
                 emergencyid.push(emergencyCheck.rows[i]);
@@ -209,7 +209,8 @@ class emergencyService {
         console.log(userList)
         if (userList) {
             for (let i = 0; i < userList.length; i++) {
-                //사용자 목록 중에 처리되지않은 응급이 있는지 확인
+                console.log(userList[i])
+                    //사용자 목록 중에 처리되지않은 응급이 있는지 확인
                 let emergencyClearCheck = await mysqlDB('select', queryList.emergencyClearCheck, [userList[i]]);
                 console.log(emergencyClearCheck)
                     //처리되지 않은 응급 중 응급 확인 시간과 응급 조치내용이 없다면 응급으로 판별 x
@@ -311,7 +312,7 @@ class emergencyService {
                     "user_phone": userInfo.row.phone_first + "-" + userInfo.row.phone_middle + "-" + userInfo.row.phone_last,
                     "protector_phone": userInfo.row.protector_phone_first + "-" + userInfo.row.protector_phone_middle + "-" + userInfo.row.protector_phone_last,
                     "staff_name": staffInfo.row.a_user_name,
-                    "gender": userInfo.row.sex,
+                    "gender": userInfo.row.gender,
                     "emBioInfo": emUserBioInfo
                 }
                 emergency.push(emergencyClearCheck.rows[0]);

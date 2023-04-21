@@ -49,6 +49,8 @@ router.post('/asDelete', asyncErrHelper(ctrInstance.asDelete));
 router.post('/asRegist', asyncErrHelper(ctrInstance.asRegist));
 // A/S 관리 등록버튼 클릭 후 이름조회 조회
 router.post('/asDetail_regi', asyncErrHelper(ctrInstance.selectInfo_As_regi));
+// A/S 등록 시 이름 조회
+router.post('/AsList/searchName', asyncErrHelper(ctrInstance.searchName_As));
 
 
 module.exports = router;

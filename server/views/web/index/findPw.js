@@ -222,6 +222,8 @@ function realTimeformControl(evnt, triggerInputId) {
                             deactiveClass = failClass;
                             noticeMsg = '';
                             showNotice = false;
+                            $newPwdNotice.addClass('deactive-notice');
+                            $newPwdNotice.removeClass('active-notice');
                         } else {
                             activeClass = failClass;
                             deactiveClass = successClass;
@@ -233,6 +235,8 @@ function realTimeformControl(evnt, triggerInputId) {
                         deactiveClass = successClass;
                         showNotice = true;
                         $bytesNotice.addClass(dangerTxtClass);
+                        $newPwdNotice.addClass('active-notice');
+                        $newPwdNotice.removeClass('deactive-notice');
                     }
                 }
                 break;

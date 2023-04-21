@@ -17,6 +17,7 @@ const client = redis.createClient();
 const { promisify } = require('util');
 const getAsync = promisify(client.get).bind(client);
 const lrangeAsync = promisify(client.lrange).bind(client);
+let addressCode
 
 function stringToNumberInArray(dataList) {
     let conversionDataList = new Array();
@@ -68,7 +69,7 @@ class p_rtimeService {
         let cryptoKey = await mysqlDB('selectOne', queryList.select_key_string, []);
         cryptoKey = cryptoKey.row.key_string;
         let select_addressCode = await mysqlDB('selectOne', queryList.select_addressCode, [userCode])
-        let addressCode = select_addressCode.row.a_user_address1 + select_addressCode.row.a_user_address2;
+        addressCode = select_addressCode.row.a_user_address1 + select_addressCode.row.a_user_address2;
         if (addressCode == "9999") {
             addressCode = "%";
         } else {
@@ -98,10 +99,10 @@ class p_rtimeService {
         } else {
             result.messageCode = "success";
             try {
-                if (result.row.sex == 'W') {
-                    result.row.sex = '여성'
-                } else if (result.row.sex == 'M') {
-                    result.row.sex = '남성'
+                if (result.row.gender == 'W') {
+                    result.row.gender = '여성'
+                } else if (result.row.gender == 'M') {
+                    result.row.gender = '남성'
                 }
                 result.row.name = cryptoUtil.decrypt_aes(cryptoKey, result.row.name);
                 result.row.birth_year = cryptoUtil.decrypt_aes(cryptoKey, result.row.birth_year);
@@ -143,7 +144,7 @@ class p_rtimeService {
     async selectAllInfo() {
         let cryptoKey = await mysqlDB('selectOne', queryList.select_key_string, []);
         cryptoKey = cryptoKey.row.key_string;
-        let result = await mysqlDB('select', queryList.userlist, [])
+        let result = await mysqlDB('select', queryList.userlist, [addressCode])
 
         for (var i = 0; i < result.rowLength; i++) {
             try {
@@ -184,11 +185,6 @@ class p_rtimeService {
         }
         return sendData;
     };
-
-
-
-
-
 
 }
 module.exports = p_rtimeService;

@@ -14,7 +14,7 @@ exports.last_data = `
 `;
 // 관리 대상자 정보 조회
 exports.userinfo = `
-    SELECT name, birth_year, birth_month, birth_date, sex, address_1, address_2, address_3, phone_first, phone_middle, phone_last, protector_phone_first, protector_phone_middle, protector_phone_last
+    SELECT name, birth_year, birth_month, birth_date, gender, address_1, address_2, address_3, phone_first, phone_middle, phone_last, protector_phone_first, protector_phone_middle, protector_phone_last
     FROM user_info
     WHERE user_code = ?;
 `;
@@ -24,7 +24,7 @@ exports.userlist = `
     FROM user_info ui
     join user_own_sensor uo
     ON ui.user_code = uo.user_code
-    WHERE user_status='Y'
+    WHERE user_status='Y' and ui.user_code like ?
     ORDER BY name;
 `
 

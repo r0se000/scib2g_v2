@@ -107,7 +107,7 @@ function showInfo(user_code) {
 
             $('#rt-detail').modal();
             $("#userName").text(result.row.name);
-            $("#sex").text(result.row.sex);
+            $("#sex").text(result.row.gender);
             $("#userBirth").text(result.row.birth_year + result.row.birth_month + result.row.birth_date);
             $("#userAddress").text(result.row.address_1 + " " + result.row.address_2 + " " + result.row.address_3);
             $("#userPhone").text(result.row.phone_first + "-" + result.row.phone_middle + "-" + result.row.phone_last);

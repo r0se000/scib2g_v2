@@ -21,7 +21,7 @@ const homeViewUrl = baseUrl + "p_apphome/p_apphome";
 const manageViewUrl = baseUrl + "p_manage/p_manage/";
 const rtimeViewUrl = baseUrl + "p_rtime/p_rtime/";
 const sensorViewUrl = baseUrl + "sensor/";
-const retryLoginUrl = serverUrl + "error/auth?lang=";
+const retryLoginUrl = serverUrl + "error/d_auth?lang=";
 const alertTokenUrl = baseUrl + "users/alertToken";
 //const testUrl = baseUrl + 'devGuide/viewTest';
 
@@ -186,21 +186,14 @@ function serConfiration() {
  */
 function changeView(pageUrl, lang, reqData) {
     // 페이지 요청 전 jwt access token 검증
-    let failPage =
-        retryLoginUrl +
-        getLocalStorage("defaultLang") +
-        "&userCode=" +
-        getLocalStorage("userCode");
+    let failPage = retryLoginUrl + getLocalStorage("defaultLang") + "&userCode=" + getLocalStorage("userCode");
     $.ajax({
         async: true,
         type: "post",
         url: authTokenUrl,
         data: { userCode: getLocalStorage("userCode") },
         beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader(
-                "authorization",
-                "Bearer " + getLocalStorage("accessToken")
-            );
+            xhr.setRequestHeader("authorization", "Bearer " + getLocalStorage("accessToken"));
         },
         success: function(result) {
             let succ = result.success;

@@ -50,8 +50,8 @@ SELECT bl.DATE, bl.user_code, ui.name, bl.batch_check FROM batch_list AS bl
     `;
 
 exports.emer_userList = `
-    SELECT em.emergency_id, em.user_code, em.a_user_code, em.emergency_time, em.emergency_check_time, em.emergency_check_contents,TIMESTAMPDIFF(second,em.emergency_time,em.emergency_web_check) AS time_diff, ui.name "user_name", ua.a_user_name
-    FROM emergency_after_list AS em
+    SELECT em.emergency_id, em.user_code, em.a_user_code, em.emergency_time, em.emergency_web_check, em.emergency_check_contents,TIMESTAMPDIFF(second,em.emergency_time,em.emergency_contents_time) AS time_diff, ui.name "user_name", ua.a_user_name
+    FROM emergency_list AS em
     LEFT JOIN user_info AS ui
     ON em.user_code = ui.user_code
     LEFT JOIN user_admin AS ua
@@ -59,7 +59,7 @@ exports.emer_userList = `
     WHERE ? <= em.emergency_time
     ORDER BY em.emergency_time DESC;
     `;
-    
+
 exports.emergencyCheck =
     `SELECT user_code, hr, rr, sv, hrv, ss, bed_state, DATE_FORMAT(created_time, '%m-%d %H:%i:%S') as created_time
     FROM biometric_real_time

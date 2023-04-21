@@ -28,6 +28,10 @@
         .deactive-notice {
             display: none;
         }
+        
+        .scroll {
+            overflow: scroll;
+        }
         /* .notice-area {
             flex-direction: row-reverse;
         } */
@@ -48,7 +52,7 @@
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
     <section id="wrapper">
-        <div class="login-register pt-5">
+        <div class="login-register scroll pt-5">
             <div class="login-box card" style="margin: auto;">
                 <div class="card-body">
                     <form class="form-horizontal form-material" id="loginform">
@@ -109,18 +113,15 @@
                         <div class="form-group mb-3">
                             <label id="label-email" for="email-input">이메일</label>
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="email-confirm"><i class="ti-email"></i></span>
-                                </div>
-                                <input id="email-input" name="eId" type="text" class="form-control" placeholder="이메일 아이디" aria-describedby="">
+                                <input id="email-input" name="eId" type="text" class="form-control" placeholder="이메일 아이디" maxlength="70">
                                 <span class="ml-1 mr-1 mt-2">@</span>
-                                <input id="email-input2" name="eDomain" type="text" class="form-control" placeholder="도메인" aria-describedby="">
+                                <input id="email-input2" name="eDomain" type="text" class="form-control" placeholder="도메인" aria-describedby="" maxlength="40">
                             </div>
                             <div class="row notice-area" style="justify-content: space-around;">
-                                <p id="email-bytes2" class="bytes-check"></p>
                                 <p id="email-bytes1" class="bytes-check"></p>
+                                <p id="email-bytes2" class="bytes-check"></p>
                             </div>
-                            <p id="email-notice2" class="active-notice form-control-feedback text-right"></p>
+                            <p id="email-notice2" class="deactive-notice form-control-feedback text-right"></p>
                             <p id="email-notice" class="active-notice form-control-feedback text-info">이메일을 통해 ID, PW 찾기가 가능하므로 정확하게 입력해 주세요.</p>
                         </div>
 

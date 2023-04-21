@@ -127,16 +127,14 @@ $("#service-end-btn").on('click', function() {
     let cmmContentType = 'application/json',
         cmmType = 'post',
         cmmUrl = '/api/asList/endService',
-        cmmReqDataObj = {
-            userCode: userCode
-        },
+        cmmReqDataObj = {},
         cmmAsync = false,
         cmmSucc = function(result) {
             if (result.rowLength > 0) {
                 setASList(result);
                 $("#as-h3").text('관리 대상자 A/S 목록(서비스 종료)');
             } else {
-                alert('관리 대상자가 존재하지 않습니다.');
+                alert('A/S 목록이 존재하지 않습니다.');
             }
         },
         cmmErr = null;
@@ -178,7 +176,6 @@ $("#searchBtn").on('click', function() {
         cmmType = 'post',
         cmmUrl = '/api/asList/searchName',
         cmmReqDataObj = {
-            userCode: userCode,
             searchStr: $("#search-user-name").val(),
             serviceCheck: serviceCheck
         },
@@ -214,9 +211,7 @@ function insertAS() {
     let cmmContentType = 'application/json',
         cmmType = 'post',
         cmmUrl = '/api/asList/selectUser',
-        cmmReqDataObj = {
-            userCode: userCode
-        },
+        cmmReqDataObj = {},
         cmmAsync = false,
         cmmSucc = function(result) {
             if (result.rowLength > 0) {
@@ -245,17 +240,14 @@ function insertAS() {
 $("#search-button").on('click', function() {
 
     if ($("#search-input").val() == '') {
-        alert('사용자 이름을 입력해 주세요.');
+        alert('대상자 이름을 입력해 주세요.');
         return;
     }
-
-    $("#search-user-modal").modal();
 
     let cmmContentType = 'application/json',
         cmmType = 'post',
         cmmUrl = '/api/asList/searchUser',
         cmmReqDataObj = {
-            userCode: userCode,
             searchStr: $("#search-input").val()
         },
         cmmAsync = false,
@@ -267,11 +259,12 @@ $("#search-button").on('click', function() {
                         "<tr>" +
                         "<td>" + result.rows[i].name + "</td>" +
                         "<td>" + result.rows[i].user_code + "</td>" +
-                        "<td>" + result.rows[i].sex + "</td>" +
+                        "<td>" + result.rows[i].gender + "</td>" +
                         "<td>" + result.rows[i].birth_year.substring(2) + result.rows[i].birth_month + result.rows[i].birth_date + "</td>" +
                         "<td><button class='form-control' onclick='selectUser(\"" + result.rows[i].user_code + "\",\"" + result.rows[i].name + "\");'>선택</button></td>";
                     $("#search-user-list > tbody:last").append(appendHtml);
                 }
+                $("#search-user-modal").modal();
 
             } else {
                 alert('관리 대상자가 존재하지 않습니다.');
@@ -382,6 +375,10 @@ $("#as-edit-btn").on('click', function() {
     if ($("#as-edit-detail").val() == '') {
         alert('A/S 내용을 입력해 주세요.');
         $("#as-edit-detail").focus();
+        return;
+    }
+
+    if(!confirm('A/S를 수정하시겠습니까?')){
         return;
     }
 

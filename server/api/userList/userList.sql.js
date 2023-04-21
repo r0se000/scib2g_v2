@@ -20,7 +20,7 @@ exports.loginCheck =
 exports.select_user_list = `
      SELECT user_code, name, user_register_date
      FROM user_info
-     WHERE staff_code=? AND user_status='Y'
+     WHERE user_code like ? AND user_status='Y'
      ORDER BY user_code ASC;
      `;
 

@@ -39,7 +39,7 @@ exports.select_model_data = `
 // 환자 출생년도
 exports.select_year_gender = `
     SELECT birth_year, gender
-    FROM user_account
+    FROM user_info
     WHERE user_code = ?;
 `;
 

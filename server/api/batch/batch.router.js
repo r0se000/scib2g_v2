@@ -14,7 +14,7 @@ const asyncErrHelper = require('../../helper/asyncErrHelper'); // async/await er
 const controller = require('./batch.controller');
 const ctrInstance = new controller();
 
-// 0시 배치
+// 07시 배치
 router.post('/B2G_Batch', asyncErrHelper(ctrInstance.B2G_Batch));
 
 // 배치 결과 INSERT

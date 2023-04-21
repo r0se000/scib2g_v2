@@ -17,7 +17,7 @@ exports.userList = `
     FROM user_info as ui
     LEFT JOIN predict_data as pd 
     ON ui.user_code=pd.user_code
-    WHERE pd.created_time=? AND ui.staff_code=? ORDER BY ui.user_code ASC;
+    WHERE pd.created_time=? AND pd.user_code LIKE ? ORDER BY ui.user_code ASC;
     `;
 
 

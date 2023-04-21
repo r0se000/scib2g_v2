@@ -17,7 +17,7 @@ exports.selectUserList = `SELECT user_code FROM user_info WHERE user_status='Y' 
 exports.select_addressCode = `SELECT a_user_address1, a_user_address2 FROM user_admin WHERE a_user_code=?;`;
 
 //관리 대상의 가장 최근 응급 기록 조회
-exports.emergencyClearCheck = `select * from emergency_list where user_code=? AND emergency_web_check IS NULL;`
+exports.emergencyClearCheck = `SELECT * FROM emergency_list WHERE user_code= ? AND emergency_contents_time IS NULL;`
 
 //응급여부 판별
 exports.emergencyCount = `SELECT COUNT(*) as emergencyCount FROM biometric_real_time WHERE user_code = ? AND hr=? AND bed_state=1 AND ss>=1000 AND created_time BETWEEN ? AND ?;`
