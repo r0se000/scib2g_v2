@@ -59,8 +59,34 @@ $('.sd-list').on('click', function(evnt) {
             let emergencyGraphUrl = baseUrl + "/monitStat/" + userCode;
             changeView(emergencyGraphUrl)
             break;
+        case 'side-menu-admin-list':
+            let adminListUrl = baseUrl + "/adminList/" + userCode;
+            changeView(adminListUrl)
+            break;
     }
 });
+
+
+// 마스터 계정인 경우
+function checkMaster(){
+    let cmmContentType = 'application/json',
+    cmmType = 'post',
+    cmmUrl = '/api/adminList/checkMaster',
+    cmmReqDataObj = {
+        adminCode: userCode
+    },
+    cmmAsync = false,
+    cmmSucc = function(result) {
+        if(result.isMaster){
+            $("#side-menu-admin-list").css('display', 'block');
+        }else{
+            $("#side-menu-admin-list").css('display', 'none');
+        }
+    },
+    cmmErr = function() {};
+
+commAjax(cmmContentType, cmmType, cmmUrl, cmmReqDataObj, cmmAsync, cmmSucc, cmmErr);
+}
 
 //관리자 정보
 $('#admin-info').on('click', function() {
